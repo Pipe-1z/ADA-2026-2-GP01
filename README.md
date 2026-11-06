@@ -1,94 +1,91 @@
-# Proyecto Oráculo
+# Proyecto Oráculo — ADAG1
 
-Curso de Análisis y Diseño de Algoritmos. El trabajo es encontrar una buena configuración de prompt consultando un oráculo. Busquen y validen cuantas veces quieran: el caché guarda lo ya generado y las trazas de fallos vienen con cada resultado.
+**Análisis y Diseño de Algoritmos · 2026-B**
+**Autor:** Juan Felipe Henao (trabajo individual) · **Subproyecto:** Proyecto Oráculo (Grupo 1)
+**Versión:** primera entrega (solución base), rama `main`
 
-| Notebook | Colab |
+> Este repositorio es un fork de [JuManoel/ADA-2026-2-GP01](https://github.com/JuManoel/ADA-2026-2-GP01). Los archivos del curso (`oraculo.py`, `ayudas.py`, `datos_visibles.json`, `proyecto_oraculo.ipynb`) se conservan sin cambios, y el README original está en [`README_curso.md`](README_curso.md).
+
+Búsqueda de una configuración de prompt (un índice por ranura `rol`, `estrategia`, `formato`, `estilo`, `cierre`, más la temperatura) que maximiza la precisión de un modelo de lenguaje sobre instancias con restricciones verificables, consultando el oráculo del curso.
+
+## Resultado
+
+| | |
 |---|---|
-| Proyecto | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/DanielMelo404/Proyecto-Oraculo-AyD/blob/main/proyecto_oraculo.ipynb) |
+| Configuración entregada | `{"rol": 0, "estrategia": 0, "formato": 0, "estilo": 5, "cierre": 1, "temperatura": 0.0}` |
+| Precisión en búsqueda (100 instancias) | 14,0 % |
+| Precisión en validación (87 instancias, `oraculo.validar`) | 10,3 % |
+| Método | Ascenso por coordenadas guiado por trazas de fallos |
+| Costo | 60 configuraciones distintas evaluadas (68 evaluaciones, 6.800 consultas, ≈ 3,4 h de GPU T4) |
 
-## Cómo se juega
+Es la **mejor configuración encontrada**, no un óptimo global demostrado: se exploró el 0,18 % de las 32.768 configuraciones.
 
-1. Abran el notebook del curso en Colab.
-2. Corran las celdas 1–3. En la 1, **reinicien el entorno** cuando lo pida.
-3. Escriban su heurística **solo en la celda 4**.
-4. Exporten `entrega.json` en la celda 5.
-
-```
-r = oraculo.evaluar(config, instancias, semilla)
-r_val = oraculo.validar(config, n)
-
-r.precision        # 0.55
-r.trazas           # [{id, violo, salida}, ...]
-```
-
-Hay **32 768** configuraciones (`espacio()`, temperatura 0.0): un índice de 0 a 7 por ranura entre `rol`, `estrategia`, `formato`, `estilo` y `cierre`, más la temperatura. Cada ranura es un consejo de prompting; algunos combinan mal con las restricciones que mide el verificador, y las trazas dicen cuál falló. El lote de búsqueda del notebook son las 100 instancias de `busqueda`. Medir con cuántas instancias buscar es parte del problema.
-
-**Es un problema de optimización de verdad.** Cada ranura ataca una parte distinta de la respuesta —el prefijo, el largo, la estructura, los caracteres, el sufijo— y los efectos se componen. Una configuración al azar se queda **debajo del 5%**; el techo está cerca del **24%**. Sortear no alcanza: hay **una sola opción limpia entre ocho** en cada ranura, así que acertar cuatro de cinco ranuras al azar pasa 1 vez cada 900. Para pasar de ahí hay que usar la estructura — leer las trazas, ver qué familia rompe cada opción, y buscar con eso (backtracking con poda, ascenso por coordenadas, haz, recocido). Reparar una ranura a la vez sube de a escalones; ninguna opción buena está en el mismo índice en todas las ranuras.
-
-Las particiones vienen **curadas**. `datos_visibles.json` marca como `descartada` a la instancia que pide más texto del que cabe en `max_new_tokens`, a la que ninguna opción puede romper, y a las de una o de cuatro-cinco restricciones. Las primeras son imposibles de acertar; las segundas son puntos que nadie puede perder, y con un tercio del lote así el puntaje casi no dependía de la configuración elegida. Búsqueda y validación quedan con la misma dificultad (2.5 restricciones por instancia), para que validar mida generalización y no un lote más duro.
-
-## Modelos
-
-`cargar_modelo` acepta un alias o un id de Hugging Face:
-
-| Alias | Checkpoint | Notas |
-|---|---|---|
-| `qwen17b` | `Qwen/Qwen3-1.7B` | el de por defecto; el más rápido |
-| `qwen17b4bit` | `unsloth/Qwen3-1.7B-unsloth-bnb-4bit` | el mismo 1.7B en 4-bit |
-| `ministral3b` | `mistralai/Ministral-3-3B-Instruct-2512-BF16` | 3.8B en fp16 (~7.7 GB), T4 |
-| `llama3b` | `unsloth/Llama-3.2-3B-Instruct` | 3.2B en fp16 (~6.4 GB), T4 |
-| `qwen8b` | `unsloth/Qwen3-8B-unsloth-bnb-4bit` | 4-bit, T4 |
-| `mistral7b` | `unsloth/mistral-7b-instruct-v0.3-bnb-4bit` | 4-bit, T4 |
+## Contenido del repositorio
 
 ```
-modelo = cargar_modelo("qwen8b")
+ADA-2026-2-GP01/  (fork)
+├── README.md                      este archivo
+├── README_curso.md                README original del curso
+├── oraculo.py, ayudas.py          archivos del curso (sin modificar)
+├── datos_visibles.json            instancias del curso (sin modificar)
+├── proyecto_oraculo.ipynb         notebook plantilla del curso (sin modificar)
+├── entrega.json                   configuración ganadora (grupo, semana, índices y temperatura)
+├── notebooks/
+│   ├── notebook_busqueda.ipynb    proyecto_oraculo.ipynb con el punto 4 implementado (con todas las salidas)
+│   └── notebook_evaluacion.ipynb  carga entrega.json y la evalúa sobre datos de prueba
+├── resultados/
+│   └── registro_busqueda.csv      las 68 evaluaciones con su precisión y fallos por familia
+├── pruebas/
+│   ├── verificar_entrega.py       valida entrega.json contra el registro (sin GPU)
+│   └── prueba_sintetica.py        prueba del algoritmo con un oráculo sintético (sin GPU)
+└── docs/
+    ├── manual_tecnico.pdf         instalación, arquitectura, funcionamiento, uso y límites
+    └── manual_tecnico.md          el mismo manual en Markdown
 ```
 
-Los 7-8B son lentos en T4: tengan paciencia con las primeras corridas.
+## Relación con el notebook del curso
 
-## Búsqueda y validación
+`notebooks/notebook_busqueda.ipynb` es el notebook del curso (`proyecto_oraculo.ipynb`) con el **punto 4** implementado: la búsqueda aleatoria de ejemplo se reemplazó por el ascenso por coordenadas guiado por trazas. Las celdas de instalación, modelo, oráculo y entrega son las del curso. Los datos son los del benchmark del curso, `datos_visibles.json` (100 instancias de búsqueda y 87 de validación).
 
-`datos_visibles.json` tiene 450 instancias, de las que se usan **100 de búsqueda y 87 de validación** (el resto va marcado `descartada`, ver `dividir`). Son el mismo split que usan [GEPA](https://arxiv.org/abs/2507.19457) y NPO [1] sobre IF-RLVR Train, de donde salen estos datos. No son las filas exactas de los papers —no publican los índices—, sí la fuente, los tamaños y la disyunción.
+## Requisitos
 
-```
-datos = cargar_datos()
-busqueda, validacion = dividir(datos)
-oraculo = Oraculo(modelo, busqueda, validacion)
-```
+- **Notebooks:** Google Colab con GPU **T4** (Python 3.12 o superior en Colab). La primera celda de cada notebook instala las dependencias (`transformers`, `accelerate`, `bitsandbytes`, `nltk`, `spacy`, `emoji`, `langdetect`, `immutabledict`) y descarga `oraculo.py`, `ayudas.py` y `datos_visibles.json` del [repositorio del curso](https://github.com/DanielMelo404/Proyecto-Oraculo-AyD).
+- **Pruebas:** Python 3.9 o superior, sin librerías externas.
 
-Las dos particiones salen del mismo pool y comparten distribución: validar mide si la config aguanta **instancias** nuevas, no restricciones de un tipo nuevo. Ese otro salto se mide al calificar, con familias que no están en este archivo.
+## Cómo ejecutar
 
-Busquen solo sobre `busqueda`. `oraculo.validar` mide la config elegida con una muestra fija de `n` instancias (las 300 tardan) e imprime qué restricciones se cayeron más.
+### Evaluar la configuración entregada
+1. Abrir `notebooks/notebook_evaluacion.ipynb` en Colab y elegir GPU T4.
+2. Ejecutar la celda 1 y reiniciar la sesión cuando lo pida.
+3. Ejecutar todas las celdas. Si hay un archivo `.json` de instancias en `/content`, se evalúa sobre él; si no, se evalúa sobre la validación pública.
 
-```
-r_val = oraculo.validar(mejor[1], n=30)
-```
+No hay que editar código, rutas ni parámetros.
 
-### Ojo con el todo-o-nada
+### Reproducir la búsqueda
+Abrir `notebooks/notebook_busqueda.ipynb` en Colab con GPU T4 y ejecutar en orden. El caché y el registro se guardan en Google Drive, así que una desconexión no hace perder lo ya evaluado. La corrida completa tomó unas 3,4 h de GPU.
 
-Una instancia trae **hasta 5 restricciones** (2.3 en promedio) y se puntúa todo-o-nada: basta que falle una para que valga 0. En las instancias más duras el modelo acierta poco, así que **con pocas instancias muchas configuraciones van a marcar `0.0` y parecer iguales**. Si su búsqueda no logra distinguir nada, suban el número de instancias antes de cambiar de heurística — decidir cuántas medir es parte del problema.
+### Ejemplo pequeño sin GPU
+Desde la raíz del repositorio:
 
-## Archivos
-
-| Archivo | Qué es |
-|---|---|
-| `proyecto_oraculo.ipynb` | El notebook del curso |
-| `oraculo.py` | La caja negra. Se consulta, no se abre |
-| `ayudas.py` | Cargar modelo, datos, dividir, ver un prompt, curva, entrega |
-| `datos_visibles.json` | 450 instancias: 100 de búsqueda, 87 de validación, 263 descartadas |
-
-## Entrega
-
-Un `entrega.json` con grupo, configuración y semana:
-
-```json
-{
- "grupo": "G07",
- "config": {"rol": 2, "estrategia": 7, "formato": 4, "estilo": 1, "cierre": 6, "temperatura": 0.0},
- "semana": 3
-}
+```bash
+python pruebas/verificar_entrega.py
+python pruebas/prueba_sintetica.py
 ```
 
-## Referencias
+Salida esperada:
 
-[1] Yuan Chang y Xiaoqi Chen, *Naive Prompt Optimization: Rethinking the Need for Complex Prompt Search*, arXiv:2608.27266, 2026. https://arxiv.org/abs/2608.27266
+```
+OK: entrega.json es válido y coincide con la mejor configuración del registro.
+...
+Pasadas: 2   Evaluaciones: 64   Cota teórica: 106
+OK: las 3 verificaciones pasaron.
+```
+
+## Reproducibilidad
+
+- Semilla fija (1) y temperatura 0,0 (generación determinista).
+- Parámetros de la búsqueda en una sola celda del notebook de búsqueda.
+- La prueba sintética usa la semilla 7 y su resultado esperado está arriba.
+- `entrega.json`, el notebook de búsqueda y el notebook de evaluación usan la misma configuración; `pruebas/verificar_entrega.py` lo comprueba.
+
+Más detalle en el manual técnico: [`docs/manual_tecnico.pdf`](docs/manual_tecnico.pdf).
