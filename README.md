@@ -39,8 +39,7 @@ ADA-2026-2-GP01/  (fork)
 │   ├── verificar_entrega.py       valida entrega.json contra el registro (sin GPU)
 │   └── prueba_sintetica.py        prueba del algoritmo con un oráculo sintético (sin GPU)
 └── docs/
-    ├── manual_tecnico.pdf         instalación, arquitectura, funcionamiento, uso y límites
-    └── manual_tecnico.md          el mismo manual en Markdown
+    └── Manual_tecnico.pdf         manual técnico en formato APA (entorno, arquitectura, funcionamiento, uso y límites)
 ```
 
 ## Relación con el notebook del curso
@@ -88,4 +87,4 @@ OK: las 3 verificaciones pasaron.
 - La prueba sintética usa la semilla 7 y su resultado esperado está arriba.
 - `entrega.json`, el notebook de búsqueda y el notebook de evaluación usan la misma configuración; `pruebas/verificar_entrega.py` lo comprueba.
 
-Más detalle en el manual técnico: [`docs/manual_tecnico.pdf`](docs/manual_tecnico.pdf).
+Más detalle en el manual técnico: [`docs/Manual_tecnico.pdf`](docs/Manual_tecnico.pdf).
