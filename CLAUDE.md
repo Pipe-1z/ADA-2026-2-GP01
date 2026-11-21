@@ -45,6 +45,8 @@ Se busca una configuración de prompt que maximice la precisión de un LLM sobre
 9. **Cada afirmación teórica** se demuestra en el informe o se cita (APA 7). Referencias ya usadas: Agrawal et al. (2025), Chang y Chen (2026), Cook (1971), Karp (1972), Håstad (2001), Hoeffding (1963), Qwen Team (2025), Wright (2015), DanielMelo404 (2026), JuManoel (2026). Para UCB1: Auer, Cesa-Bianchi y Fischer (2002). Para Successive Halving: Karnin, Koren y Somekh (2013) y Jamieson y Talwalkar (2016). Verifica cada referencia nueva antes de usarla.
 10. **Idioma:** documentos en español; código con nombres en español, consistente con el notebook actual.
 11. **Commits pequeños**, uno por tarea terminada, con mensaje descriptivo. No reescribir la historia.
+12. **`oraculo.py` solo se usa a través de su interfaz pública:** `Oraculo.evaluar`, `Oraculo.validar`, `espacio` y `CATALOGO` (más `TEMPERATURAS`). No se lee ni se usa su contenido interno (constantes, comentarios, funciones o atributos privados): ni para buscar, ni para analizar, ni para probar configuraciones, ni para escribir documentos. El caché que escribe se trata como un archivo de datos (`[aprobada, restricción violada, salida]` por entrada; la clave contiene el id de la instancia).
+13. **Verificadores de referencia:** `allenai/open-instruct` fijado en el commit `a4cd966a9e202843baba653115045e6fd6f473db` para todo el proyecto (entorno local y notebooks). Los números de la primera entrega se calificaron con una versión anterior; su recalificación con `a4cd966` está en `resultados/fase0_verificacion_cache.json` y `resultados/registro_busqueda_recalificado_a4cd966.csv`, y es la que se usa de aquí en adelante.
 
 ## 5. Entorno local
 
@@ -56,10 +58,11 @@ Pasos (Windows con PowerShell, o WSL2 si algo falla):
 2. PyTorch con CUDA según la GPU (https://pytorch.org/get-started/locally/).
 3. `pip install -U "bitsandbytes>=0.46.1" transformers accelerate nltk spacy emoji langdetect immutabledict pandas matplotlib tqdm pytest`
 4. `python -m spacy download en_core_web_sm`
-5. `git clone https://github.com/allenai/open-instruct ..\open-instruct` (fuera del repositorio) y agregar esa ruta al `PYTHONPATH`.
+5. `git clone https://github.com/allenai/open-instruct ..\open-instruct` (fuera del repositorio), `git -C ..\open-instruct checkout a4cd966a9e202843baba653115045e6fd6f473db` (regla 13) y agregar esa ruta al `PYTHONPATH`.
 6. Datos de nltk (`punkt`, `punkt_tab`, `averaged_perceptron_tagger`, `averaged_perceptron_tagger_eng`), igual que la celda 1 del notebook.
-7. Copiar `cache_oraculo.json` desde Google Drive (`MyDrive/proyecto_oraculo/`) y usarlo como caché local.
-8. **Verificación obligatoria antes de cualquier experimento:** reevaluar (0,0,0,0,0) y (0,0,0,5,1) **sin caché** y comparar con 9 % y 14 % del registro. fp16 en otra GPU puede dar salidas distintas a la T4. Si no coinciden, documentarlo y decidir con el usuario qué hardware es la referencia: los resultados que entran al informe deben ser comparables entre sí.
+7. Copiar `cache_oraculo.json` desde Google Drive (`MyDrive/proyecto_oraculo/`) a `cache/cache_oraculo.json` y usarlo como caché local.
+8. **`PYTHONUTF8=1`** en el entorno (`$env:PYTHONUTF8 = "1"` en PowerShell, `export PYTHONUTF8=1` en Git Bash). `ayudas.py` abre `datos_visibles.json` sin indicar codificación y en Windows Python usaría cp1252 (`UnicodeDecodeError`); como el archivo no se modifica, se activa el modo UTF-8 de Python.
+9. **Verificación obligatoria antes de cualquier experimento:** `python scripts/fase0_verificacion.py --parte cache` (sin GPU) y `--parte gpu` (reevalúa (0,0,0,0,0) y (0,0,0,5,1) **sin caché** y compara con el registro). fp16 en otra GPU puede dar salidas distintas a la T4. Si no coinciden, documentarlo y decidir con el usuario qué hardware es la referencia: los resultados que entran al informe deben ser comparables entre sí.
 
 `.venv/`, cachés y salidas pesadas van en `.gitignore`.
 
@@ -108,15 +111,18 @@ Todos los algoritmos reciben el mismo tipo de oráculo (interfaz común: `evalua
 
 Necesario para la validación experimental con n y |C| crecientes sin gastar GPU, y para tener casos de resultado conocido.
 
-- Parámetros: m ranuras, k opciones, n instancias, familias de restricciones, semilla.
-- Modelo base, el mismo de la reducción y de la descripción del curso: cada opción no limpia "rompe" un conjunto de familias; una instancia pasa si ninguna de sus familias está rota.
-- Parámetro de **interacción**: pares de opciones que solo funcionan juntas, para crear óptimos locales controlados.
-- Parámetro de **ruido** para la Parte 2: probabilidad de que una consulta devuelva un resultado erróneo.
+- Parámetros comunes: m ranuras, k opciones por ranura, n instancias, semilla. Todo se genera con un `random.Random(semilla)` propio.
+- Soporta **dos modelos**, que se eligen con un parámetro:
+  - **Conjuntivo** (descripción del curso): hay un conjunto de familias de restricciones; cada opción (p, a) rompe un subconjunto R(p, a) de familias; cada instancia trae 2 o 3 familias y **pasa si ninguna de sus familias está rota**. El número de opciones "limpias" (R = ∅) por ranura es un parámetro (0 o más); si toda ranura tiene una opción limpia y no hay interacciones, el óptimo es trivial (Acc = 1), por eso los casos de prueba también deben incluir ranuras sin opción limpia.
+  - **Disyuntivo** (el de la reducción desde 3-SAT): cada instancia i trae un conjunto L_i de pares (p, a) y **pasa si la configuración contiene al menos uno**. Con k = 2 y |L_i| = 3 sobre ranuras distintas, cada instancia es una cláusula de 3-SAT; el generador debe poder producir fórmulas aleatorias con una razón cláusulas/variables dada, para tener casos difíciles.
+- **Interacciones que solo rompen** (en los dos modelos): pares de opciones de ranuras distintas ((p, a), (q, b)) que, cuando aparecen juntas, hacen fallar un conjunto de instancias (en el conjuntivo, rompen familias adicionales). Nunca reparan una instancia. Crean óptimos locales para el Algoritmo 3 sin romper la admisibilidad de la cota del Algoritmo 1, porque fijar más ranuras solo puede hacer fallar más instancias.
+- Parámetro de **ruido** para la Parte 2: probabilidad de que una consulta devuelva el resultado contrario.
+- Devuelve precisión y trazas con la misma forma que el oráculo real (`violo` = primera restricción/familia violada) y cuenta consultas.
 - Debe poder calcular el **óptimo exacto** por fuerza bruta en tamaños pequeños.
 
 ### 7.2 Notas técnicas por algoritmo
 
-- **Backtracking:** recorre el árbol ranura por ranura. Con el modelo de 7.1, una cota superior válida para una asignación parcial es la fracción de instancias que aún no tienen ninguna familia rota por las ranuras ya fijadas; es válida porque cada ranura sin fijar tiene una opción limpia. Demostrar que la cota es admisible (nunca subestima) y que la poda no descarta el óptimo, usando las técnicas de correctitud del curso. Con el oráculo real no hay una cota exacta conocida, así que el exacto se usa en el sintético y en el subespacio real de la Fase 7.
+- **Backtracking:** recorre el árbol ranura por ranura. Cota superior para una asignación parcial: la fracción de instancias que todavía pueden pasar. En el modelo conjuntivo, las que no tienen ninguna familia rota por las opciones ni por los pares ya fijados; en el disyuntivo, las que no tienen un par prohibido ya fijado y o bien ya están satisfechas o bien tienen algún par (p, a) en una ranura p sin fijar. Es válida porque en los dos modelos fijar más ranuras solo puede hacer fallar más instancias (las interacciones solo rompen), no porque exista una opción limpia. Demostrar que la cota es admisible (nunca subestima) y que la poda no descarta el óptimo, usando las técnicas de correctitud del curso. Con el oráculo real no hay una cota exacta conocida, así que el exacto se usa en el sintético y en el subespacio real de la Fase 7.
 - **Successive Halving:** con |C| = 2^R y n_r = n₀·2^r, la ronda r cuesta |C|·n₀ hasta que n₀·2^r supera n; desde ahí se topa en n. Deducir la fórmula cerrada con el tope, verificarla contra el conteo real del código y analizar la probabilidad de eliminar la mejor configuración.
 - **Coordenadas:** extraer la lógica del notebook a `coordenadas.py` **sin cambiar el comportamiento**; una prueba debe reproducir las decisiones del registro a partir del caché.
 - **Reparto:** con el mismo B comparar uniforme, Successive Halving y UCB1. Métricas: probabilidad de elegir la mejor configuración y *simple regret* (Acc* − Acc del elegido), con ≥ 100 repeticiones en el sintético.
