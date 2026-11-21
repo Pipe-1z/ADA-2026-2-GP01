@@ -1,0 +1,85 @@
+{
+ "descripcion": "Fase 0, resumen: efecto de los verificadores y del hardware en (0,0,0,0,0) y (0,0,0,5,1)",
+ "metadatos": {
+  "fecha": "2026-11-21 16:51:20",
+  "git_hash": "0a4c61dd62300ffad491ea69a8a42666d482defd",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "open_instruct_importado_desde": null,
+  "python": "3.12.10",
+  "sistema": "Windows-11-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda_torch": "12.8",
+  "transformers": "5.24.0",
+  "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_capacidad": "12.0",
+  "gpu_memoria_gb": 8.55,
+  "driver": "610.74"
+ },
+ "verificadores_referencia": "a4cd966a9e202843baba653115045e6fd6f473db",
+ "hardware_local": "NVIDIA GeForce RTX 5050 Laptop GPU",
+ "configuraciones": [
+  {
+   "config": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 0,
+    "cierre": 0,
+    "temperatura": 0.0
+   },
+   "instancias": 100,
+   "precision_t4_original": 0.09,
+   "precision_t4_recalificada": 0.08,
+   "precision_local": 0.09,
+   "efecto_verificadores": {
+    "pasan_solo_en_t4_original": [
+     "471"
+    ],
+    "pasan_solo_en_t4_recalificada": []
+   },
+   "efecto_hardware": {
+    "pasan_solo_en_local": [
+     "692"
+    ],
+    "pasan_solo_en_t4_recalificada": [],
+    "salidas_texto_identicas": 78
+   },
+   "segundos_por_consulta_local": 3.499
+  },
+  {
+   "config": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0
+   },
+   "instancias": 100,
+   "precision_t4_original": 0.14,
+   "precision_t4_recalificada": 0.13,
+   "precision_local": 0.12,
+   "efecto_verificadores": {
+    "pasan_solo_en_t4_original": [
+     "471"
+    ],
+    "pasan_solo_en_t4_recalificada": []
+   },
+   "efecto_hardware": {
+    "pasan_solo_en_local": [],
+    "pasan_solo_en_t4_recalificada": [
+     "639"
+    ],
+    "salidas_texto_identicas": 85
+   },
+   "segundos_por_consulta_local": 5.538
+  }
+ ],
+ "costo_local": {
+  "consultas": 200,
+  "segundos": 903.7,
+  "segundos_por_consulta": 4.518,
+  "nota": "tiempo de evaluar() con caché vacío, sin la carga del modelo"
+ }
+}

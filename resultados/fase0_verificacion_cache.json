@@ -1,0 +1,788 @@
+{
+ "descripcion": "Fase 0, parte sin GPU: registro vs caché de la T4 y recalificación de las salidas guardadas",
+ "metadatos": {
+  "fecha": "2026-11-21 16:21:40",
+  "git_hash": "8fc303af1c222c91f50bc76d0ad0cbfa7e99f5c6",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "open_instruct_importado_desde": "C:\\Users\\felip\\Documents\\open-instruct\\open_instruct\\IFEvalG\\instructions.py",
+  "python": "3.12.10",
+  "sistema": "Windows-11-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda_torch": "12.8",
+  "transformers": "5.24.0",
+  "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_capacidad": "12.0",
+  "gpu_memoria_gb": 8.55,
+  "driver": "610.74"
+ },
+ "parametros": {
+  "semilla": 1,
+  "modelo": "Qwen/Qwen3-1.7B",
+  "cache": "cache/cache_oraculo.json",
+  "verificadores": "a4cd966a9e202843baba653115045e6fd6f473db"
+ },
+ "A_registro_vs_cache_t4": {
+  "filas_registro": 68,
+  "configuraciones_distintas_en_registro": 60,
+  "respuestas_en_cache": 6087,
+  "filas_con_discrepancia": [],
+  "validacion_final": {
+   "aciertos": 9,
+   "instancias": 87,
+   "precision": 0.10344827586206896
+  }
+ },
+ "B_recalificacion": {
+  "salidas_recalificadas": 6087,
+  "veredictos_distintos": 31,
+  "distintos_por_restriccion": {
+   "keywords:exclude_word_harder": 28,
+   "change_case:english_capital": 3
+  },
+  "instancias_afectadas": [
+   "471",
+   "611",
+   "741"
+  ],
+  "distintos": [
+   {
+    "clave": "Qwen/Qwen3-1.7B|c334c72e|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|dbc1d54a|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|e9a58f01|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|737bf0d6|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|b0ec5570|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|79c57545|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|6d574b61|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|6e21de2b|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|0a3250f4|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|6b74b3e4|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|3966fbf4|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|88d35a21|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|850a1386|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|8d5215ce|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|e31f556b|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|5f584622|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|d1fca91d|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|73635308|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|73635308|611|1",
+    "instancia": "611",
+    "t4": [
+     0,
+     "change_case:english_capital"
+    ],
+    "nuevo": [
+     1,
+     null
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|815d4c97|741|1",
+    "instancia": "741",
+    "t4": [
+     0,
+     "change_case:english_capital"
+    ],
+    "nuevo": [
+     0,
+     "keywords:word_once"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|815d4c97|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|8e2e5e58|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|a27f630d|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|1762141b|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|c60fc4fb|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|75be0c5e|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|ef3baae8|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|ef7be342|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|78fe3c28|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|78fe3c28|611|1",
+    "instancia": "611",
+    "t4": [
+     0,
+     "change_case:english_capital"
+    ],
+    "nuevo": [
+     1,
+     null
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|cbce7d09|471|1",
+    "instancia": "471",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "keywords:exclude_word_harder"
+    ]
+   }
+  ],
+  "filas_registro_que_cambian": [
+   {
+    "paso": 1,
+    "fase": "inicial",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 0,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.09,
+    "precision_a4cd966": 0.08
+   },
+   {
+    "paso": 2,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_a4cd966": 0.1
+   },
+   {
+    "paso": 3,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 2,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.1,
+    "precision_a4cd966": 0.09
+   },
+   {
+    "paso": 8,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 7,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 9,
+    "fase": "pasada 1",
+    "rol": 1,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_a4cd966": 0.1
+   },
+   {
+    "paso": 10,
+    "fase": "pasada 1",
+    "rol": 2,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.07,
+    "precision_a4cd966": 0.06
+   },
+   {
+    "paso": 12,
+    "fase": "pasada 1",
+    "rol": 4,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.07,
+    "precision_a4cd966": 0.06
+   },
+   {
+    "paso": 13,
+    "fase": "pasada 1",
+    "rol": 5,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 14,
+    "fase": "pasada 1",
+    "rol": 6,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 17,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 2,
+    "estilo": 1,
+    "cierre": 0,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 23,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.12,
+    "precision_a4cd966": 0.11
+   },
+   {
+    "paso": 26,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 4,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.05,
+    "precision_a4cd966": 0.04
+   },
+   {
+    "paso": 27,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 5,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.1,
+    "precision_a4cd966": 0.09
+   },
+   {
+    "paso": 28,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 6,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 29,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 7,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.06,
+    "precision_a4cd966": 0.05
+   },
+   {
+    "paso": 30,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 1,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.09,
+    "precision_a4cd966": 0.08
+   },
+   {
+    "paso": 31,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 2,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.1,
+    "precision_a4cd966": 0.09
+   },
+   {
+    "paso": 34,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 5,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.06,
+    "precision_a4cd966": 0.05
+   },
+   {
+    "paso": 36,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 7,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.09,
+    "precision_a4cd966": 0.08
+   },
+   {
+    "paso": 37,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 0,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_a4cd966": 0.1
+   },
+   {
+    "paso": 38,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 2,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.12,
+    "precision_a4cd966": 0.11
+   },
+   {
+    "paso": 40,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.14,
+    "precision_a4cd966": 0.13
+   },
+   {
+    "paso": 42,
+    "fase": "pasada 2",
+    "rol": 2,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_a4cd966": 0.1
+   },
+   {
+    "paso": 53,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 5,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 54,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 1,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.06,
+    "precision_a4cd966": 0.05
+   },
+   {
+    "paso": 60,
+    "fase": "pasada 3",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 0,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_a4cd966": 0.1
+   },
+   {
+    "paso": 61,
+    "fase": "pasada 3",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.12,
+    "precision_a4cd966": 0.11
+   },
+   {
+    "paso": 65,
+    "fase": "pasada 3",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 5,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.08,
+    "precision_a4cd966": 0.07
+   },
+   {
+    "paso": 67,
+    "fase": "temperatura",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.3,
+    "precision_registro_t4": 0.12,
+    "precision_a4cd966": 0.11
+   }
+  ],
+  "mejor_fila_t4": {
+   "paso": 40,
+   "precision": 0.14
+  },
+  "mejor_fila_recalificada": {
+   "paso": 40,
+   "precision": 0.13
+  },
+  "validacion_final": {
+   "aciertos": 9,
+   "instancias": 87,
+   "precision": 0.10344827586206896
+  },
+  "cache_recalificado": "cache/cache_oraculo_recalificado_a4cd966.json",
+  "segundos": 2.2
+ }
+}

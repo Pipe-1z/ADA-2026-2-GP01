@@ -1,0 +1,157 @@
+{
+ "descripcion": "Fase 0, parte GPU: reevaluación sin caché de dos configuraciones del registro",
+ "metadatos": {
+  "fecha": "2026-11-21 16:48:35",
+  "git_hash": "8fc303af1c222c91f50bc76d0ad0cbfa7e99f5c6",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "open_instruct_importado_desde": "C:\\Users\\felip\\Documents\\open-instruct\\open_instruct\\IFEvalG\\instructions.py",
+  "python": "3.12.10",
+  "sistema": "Windows-11-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda_torch": "12.8",
+  "transformers": "5.24.0",
+  "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_capacidad": "12.0",
+  "gpu_memoria_gb": 8.55,
+  "driver": "610.74"
+ },
+ "parametros": {
+  "modelo": "Qwen/Qwen3-1.7B",
+  "semilla": 1,
+  "lote": 16,
+  "presupuesto": 32000000,
+  "cache_inicial": "vacío"
+ },
+ "segundos_carga_modelo": 968.4,
+ "vram_modelo_gb": 3.44,
+ "comparaciones": [
+  {
+   "config": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 0,
+    "cierre": 0,
+    "temperatura": 0.0
+   },
+   "precision_local": 0.09,
+   "precision_t4_registro": 0.09,
+   "coincide_precision": true,
+   "instancias": 100,
+   "mismo_veredicto": 98,
+   "misma_restriccion_violada": 98,
+   "misma_salida_texto": 78,
+   "calificar_coincide_con_oraculo": 100,
+   "pasa_local_falla_t4": [
+    "692"
+   ],
+   "falla_local_pasa_t4": [
+    "471"
+   ],
+   "fallos_familia_local": {
+    "keywords": 16,
+    "detectable_format": 13,
+    "copy": 12,
+    "last_word": 8,
+    "change_case": 8,
+    "punctuation": 7,
+    "first_word": 6,
+    "new": 5,
+    "length_constraints": 4,
+    "language": 3,
+    "startend": 3,
+    "paragraphs": 2,
+    "combination": 2,
+    "letters": 2
+   },
+   "fallos_familia_t4": {
+    "keywords": 15,
+    "detectable_format": 13,
+    "copy": 12,
+    "last_word": 8,
+    "change_case": 8,
+    "punctuation": 8,
+    "first_word": 6,
+    "new": 5,
+    "length_constraints": 4,
+    "language": 3,
+    "startend": 3,
+    "paragraphs": 2,
+    "combination": 2,
+    "letters": 2
+   },
+   "consultas": 100,
+   "segundos": 349.9,
+   "segundos_por_consulta": 3.499,
+   "vram_pico_gb": 5.71,
+   "cache_local": "cache/cache_fase0_local_c0.json"
+  },
+  {
+   "config": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0
+   },
+   "precision_local": 0.12,
+   "precision_t4_registro": 0.14,
+   "coincide_precision": false,
+   "instancias": 100,
+   "mismo_veredicto": 98,
+   "misma_restriccion_violada": 97,
+   "misma_salida_texto": 85,
+   "calificar_coincide_con_oraculo": 100,
+   "pasa_local_falla_t4": [],
+   "falla_local_pasa_t4": [
+    "471",
+    "639"
+   ],
+   "fallos_familia_local": {
+    "keywords": 15,
+    "copy": 12,
+    "detectable_format": 11,
+    "change_case": 9,
+    "last_word": 8,
+    "punctuation": 8,
+    "first_word": 6,
+    "new": 5,
+    "length_constraints": 4,
+    "startend": 3,
+    "language": 2,
+    "letters": 2,
+    "paragraphs": 2,
+    "combination": 1
+   },
+   "fallos_familia_t4": {
+    "keywords": 15,
+    "copy": 12,
+    "detectable_format": 11,
+    "change_case": 9,
+    "last_word": 8,
+    "punctuation": 7,
+    "first_word": 6,
+    "new": 5,
+    "length_constraints": 4,
+    "language": 2,
+    "startend": 2,
+    "letters": 2,
+    "paragraphs": 2,
+    "combination": 1
+   },
+   "consultas": 100,
+   "segundos": 553.8,
+   "segundos_por_consulta": 5.538,
+   "vram_pico_gb": 5.7,
+   "cache_local": "cache/cache_fase0_local_c1.json"
+  }
+ ],
+ "costo_medido": {
+  "consultas": 200,
+  "segundos": 903.7,
+  "segundos_por_consulta": 4.518,
+  "nota": "tiempo de evaluar() con caché vacío, sin la carga del modelo"
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "descripcion": "Fase 0, parte sin GPU: registro vs caché de la T4 y recalificación de las salidas guardadas",
+ "metadatos": {
+  "fecha": "2026-11-21 16:21:46",
+  "git_hash": "8fc303af1c222c91f50bc76d0ad0cbfa7e99f5c6",
+  "git_sucio": false,
+  "open_instruct_hash": "b781e782a",
+  "open_instruct_importado_desde": "C:\\Users\\felip\\AppData\\Local\\Temp\\claude\\95cb40a425efbb9c\\86d9ffee-2376-4a27-a200-12dc201d28d9\\scratchpad\\oi_b781e782a\\open_instruct\\IFEvalG\\instructions.py",
+  "python": "3.12.10",
+  "sistema": "Windows-11-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda_torch": "12.8",
+  "transformers": "5.24.0",
+  "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_capacidad": "12.0",
+  "gpu_memoria_gb": 8.55,
+  "driver": "610.74"
+ },
+ "parametros": {
+  "semilla": 1,
+  "modelo": "Qwen/Qwen3-1.7B",
+  "cache": "cache/cache_oraculo.json",
+  "verificadores": "b781e782a"
+ },
+ "A_registro_vs_cache_t4": {
+  "filas_registro": 68,
+  "configuraciones_distintas_en_registro": 60,
+  "respuestas_en_cache": 6087,
+  "filas_con_discrepancia": [],
+  "validacion_final": {
+   "aciertos": 9,
+   "instancias": 87,
+   "precision": 0.10344827586206896
+  }
+ },
+ "B_recalificacion": {
+  "salidas_recalificadas": 6087,
+  "veredictos_distintos": 3,
+  "distintos_por_restriccion": {
+   "change_case:english_capital": 2,
+   "first_word:first_word_answer": 1
+  },
+  "instancias_afectadas": [
+   "611",
+   "708"
+  ],
+  "distintos": [
+   {
+    "clave": "Qwen/Qwen3-1.7B|850a1386|611|1",
+    "instancia": "611",
+    "t4": [
+     1,
+     null
+    ],
+    "nuevo": [
+     0,
+     "change_case:english_capital"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|8e2e5e58|708|1",
+    "instancia": "708",
+    "t4": [
+     0,
+     "first_word:first_word_answer"
+    ],
+    "nuevo": [
+     0,
+     "change_case:english_capital"
+    ]
+   },
+   {
+    "clave": "Qwen/Qwen3-1.7B|78fe3c28|611|1",
+    "instancia": "611",
+    "t4": [
+     0,
+     "change_case:english_capital"
+    ],
+    "nuevo": [
+     1,
+     null
+    ]
+   }
+  ],
+  "filas_registro_que_cambian": [
+   {
+    "paso": 27,
+    "fase": "pasada 1",
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 1,
+    "cierre": 5,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.1,
+    "precision_b781e78": 0.09
+   },
+   {
+    "paso": 59,
+    "fase": "pasada 2",
+    "rol": 0,
+    "estrategia": 7,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_b781e78": 0.12
+   },
+   {
+    "paso": 66,
+    "fase": "pasada 3",
+    "rol": 0,
+    "estrategia": 7,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0,
+    "precision_registro_t4": 0.11,
+    "precision_b781e78": 0.12
+   }
+  ],
+  "mejor_fila_t4": {
+   "paso": 40,
+   "precision": 0.14
+  },
+  "mejor_fila_recalificada": {
+   "paso": 40,
+   "precision": 0.14
+  },
+  "validacion_final": {
+   "aciertos": 9,
+   "instancias": 87,
+   "precision": 0.10344827586206896
+  },
+  "cache_recalificado": "cache/cache_oraculo_recalificado_b781e78.json",
+  "segundos": 2.4
+ }
+}
