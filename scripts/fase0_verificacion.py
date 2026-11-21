@@ -28,6 +28,7 @@ Uso, desde la raíz del repositorio, con PYTHONUTF8=1:
 
     python scripts/fase0_verificacion.py --parte cache
     python scripts/fase0_verificacion.py --parte gpu
+    python scripts/fase0_verificacion.py --parte resumen   (sin GPU, después de las otras dos)
 """
 
 import argparse
@@ -342,9 +343,56 @@ def parte_gpu():
     guardar_json(f"fase0_verificacion_gpu{SUFIJO}.json", resultado)
 
 
+# ---------------------------------------------------------------- parte resumen
+
+def parte_resumen():
+    """Sin GPU: separa el efecto de los verificadores del efecto del hardware.
+
+    Compara, para las configuraciones de la parte gpu, la calificación de la T4
+    original, la de la T4 recalificada con los verificadores de referencia y la
+    de la GPU local (calificada con esos mismos verificadores).
+    """
+    gpu = json.loads((RAIZ / "resultados" / "fase0_verificacion_gpu.json").read_text(encoding="utf-8"))
+    cache_res = json.loads((RAIZ / "resultados" / "fase0_verificacion_cache.json").read_text(encoding="utf-8"))
+    commit = cache_res["parametros"]["verificadores"]
+    assert gpu["metadatos"]["open_instruct_hash"] == commit, "la parte gpu usó otros verificadores"
+    cache_t4 = json.loads(RUTA_CACHE_T4.read_text(encoding="utf-8"))
+    recal = json.loads((RAIZ / cache_res["B_recalificacion"]["cache_recalificado"]).read_text(encoding="utf-8"))
+
+    filas = []
+    for comp in gpu["comparaciones"]:
+        local = json.loads((RAIZ / comp["cache_local"]).read_text(encoding="utf-8"))
+        n = len(local)
+        pasa = {nombre: {id_de_clave(k) for k in local if fuente[k][0]}
+                for nombre, fuente in (("t4_original", cache_t4), ("t4_recalificada", recal), ("local", local))}
+        filas.append({
+            "config": comp["config"],
+            "instancias": n,
+            "precision_t4_original": len(pasa["t4_original"]) / n,
+            "precision_t4_recalificada": len(pasa["t4_recalificada"]) / n,
+            "precision_local": len(pasa["local"]) / n,
+            "efecto_verificadores": {"pasan_solo_en_t4_original": sorted(pasa["t4_original"] - pasa["t4_recalificada"], key=int),
+                                     "pasan_solo_en_t4_recalificada": sorted(pasa["t4_recalificada"] - pasa["t4_original"], key=int)},
+            "efecto_hardware": {"pasan_solo_en_local": sorted(pasa["local"] - pasa["t4_recalificada"], key=int),
+                                "pasan_solo_en_t4_recalificada": sorted(pasa["t4_recalificada"] - pasa["local"], key=int),
+                                "salidas_texto_identicas": comp["misma_salida_texto"]},
+            "segundos_por_consulta_local": comp["segundos_por_consulta"],
+        })
+    resultado = {
+        "descripcion": "Fase 0, resumen: efecto de los verificadores y del hardware en (0,0,0,0,0) y (0,0,0,5,1)",
+        "metadatos": metadatos(),
+        "verificadores_referencia": commit,
+        "hardware_local": gpu["metadatos"]["gpu"],
+        "configuraciones": filas,
+        "costo_local": gpu["costo_medido"],
+    }
+    guardar_json("fase0_resumen.json", resultado)
+    print(json.dumps(filas, indent=1, ensure_ascii=False))
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--parte", choices=["cache", "gpu"], required=True)
+    ap.add_argument("--parte", choices=["cache", "gpu", "resumen"], required=True)
     ap.add_argument("--open-instruct", default=None,
                     help="carpeta de open-instruct a usar (por defecto ../open-instruct)")
     ap.add_argument("--commit-verificadores", default=None,
@@ -356,4 +404,4 @@ if __name__ == "__main__":
     sys.path.insert(0, str(RUTA_OPEN_INSTRUCT))
     COMMIT_VERIFICADORES = args.commit_verificadores
     SUFIJO = args.sufijo
-    {"cache": parte_cache, "gpu": parte_gpu}[args.parte]()
+    {"cache": parte_cache, "gpu": parte_gpu, "resumen": parte_resumen}[args.parte]()
