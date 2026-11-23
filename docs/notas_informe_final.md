@@ -25,6 +25,12 @@ Puntos que deben entrar en el informe final, anotados durante el desarrollo. Nin
 - **Matiz obligatorio para no exagerar:** en las fórmulas 3-SAT aleatorias medidas (k = 2) la cota sí poda una fracción grande del árbol, aunque los nodos explorados crecen de forma exponencial con el número de variables (familias `3sat_v*` del mismo archivo). La NP-dureza es una afirmación de peor caso.
 - Presentar Q (consultas) y K (cómputo de cotas) por separado (`docs/derivaciones/algoritmo1_backtracking.md`, Sección 6), y la respuesta sobre el modelo de información de la cota (Sección 7).
 
-## 5. Correcciones de la primera entrega
+## 5. Algoritmo 4: el ruido con muestras pequeñas (SH con n₀ = 2 y la limitación del reparto uniforme)
+
+- Conectar dos hallazgos: (a) Successive Halving con n₀ = 2 eliminó a la mejor configuración del vecindario doble en cerca de la mitad de las repeticiones en el caso calibrado de 24 % (`resultados/fase4_probabilidad_sh.json`); (b) la limitación del reparto uniforme que menciona el enunciado ("muchas configuraciones buenas parecen tener 0 % por puro ruido").
+- Causa común: con evaluación todo o nada y precisiones bajas, la probabilidad de que una configuración con precisión real μ no acierte ninguna de m instancias es (1 − μ)^m; con pocas instancias, las diferencias reales quedan tapadas por el ruido de muestreo. Ver `docs/derivaciones/algoritmo4_reparto.md`, Sección 2, y los resultados del Algoritmo 4 en `resultados/fase5_reparto.json`.
+- UCB1: citar el Teorema 1 de Auer, Cesa-Bianchi y Fischer (2002, p. 237) y aclarar que es una garantía de regret acumulado bajo recompensas independientes (Sección 4 de la misma derivación).
+
+## 6. Correcciones de la primera entrega
 
 - Ver `docs/correcciones_primera_entrega.md` (Fases 8 y 9).
