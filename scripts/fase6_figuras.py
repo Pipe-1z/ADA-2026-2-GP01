@@ -99,10 +99,35 @@ def figura(algoritmo, filas):
     return ruta
 
 
+def tablas_cocientes(resumen):
+    """resultados/fase6_cocientes.md: tablas T/g por algoritmo, dimensión y medida (generadas, no editar)."""
+    lineas = ["# Fase 6: tablas de cocientes observado/teórico", "",
+              "Generado por `scripts/fase6_figuras.py` desde `resultados/fase6_validacion.json`; no se edita a mano.",
+              "Como en las presentaciones del curso: si T = Θ(g), el cociente T/g queda entre dos constantes c₁ y c₂.",
+              "El tiempo es de CPU con el oráculo sintético, no de GPU.", ""]
+    for f in resumen:
+        lineas += [f"## {TITULOS.get(f['algoritmo'], f['algoritmo'])}: {MEDIDAS.get(f['medida'], f['medida'])} "
+                   f"frente a {f['etiqueta_tamano']}", "",
+                   f"Modelo: {f['teoria']}; coeficientes {', '.join(f'{c:.4g}' for c in f['coeficientes'])}. "
+                   f"Pendiente log-log: observada {f['pendiente_loglog_observada']:.3f}, ajuste "
+                   f"{f['pendiente_loglog_ajuste']:.3f}, término dominante {f['pendiente_loglog_termino_dominante']:.3f}.", "",
+                   "| tamaño | observado (media) | teórico ajustado | observado / ajustado | término dominante g | observado / g |",
+                   "|---|---|---|---|---|---|"]
+        for a, b in zip(f["cocientes_frente_al_ajuste"]["filas"], f["cocientes_frente_al_termino_dominante"]["filas"]):
+            lineas.append(f"| {numero(a['tamano'])} | {a['observado']:.4g} | {a['teorico']:.4g} | {a['cociente']:.4f} "
+                          f"| {b['teorico']:.4g} | {b['cociente']:.4g} |")
+        c = f["cocientes_frente_al_ajuste"]
+        lineas += ["", f"c₁ = {c['c1']:.4f}, c₂ = {c['c2']:.4f} (observado / ajustado).", ""]
+    ruta = rutas.dir_resultados() / "fase6_cocientes.md"
+    ruta.write_text("\n".join(lineas), encoding="utf-8")
+    return ruta
+
+
 def main():
     resumen = cargar_resultado("fase6_validacion")["datos"]["resumen"]
     for algoritmo in dict.fromkeys(f["algoritmo"] for f in resumen):
         print("→", figura(algoritmo, [f for f in resumen if f["algoritmo"] == algoritmo]))
+    print("→", tablas_cocientes(resumen))
 
 
 if __name__ == "__main__":
