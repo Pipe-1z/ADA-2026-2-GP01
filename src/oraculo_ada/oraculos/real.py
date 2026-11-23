@@ -189,18 +189,23 @@ class ConsultaFueraDeCache(RuntimeError):
 
 
 class _TokenizadorSinModelo:
-    """Tokenizador de relleno para reproducir desde el caché: si el oráculo intenta
-    preparar una generación, se detiene con ``ConsultaFueraDeCache`` (sin GPU)."""
+    """Tokenizador de relleno para reproducir desde el caché, sin modelo ni GPU.
+
+    Solo trae los atributos de configuración que se le asignan al construir el oráculo.
+    Cualquier otro uso (es decir, cualquier intento de generar una respuesta nueva)
+    detiene la reproducción con ``ConsultaFueraDeCache``.
+    """
 
     pad_token = "<pad>"
     eos_token = "<eos>"
     chat_template = ""
     padding_side = "left"
 
-    def _sin_cache(self, *args, **kwargs):
+    def __getattr__(self, nombre):            # solo se llama para atributos que no existen arriba
         raise ConsultaFueraDeCache("la consulta no está en el caché y se está reproduciendo sin modelo")
 
-    apply_chat_template = __call__ = batch_decode = _sin_cache
+    def __call__(self, *args, **kwargs):
+        raise ConsultaFueraDeCache("la consulta no está en el caché y se está reproduciendo sin modelo")
 
 
 def oraculo_curso_desde_cache(ruta_cache, busqueda, validacion=None, nombre_modelo="Qwen/Qwen3-1.7B"):
