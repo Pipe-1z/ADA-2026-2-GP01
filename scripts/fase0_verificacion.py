@@ -378,12 +378,24 @@ def parte_resumen():
                                 "salidas_texto_identicas": comp["misma_salida_texto"]},
             "segundos_por_consulta_local": comp["segundos_por_consulta"],
         })
+        h = filas[-1]["efecto_hardware"]
+        filas[-1]["diferencia_hardware_instancias"] = len(h["pasan_solo_en_local"]) + len(h["pasan_solo_en_t4_recalificada"])
+        filas[-1]["diferencia_hardware_aciertos"] = round((filas[-1]["precision_local"] - filas[-1]["precision_t4_recalificada"]) * n)
     resultado = {
         "descripcion": "Fase 0, resumen: efecto de los verificadores y del hardware en (0,0,0,0,0) y (0,0,0,5,1)",
         "metadatos": metadatos(),
         "verificadores_referencia": commit,
         "hardware_local": gpu["metadatos"]["gpu"],
+        "hardware_referencia": "Google Colab, NVIDIA T4 (decisión del autor, Fase 0)",
         "configuraciones": filas,
+        "ruido_de_medicion_por_hardware": {
+            "descripcion": "Instancias de búsqueda cuyo veredicto cambia entre la GPU local y la T4 con los mismos "
+                           "verificadores, misma configuración y misma semilla (evidencia del ruido de medición)",
+            "por_configuracion": [{"config": f["config"], "instancias_distintas": f["diferencia_hardware_instancias"],
+                                   "diferencia_aciertos_local_menos_t4": f["diferencia_hardware_aciertos"],
+                                   "instancias": f["instancias"]} for f in filas],
+            "maximo_instancias_distintas": max(f["diferencia_hardware_instancias"] for f in filas),
+        },
         "costo_local": gpu["costo_medido"],
     }
     guardar_json("fase0_resumen.json", resultado)
