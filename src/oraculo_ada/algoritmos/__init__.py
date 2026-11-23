@@ -1,9 +1,13 @@
 """Algoritmos del proyecto: fuerza bruta (exacto de referencia) y Algoritmos 1 a 4."""
 
+from .backtracking import ResultadoBacktracking, backtracking, nodos_por_nivel_peor_caso
 from .coordenadas import ResultadoCoordenadas, ascenso_coordenadas, cota_consultas_coordenadas
 from .fuerza_bruta import ResultadoFuerzaBruta, fuerza_bruta
 
 __all__ = [
+    "ResultadoBacktracking",
+    "backtracking",
+    "nodos_por_nivel_peor_caso",
     "ResultadoCoordenadas",
     "ResultadoFuerzaBruta",
     "ascenso_coordenadas",

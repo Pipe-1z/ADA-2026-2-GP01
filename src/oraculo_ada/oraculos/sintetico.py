@@ -189,6 +189,44 @@ class OraculoSintetico(OraculoBase):
         estado = self._estado(idx)
         return sum(self._veredicto(idx, x["id"], estado)[0] for x in instancias) / len(instancias)
 
+    # ---- cota superior para asignaciones parciales (Algoritmo 1) ---------
+
+    def instancias_vivas(self, parcial):
+        """Ids de las instancias que todavía pueden pasar con las ranuras ya fijadas.
+
+        ``parcial`` es una tupla con las opciones de las primeras ``d`` ranuras
+        (``0 <= d <= m``). Sea P = {0, ..., d-1} el conjunto de ranuras fijadas.
+
+        - Conjuntivo: la instancia está viva si ninguna de sus familias está rota por
+          las familias siempre rotas, por las opciones fijadas o por una interacción
+          cuyas dos opciones están fijadas.
+        - Disyuntivo: la instancia está viva si no la anula una interacción cuyas dos
+          opciones están fijadas y, además, ya está satisfecha por una ranura fijada
+          o tiene algún par (p, a) en una ranura p sin fijar.
+
+        Con d = m (asignación completa) coincide con el conjunto de instancias que pasan.
+        """
+        d = len(parcial)
+        if d > self.m or any(not 0 <= a < self.k for a in parcial):
+            raise ValueError(f"asignación parcial inválida: {parcial}")
+        activas = [conj for (p, a), (q, b), conj in self.interacciones
+                   if p < d and q < d and parcial[p] == a and parcial[q] == b]
+        if self.modelo == "conjuntivo":
+            rotas = set(self.familias_siempre_rotas)
+            for p in range(d):
+                rotas |= self.rompe[(p, parcial[p])]
+            for conj in activas:
+                rotas |= conj
+            return [i for i, fams in enumerate(self.familias_instancia) if not rotas.intersection(fams)]
+        anuladas = set().union(*activas) if activas else set()
+        return [i for i, L in enumerate(self.literales)
+                if i not in anuladas and any(p >= d or parcial[p] == a for p, a in L)]
+
+    def cota_superior(self, parcial):
+        """Cota superior admisible de Acc(c) para toda configuración c que extiende ``parcial``:
+        la fracción de instancias vivas (ver ``instancias_vivas``). No cobra consultas."""
+        return len(self.instancias_vivas(parcial)) / self.n
+
     def veredictos_exactos(self, config):
         """Lista, por instancia, de ``(aprobada, restricción violada)`` sin ruido y sin cobrar consultas."""
         self.validar_config(config)
@@ -397,6 +435,22 @@ def generar_calibrado(techo=24, *, candidato=None, ruido=0.0, cache=True, temper
                            ranuras=["rol", "estrategia", "formato", "estilo", "cierre"], temperaturas=temperaturas)
     o.parametros.update({"generador": "generar_calibrado", "techo": techo})
     return o
+
+
+def generar_peor_caso_backtracking(m, k, n, *, ranuras=None):
+    """Caso en que la cota no poda nada: el Algoritmo 1 recorre el árbol completo.
+
+    Modelo disyuntivo con un solo par por instancia, siempre en la **última** ranura:
+    la instancia i pasa si la última ranura vale ``i mod k``. En todo nodo interno la
+    última ranura está sin fijar, así que todas las instancias están vivas y la cota
+    vale 1; pero ninguna configuración resuelve más de ⌈n/k⌉ instancias, así que con
+    k ≥ 2 la mejor precisión es menor que 1 y la cota nunca es ≤ que la mejor.
+    """
+    if k < 2:
+        raise ValueError("el peor caso necesita k >= 2")
+    literales = [((m - 1, i % k),) for i in range(n)]
+    return OraculoSintetico("disyuntivo", m, k, literales=literales, ranuras=ranuras,
+                            parametros={"generador": "generar_peor_caso_backtracking"})
 
 
 def desde_3sat(clausulas, num_variables, *, interacciones=(), ruido=0.0, semilla_ruido=0, cache=True):

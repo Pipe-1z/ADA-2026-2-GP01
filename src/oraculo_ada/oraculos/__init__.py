@@ -8,6 +8,7 @@ from .sintetico import (
     generar_calibrado,
     generar_conjuntivo,
     generar_disyuntivo,
+    generar_peor_caso_backtracking,
 )
 
 __all__ = [
@@ -21,4 +22,5 @@ __all__ = [
     "generar_calibrado",
     "generar_conjuntivo",
     "generar_disyuntivo",
+    "generar_peor_caso_backtracking",
 ]
