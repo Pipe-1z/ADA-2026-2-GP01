@@ -157,17 +157,23 @@ def test_reproduce_las_68_evaluaciones_del_registro(tmp_path):
 
 # ---------------------------------------------------------------- caso calibrado
 
-def test_caso_calibrado_coincide_con_su_archivo_de_calibracion():
+@pytest.mark.parametrize("techo,archivo", [(24, "calibracion_sintetico"), (28, "calibracion_sintetico_28")])
+def test_caso_calibrado_coincide_con_su_archivo_de_calibracion(techo, archivo):
     from oraculo_ada.oraculos import generar_calibrado
-    from oraculo_ada.oraculos.sintetico import CALIBRADO
+    from oraculo_ada.oraculos.sintetico import CALIBRADOS
     from oraculo_ada.registro import cargar_resultado
 
-    cal = cargar_resultado("calibracion_sintetico")
+    cal = cargar_resultado(archivo)
     fijos = cal["parametros"]["fijos"]
     esperado = {**fijos, "familias_por_instancia": tuple(fijos["familias_por_instancia"]), **cal["datos"]["elegido"]}
-    assert CALIBRADO == esperado
-    o = generar_calibrado()
+    assert CALIBRADOS[techo] == esperado
+    o = generar_calibrado(techo)
     v = cal["datos"]["verificacion"]
     assert o.precision_exacta(o.config([0] * 5)) == v["precision_inicial"]
     assert o.parametros["instancias_insolubles"] == v["instancias_insolubles"]
     assert ascenso_coordenadas(o).mejor_precision == v["coordenadas_desde_inicial"]["mejor_precision"]
+    # cada candidato válido de la lista cumple los objetivos de la calibración
+    obj = cal["parametros"]["objetivos"]
+    for candidato in cal["datos"]["lista_validos"][:5]:
+        c = generar_calibrado(techo, candidato=candidato)
+        assert obj["precision_inicial"][0] <= c.precision_exacta(c.config([0] * 5)) <= obj["precision_inicial"][1]

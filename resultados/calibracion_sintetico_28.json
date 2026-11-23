@@ -1,0 +1,338 @@
+{
+ "descripcion": "Calibración del caso sintético que imita las estadísticas del problema real (techo 28 %)",
+ "parametros": {
+  "fijos": {
+   "m": 5,
+   "k": 8,
+   "n": 100,
+   "familias": 14,
+   "familias_por_instancia": [
+    2,
+    3
+   ],
+   "limpias_por_ranura": 1,
+   "fraccion_insoluble": 0.72
+  },
+  "rejilla": {
+   "prob_rompe_opcion0": [
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06,
+    0.07,
+    0.08,
+    0.09,
+    0.1,
+    0.11,
+    0.12
+   ],
+   "prob_rompe": [
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4
+   ],
+   "pares_acoplados": [
+    0,
+    1,
+    2
+   ],
+   "semilla": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "objetivos": {
+   "precision_inicial": [
+    0.08,
+    0.1
+   ],
+   "precision_optima": [
+    0.27,
+    0.29
+   ],
+   "promedio_al_azar_menor_que": 0.05,
+   "coordenadas": [
+    0.13,
+    0.14
+   ]
+  },
+  "tamano_muestra_rejilla": 500,
+  "regla_de_eleccion": "válido y con precisión inicial más cercana a 0,09; en empate, el primero de la rejilla"
+ },
+ "semilla": {
+  "semilla_oraculo": 3,
+  "semilla_muestra": 2026
+ },
+ "metadatos": {
+  "fecha": "2026-11-22 21:51:28",
+  "git_hash": "93d1e0f6e3b5e43e64138d3baa25814e960964dc",
+  "git_sucio": true,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "techo": 28,
+  "candidatos": 1980,
+  "validos": 25,
+  "elegido": {
+   "prob_rompe_opcion0": 0.03,
+   "prob_rompe": 0.15,
+   "pares_acoplados": 2,
+   "semilla": 3
+  },
+  "lista_validos": [
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.15,
+    "pares_acoplados": 2,
+    "semilla": 3
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 5
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.07,
+    "prob_rompe": 0.15,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.07,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.07,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.08,
+    "prob_rompe": 0.15,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.08,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.08,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.09,
+    "prob_rompe": 0.15,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.09,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.09,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 4
+   },
+   {
+    "prob_rompe_opcion0": 0.12,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 5
+   },
+   {
+    "prob_rompe_opcion0": 0.12,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 5
+   },
+   {
+    "prob_rompe_opcion0": 0.12,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 5
+   },
+   {
+    "prob_rompe_opcion0": 0.12,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 5
+   }
+  ],
+  "verificacion": {
+   "precision_inicial": 0.09,
+   "precision_optima_fuerza_bruta": 0.28,
+   "configuraciones_optimas": 1,
+   "instancias_insolubles": 72,
+   "fraccion_insoluble": 0.72,
+   "al_azar": {
+    "muestra": 5000,
+    "semilla_muestra": 2026,
+    "promedio": 0.03685,
+    "mediana": 0.03,
+    "percentil_95": 0.12,
+    "maximo": 0.23,
+    "fraccion_bajo_5_por_ciento": 0.633
+   },
+   "coordenadas_desde_inicial": {
+    "mejor_config": {
+     "rol": 0,
+     "estrategia": 7,
+     "formato": 0,
+     "estilo": 0,
+     "cierre": 7,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 0.14,
+    "evaluaciones": 44,
+    "consultas_cobradas": 4100,
+    "pasadas": 2,
+    "convergio": true,
+    "movimientos": [
+     {
+      "fase": "pasada 1",
+      "ranura": "estrategia",
+      "de": 0,
+      "a": 7,
+      "precision_antes": 0.09,
+      "precision_despues": 0.1
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "cierre",
+      "de": 0,
+      "a": 7,
+      "precision_antes": 0.1,
+      "precision_despues": 0.14
+     }
+    ]
+   },
+   "pares_acoplados": [
+    {
+     "ranuras": [
+      0,
+      1
+     ],
+     "opciones": [
+      3,
+      1
+     ]
+    },
+    {
+     "ranuras": [
+      3,
+      4
+     ],
+     "opciones": [
+      1,
+      1
+     ]
+    }
+   ],
+   "segundos_cpu_fuerza_bruta": 0.6621987999997145
+  },
+  "segundos_cpu_rejilla": 22.74044810000032,
+  "fuentes": {
+   "precision_inicial": "resultados/registro_busqueda.csv (9 %) y resultados/registro_busqueda_recalificado_a4cd966.csv (8 %)",
+   "precision_optima": "README_curso.md (DanielMelo404, 2026): techo cercano al 24 %",
+   "al_azar": "README_curso.md (DanielMelo404, 2026): una configuración al azar queda debajo del 5 %",
+   "coordenadas": "resultados/fase2_coordenadas_reproduccion.json (14 % original; 13 % con a4cd966 si la evaluación faltante no supera a la mejor)"
+  }
+ }
+}

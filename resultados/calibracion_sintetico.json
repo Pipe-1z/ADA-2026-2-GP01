@@ -1,5 +1,5 @@
 {
- "descripcion": "Fase 2: calibración del caso sintético que imita las estadísticas del problema real",
+ "descripcion": "Calibración del caso sintético que imita las estadísticas del problema real (techo 24 %)",
  "parametros": {
   "fijos": {
    "m": 5,
@@ -76,9 +76,9 @@
   "semilla_muestra": 2026
  },
  "metadatos": {
-  "fecha": "2026-11-22 21:32:38",
-  "git_hash": "ddebd39c6468d6d70ee5b49607c044aee0c99e36",
-  "git_sucio": false,
+  "fecha": "2026-11-22 21:51:01",
+  "git_hash": "93d1e0f6e3b5e43e64138d3baa25814e960964dc",
+  "git_sucio": true,
   "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
   "hardware": {
    "python": "3.12.10",
@@ -94,6 +94,7 @@
   }
  },
  "datos": {
+  "techo": 24,
   "candidatos": 1980,
   "validos": 44,
   "elegido": {
@@ -102,6 +103,272 @@
    "pares_acoplados": 1,
    "semilla": 7
   },
+  "lista_validos": [
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 1,
+    "semilla": 2
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.02,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 1,
+    "semilla": 8
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.03,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 3
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.04,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.05,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 7
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 7
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.06,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 2,
+    "semilla": 1
+   },
+   {
+    "prob_rompe_opcion0": 0.07,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 7
+   },
+   {
+    "prob_rompe_opcion0": 0.07,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 2,
+    "semilla": 7
+   },
+   {
+    "prob_rompe_opcion0": 0.1,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.1,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.1,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.1,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.1,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.11,
+    "prob_rompe": 0.2,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.11,
+    "prob_rompe": 0.25,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.11,
+    "prob_rompe": 0.3,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.11,
+    "prob_rompe": 0.35,
+    "pares_acoplados": 1,
+    "semilla": 10
+   },
+   {
+    "prob_rompe_opcion0": 0.11,
+    "prob_rompe": 0.4,
+    "pares_acoplados": 1,
+    "semilla": 10
+   }
+  ],
   "verificacion": {
    "precision_inicial": 0.09,
    "precision_optima_fuerza_bruta": 0.24,
@@ -170,9 +437,9 @@
      ]
     }
    ],
-   "segundos_cpu_fuerza_bruta": 0.6125208000003113
+   "segundos_cpu_fuerza_bruta": 0.6425641999994696
   },
-  "segundos_cpu_rejilla": 21.856847399999424,
+  "segundos_cpu_rejilla": 75.3465868000003,
   "fuentes": {
    "precision_inicial": "resultados/registro_busqueda.csv (9 %) y resultados/registro_busqueda_recalificado_a4cd966.csv (8 %)",
    "precision_optima": "README_curso.md (DanielMelo404, 2026): techo cercano al 24 %",

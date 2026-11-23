@@ -189,6 +189,20 @@ class OraculoSintetico(OraculoBase):
         estado = self._estado(idx)
         return sum(self._veredicto(idx, x["id"], estado)[0] for x in instancias) / len(instancias)
 
+    def veredictos_exactos(self, config):
+        """Lista, por instancia, de ``(aprobada, restricción violada)`` sin ruido y sin cobrar consultas."""
+        self.validar_config(config)
+        idx = self._indices(config)
+        estado = self._estado(idx)
+        return [self._veredicto(idx, i, estado) for i in range(self.n)]
+
+    def opciones_limpias(self):
+        """(Solo conjuntivo) dict ranura → opciones que no rompen ninguna familia. Es la verdad del
+        sintético; se usa para diagnosticar los algoritmos, nunca dentro de ellos."""
+        if self.modelo != "conjuntivo":
+            return {}
+        return {r: [a for a in range(self.k) if not self.rompe[(p, a)]] for p, r in enumerate(self.ranuras)}
+
     def optimo_exacto(self):
         """(Acc*, lista de configuraciones óptimas) por fuerza bruta sobre C, sin cobrar consultas."""
         tamano = self.tamano_espacio()
@@ -353,25 +367,35 @@ def generar_disyuntivo(m, k, n, semilla, *, literales_por_instancia=3, interacci
 # scripts/fase2_calibracion_sintetico.py y están documentados, con sus objetivos y
 # fuentes, en resultados/calibracion_sintetico.json. No se editan a mano: si se
 # recalibra, se copian desde ese archivo (una prueba verifica que coincidan).
-CALIBRADO = {
-    "m": 5, "k": 8, "n": 100, "familias": 14, "familias_por_instancia": (2, 3), "limpias_por_ranura": 1,
-    "fraccion_insoluble": 0.76, "prob_rompe_opcion0": 0.06, "prob_rompe": 0.25, "pares_acoplados": 1,
-    "semilla": 7,
+_FIJOS_CALIBRADO = {"m": 5, "k": 8, "n": 100, "familias": 14, "familias_por_instancia": (2, 3),
+                    "limpias_por_ranura": 1}
+CALIBRADOS = {
+    # techo 24 %: resultados/calibracion_sintetico.json
+    24: {**_FIJOS_CALIBRADO, "fraccion_insoluble": 0.76, "prob_rompe_opcion0": 0.06, "prob_rompe": 0.25,
+         "pares_acoplados": 1, "semilla": 7},
+    # techo 28 %: resultados/calibracion_sintetico_28.json
+    28: {**_FIJOS_CALIBRADO, "fraccion_insoluble": 0.72, "prob_rompe_opcion0": 0.03, "prob_rompe": 0.15,
+         "pares_acoplados": 2, "semilla": 3},
 }
+CALIBRADO = CALIBRADOS[24]
 
 
-def generar_calibrado(*, ruido=0.0, cache=True, temperaturas=(0.0,)):
-    """Caso sintético calibrado con el problema real (precisión inicial 9 %, óptimo 24 %,
-    configuraciones al azar con promedio menor que 5 %, 76 instancias insolubles; ver
-    ``resultados/calibracion_sintetico.json``). Usa los nombres de ranura del proyecto."""
-    c = CALIBRADO
+def generar_calibrado(techo=24, *, candidato=None, ruido=0.0, cache=True, temperaturas=(0.0,)):
+    """Caso sintético calibrado con el problema real (ver ``resultados/calibracion_sintetico*.json``).
+
+    ``techo`` = 24 (precisión inicial 9 %, óptimo 24 %, 76 instancias insolubles) o 28
+    (óptimo 28 %, 72 insolubles). ``candidato`` (dict con ``prob_rompe_opcion0``,
+    ``prob_rompe``, ``pares_acoplados`` y ``semilla``) elige otro de los candidatos
+    válidos de la calibración en vez del elegido. Usa los nombres de ranura del proyecto.
+    """
+    c = {**CALIBRADOS[techo], **(candidato or {})}
     o = generar_conjuntivo(c["m"], c["k"], c["n"], c["semilla"], familias=c["familias"],
                            familias_por_instancia=c["familias_por_instancia"],
                            limpias_por_ranura=c["limpias_por_ranura"], fraccion_insoluble=c["fraccion_insoluble"],
                            prob_rompe=c["prob_rompe"], prob_rompe_opcion0=c["prob_rompe_opcion0"],
                            pares_acoplados=c["pares_acoplados"], ruido=ruido, cache=cache,
                            ranuras=["rol", "estrategia", "formato", "estilo", "cierre"], temperaturas=temperaturas)
-    o.parametros["generador"] = "generar_calibrado"
+    o.parametros.update({"generador": "generar_calibrado", "techo": techo})
     return o
 
 

@@ -24,9 +24,17 @@ cumple los cuatro primeros objetivos y el Algoritmo 3 termina en un óptimo loca
 dentro del rango; entre los válidos se elige el de precisión inicial más cercana
 a 9 % y, en empate, el primero de la rejilla.
 
-Escribe resultados/calibracion_sintetico.json y resultados/calibracion_sintetico_candidatos.csv.
+Variante con techo de 28 % (``--techo 28``, Fase 2b): la misma rejilla y los mismos
+objetivos, salvo 72 instancias insolubles y óptimo entre 27 % y 29 % (techo
+entre 24 y 28 % según el monitor, comunicación personal).
+
+Escribe resultados/calibracion_sintetico.json (techo 24) o
+resultados/calibracion_sintetico_28.json, y el CSV de candidatos correspondiente.
+Los JSON incluyen la lista de todos los candidatos válidos, en el orden de la
+rejilla: de ahí salen los casos de las comparaciones de la Fase 2b.
 """
 
+import argparse
 import itertools
 import random
 import statistics
@@ -46,6 +54,10 @@ REJILLA = {
 }
 OBJETIVOS = {"precision_inicial": (0.08, 0.10), "precision_optima": (0.23, 0.25),
              "promedio_al_azar_menor_que": 0.05, "coordenadas": (0.13, 0.14)}
+VARIANTES = {
+    24: {"fraccion_insoluble": 0.76, "precision_optima": (0.23, 0.25), "nombre": "calibracion_sintetico"},
+    28: {"fraccion_insoluble": 0.72, "precision_optima": (0.27, 0.29), "nombre": "calibracion_sintetico_28"},
+}
 SEMILLA_MUESTRA = 2026           # muestra de configuraciones al azar
 TAMANO_MUESTRA = 500
 TAMANO_MUESTRA_FINAL = 5000
@@ -86,6 +98,12 @@ def evaluar_candidato(params):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--techo", type=int, choices=sorted(VARIANTES), default=24)
+    techo = ap.parse_args().techo
+    variante = VARIANTES[techo]
+    FIJOS["fraccion_insoluble"] = variante["fraccion_insoluble"]
+    OBJETIVOS["precision_optima"] = variante["precision_optima"]
     with Cronometro() as reloj:
         candidatos = [evaluar_candidato(dict(zip(REJILLA, valores)))
                       for valores in itertools.product(*REJILLA.values())]
@@ -123,15 +141,16 @@ def main():
     print({k: v for k, v in verificacion.items() if k not in ("coordenadas_desde_inicial",)})
     print("Algoritmo 3:", coord.mejor_precision, coord.movimientos)
 
-    guardar_csv("calibracion_sintetico_candidatos", candidatos)
+    guardar_csv(f"{variante['nombre']}_candidatos", candidatos)
     guardar_resultado(
-        "calibracion_sintetico",
-        descripcion="Fase 2: calibración del caso sintético que imita las estadísticas del problema real",
+        variante["nombre"],
+        descripcion=f"Calibración del caso sintético que imita las estadísticas del problema real (techo {techo} %)",
         parametros={"fijos": {**FIJOS, "familias_por_instancia": list(FIJOS["familias_por_instancia"])},
                     "rejilla": REJILLA, "objetivos": OBJETIVOS, "tamano_muestra_rejilla": TAMANO_MUESTRA,
                     "regla_de_eleccion": "válido y con precisión inicial más cercana a 0,09; en empate, el primero de la rejilla"},
         semilla={"semilla_oraculo": params["semilla"], "semilla_muestra": SEMILLA_MUESTRA},
-        datos={"candidatos": len(candidatos), "validos": len(validos), "elegido": params,
+        datos={"techo": techo, "candidatos": len(candidatos), "validos": len(validos), "elegido": params,
+               "lista_validos": [{k: c[k] for k in REJILLA} for c in validos],
                "verificacion": verificacion, "segundos_cpu_rejilla": reloj.segundos,
                "fuentes": {
                    "precision_inicial": "resultados/registro_busqueda.csv (9 %) y "
