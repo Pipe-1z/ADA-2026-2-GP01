@@ -120,3 +120,47 @@ def test_etiquetas_y_verificacion_de_hardware():
     assert verificar_hardware("t4", "Tesla T4") == "t4"
     with pytest.raises(RuntimeError):
         verificar_hardware("t4", "NVIDIA GeForce RTX 5050 Laptop GPU")
+
+
+# ---------------------------------------------------------------- Fase 7: tope, registro previo y subespacio
+
+def test_tope_de_consultas_nuevas_se_respeta_antes_de_consultar(tmp_path):
+    from oraculo_ada.oraculos.real import PresupuestoAgotado
+
+    o = crear(tmp_path)
+    o.limite_consultas_nuevas = 20
+    o.evaluar(o.config([0, 0]))                     # 12 nuevas
+    llamadas = len(o.oraculo.llamadas)
+    with pytest.raises(PresupuestoAgotado):
+        o.evaluar(o.config([1, 0]))                 # necesitaría 12 más: 24 > 20
+    assert len(o.oraculo.llamadas) == llamadas      # no se consultó al modelo
+    o.evaluar(o.config([0, 0]))                     # repetida: 0 nuevas, permitida
+
+
+def test_registrar_primera_entrega(tmp_path):
+    from oraculo_ada.oraculos.real import registrar_primera_entrega
+
+    registro = tmp_path / "registro.csv"
+    registro.write_text("paso,rol,estilo,temperatura\n1,0,1,0.0\n2,1,2,0.3\n", encoding="utf-8")
+    o = crear(tmp_path)
+    registrar_primera_entrega(o, registro, o.instancias, config_validada=o.config([0, 1]), n_validacion=10)
+    assert o.evaluar(o.config([0, 1])).consultas_nuevas == 0
+    assert o.evaluar(o.config([1, 2], temperatura=0.3)).consultas_nuevas == 0
+    assert o.validar(o.config([0, 1]), n=None).consultas_nuevas == 0
+    assert o.evaluar(o.config([1, 1])).consultas_nuevas == 12
+
+
+def test_subespacio_delega_y_restringe(tmp_path):
+    from oraculo_ada.algoritmos import fuerza_bruta
+    from oraculo_ada.oraculos.subespacio import OraculoSubespacio, sortear_subespacio
+
+    o = crear(tmp_path)
+    opciones = sortear_subespacio(o, 2, semilla=3)
+    assert opciones == sortear_subespacio(o, 2, semilla=3)
+    assert all(len(v) == 2 and set(v) <= set(o.opciones[r]) for r, v in opciones.items())
+    sub = OraculoSubespacio(o, opciones)
+    r = fuerza_bruta(sub)
+    assert r.configuraciones_evaluadas == 4 and r.consultas_cobradas == 4 * 12 == o.consultas
+    excluida = next(a for a in o.opciones["estilo"] if a not in opciones["estilo"])   # estilo tiene 3 opciones
+    with pytest.raises(ValueError):
+        sub.evaluar({"rol": opciones["rol"][0], "estilo": excluida, "temperatura": 0.0})

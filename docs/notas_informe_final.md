@@ -39,6 +39,12 @@ Puntos que deben entrar en el informe final, anotados durante el desarrollo. Nin
 - **UCB1 frente a |S|:** el término asintótico B·|S| del cálculo del índice tiene un coeficiente tan pequeño (cálculo vectorizado) que en el rango medido (|S| ≤ 1024) domina el costo por jugada; la pendiente observada queda cerca de 1, no de 2. Decirlo así, sin afirmar que se observó el término cuadrático.
 - **Backtracking en 3-SAT:** se compara con el peor caso, no se ajusta: Q y K contra el peor caso sin escalar, y el tiempo contra el peor caso con la constante de CPU medida en el peor caso construido. Lo observado queda varios órdenes por debajo y su pendiente log-log es menor que 1, aunque crece con |C| (coherente con la Sección 4 de estas notas).
 
-## 7. Correcciones de la primera entrega
+## 7. Tiempo real en la T4 contra n (Fase 7, paso a)
+
+- Fuente: `resultados/fase7_tiempo.json` (se genera en Colab). Cada medición genera todas sus respuestas (caché vacío propio), para que el tiempo no salga artificialmente bajo.
+- **Efecto del lote de 16:** el oráculo genera las respuestas por lotes de hasta 16 prompts (`lote=16`, parámetro público del constructor, el mismo del notebook de búsqueda). Generar un lote de 1 o de 16 prompts cuesta parecido (la GPU los procesa en paralelo y el tiempo lo fija sobre todo el prompt y la respuesta más largos del lote), así que el tiempo crece por **escalones** de ⌈n/16⌉ lotes y no de forma perfectamente proporcional a n: n = 10 usa 1 lote nominal, n = 25 usa 2, n = 50 usa 4 y n = 100 usa 7. Explicar que el ajuste lineal T = a + b·n describe la tendencia y que las desviaciones respecto a la recta vienen de esos escalones (y de que el oráculo también parte lotes por largo de prompt).
+- Relacionarlo con la validación sintética (Fase 6): allí el costo por consulta es constante por construcción; en la T4 el costo marginal por consulta se mide con la pendiente b.
+
+## 8. Correcciones de la primera entrega
 
 - Ver `docs/correcciones_primera_entrega.md` (Fases 8 y 9).

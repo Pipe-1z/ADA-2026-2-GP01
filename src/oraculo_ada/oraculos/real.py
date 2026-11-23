@@ -40,6 +40,31 @@ def ruta_libro_consultas(etiqueta, directorio=None):
     return directorio / f"libro_consultas_{etiqueta}.json"
 
 
+class PresupuestoAgotado(RuntimeError):
+    """Una evaluación superaría el tope de consultas nuevas autorizado."""
+
+
+def registrar_primera_entrega(oraculo_real, ruta_registro, busqueda, config_validada=None, n_validacion=None):
+    """Marca en el libro las consultas de la primera entrega, que ya están en el caché de la T4.
+
+    Cada fila del registro (``resultados/registro_busqueda.csv``) se evaluó sobre todas las
+    instancias de búsqueda con semilla 1; la configuración final se validó con
+    ``validar(n=None)`` (``n_validacion`` instancias). Es idempotente.
+    """
+    import csv
+
+    ids = [x["id"] for x in busqueda]
+    with open(ruta_registro, encoding="utf-8") as f:
+        for fila in csv.DictReader(f):
+            config = oraculo_real.config([int(fila[r]) for r in oraculo_real.ranuras],
+                                         temperatura=float(fila["temperatura"]))
+            oraculo_real.registrar_consultas(config, ids, semilla=1)
+    if config_validada is not None and n_validacion:
+        clave = oraculo_real._clave_libro(config_validada, 1, prefijo="validar")
+        oraculo_real._libro[clave] = {str(i) for i in range(n_validacion)}
+        oraculo_real._guardar_libro()
+
+
 class OraculoReal(OraculoBase):
     """Oráculo del curso con contador de consultas, cronómetro y libro de consultas.
 
@@ -54,7 +79,7 @@ class OraculoReal(OraculoBase):
     """
 
     def __init__(self, oraculo_curso, instancias, *, hardware, ruta_libro, catalogo=None,
-                 temperaturas=None, espacio_fn=None):
+                 temperaturas=None, espacio_fn=None, limite_consultas_nuevas=None):
         if catalogo is None or temperaturas is None or espacio_fn is None:
             import oraculo as curso  # interfaz pública del oráculo del curso
 
@@ -68,6 +93,9 @@ class OraculoReal(OraculoBase):
         self._oficiales = {self.clave(c): c for c in espacio_fn(tuple(self.temperaturas))}
         self.ruta_libro = Path(ruta_libro)
         self._libro = self._cargar_libro()
+        # Tope de consultas nuevas para esta instancia del oráculo (None = sin tope). Si una
+        # evaluación lo superaría, se lanza PresupuestoAgotado ANTES de consultar al modelo.
+        self.limite_consultas_nuevas = limite_consultas_nuevas
 
     # ---- libro de consultas ----------------------------------------------
 
@@ -101,6 +129,10 @@ class OraculoReal(OraculoBase):
     def consultas_hechas(self, config, semilla=1):
         return set(self._libro.get(self._clave_libro(config, semilla), set()))
 
+    def total_registrado(self):
+        """Número total de consultas anotadas en el libro (sirve para contar entre sesiones)."""
+        return sum(len(v) for v in self._libro.values())
+
     # ---- consulta -----------------------------------------------------
 
     def oficial(self, config):
@@ -113,6 +145,10 @@ class OraculoReal(OraculoBase):
         clave = self._clave_libro(config, semilla)
         vistas = self._libro.setdefault(clave, set())
         nuevas = sum(1 for i in ids if i not in vistas)
+        if self.limite_consultas_nuevas is not None and self.consultas + nuevas > self.limite_consultas_nuevas:
+            raise PresupuestoAgotado(
+                f"la evaluación necesita {nuevas} consultas nuevas y ya se usaron {self.consultas} "
+                f"de {self.limite_consultas_nuevas}")
         r = self.oraculo.evaluar(self.oficial(config), instancias, semilla=semilla)
         vistas.update(ids)
         self._guardar_libro()
@@ -180,7 +216,7 @@ def oraculo_curso_desde_cache(ruta_cache, busqueda, validacion=None, nombre_mode
 
 
 def crear_oraculo_real(hardware=None, *, modelo="qwen17b", directorio_cache=None, lote=16,
-                       presupuesto=32_000_000, ruta_datos=None):
+                       presupuesto=32_000_000, ruta_datos=None, limite_consultas_nuevas=None, modelo_cargado=None):
     """Carga el modelo y arma el oráculo del curso con el caché del hardware correcto.
 
     Devuelve ``(oraculo_real, busqueda, validacion)``. ``hardware`` por defecto es
@@ -194,8 +230,9 @@ def crear_oraculo_real(hardware=None, *, modelo="qwen17b", directorio_cache=None
     verificar_hardware(etiqueta)
     ruta_cache = ruta_cache_oraculo(etiqueta, directorio_cache)
     busqueda, validacion = dividir(cargar_datos(str(ruta_datos or rutas.RAIZ / "datos_visibles.json")))
-    curso = Oraculo(cargar_modelo(modelo), busqueda, validacion, cache=str(ruta_cache),
+    curso = Oraculo(modelo_cargado or cargar_modelo(modelo), busqueda, validacion, cache=str(ruta_cache),
                     lote=lote, presupuesto=presupuesto)
     real = OraculoReal(curso, busqueda, hardware=etiqueta,
-                       ruta_libro=ruta_libro_consultas(etiqueta, directorio_cache))
+                       ruta_libro=ruta_libro_consultas(etiqueta, directorio_cache),
+                       limite_consultas_nuevas=limite_consultas_nuevas)
     return real, busqueda, validacion
