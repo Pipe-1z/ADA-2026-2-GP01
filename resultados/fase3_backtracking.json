@@ -1,0 +1,4580 @@
+{
+ "descripcion": "Fase 3: nodos explorados, hojas y consultas del Algoritmo 1 frente al peor caso sin poda (métrica principal: consultas y nodos; segundos_cpu no es tiempo de GPU)",
+ "parametros": {
+  "ordenes": [
+   "indice",
+   "cota"
+  ],
+  "sat": {
+   "variables": [
+    10,
+    12,
+    14,
+    16
+   ],
+   "razones": [
+    2,
+    3,
+    4,
+    4.26,
+    5,
+    6
+   ],
+   "semillas": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "semilla_consulta": 1,
+  "casos": "ver docstring de scripts/fase3_backtracking.py"
+ },
+ "semilla": {
+  "sat": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "disyuntivo_y_sin_limpias": "1 a 30",
+  "calibrados": "lista_validos de la calibración"
+ },
+ "metadatos": {
+  "fecha": "2026-11-22 22:23:14",
+  "git_hash": "b4806dfeacdbc1215bcaafbc1da86bfe2fb2ea35",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "resumen": {
+   "peor_caso": {
+    "indice": {
+     "casos": 1,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "fraccion_hojas": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "fraccion_consultas": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "nodos_explorados": {
+      "n": 1,
+      "media": 37449.0,
+      "desviacion": 0.0,
+      "minimo": 37449,
+      "maximo": 37449
+     },
+     "hojas_evaluadas": {
+      "n": 1,
+      "media": 32768.0,
+      "desviacion": 0.0,
+      "minimo": 32768,
+      "maximo": 32768
+     },
+     "consultas_cobradas": {
+      "n": 1,
+      "media": 3276800.0,
+      "desviacion": 0.0,
+      "minimo": 3276800,
+      "maximo": 3276800
+     },
+     "optimo": {
+      "n": 1,
+      "media": 0.13,
+      "desviacion": 0.0,
+      "minimo": 0.13,
+      "maximo": 0.13
+     },
+     "segundos_cpu": {
+      "n": 1,
+      "media": 4.4697187999991,
+      "desviacion": 0.0,
+      "minimo": 4.4697187999991,
+      "maximo": 4.4697187999991
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      64.0,
+      512.0,
+      4096.0,
+      32768.0
+     ]
+    },
+    "cota": {
+     "casos": 1,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "fraccion_hojas": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "fraccion_consultas": {
+      "n": 1,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "nodos_explorados": {
+      "n": 1,
+      "media": 37449.0,
+      "desviacion": 0.0,
+      "minimo": 37449,
+      "maximo": 37449
+     },
+     "hojas_evaluadas": {
+      "n": 1,
+      "media": 32768.0,
+      "desviacion": 0.0,
+      "minimo": 32768,
+      "maximo": 32768
+     },
+     "consultas_cobradas": {
+      "n": 1,
+      "media": 3276800.0,
+      "desviacion": 0.0,
+      "minimo": 3276800,
+      "maximo": 3276800
+     },
+     "optimo": {
+      "n": 1,
+      "media": 0.13,
+      "desviacion": 0.0,
+      "minimo": 0.13,
+      "maximo": 0.13
+     },
+     "segundos_cpu": {
+      "n": 1,
+      "media": 4.489917400000195,
+      "desviacion": 0.0,
+      "minimo": 4.489917400000195,
+      "maximo": 4.489917400000195
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      64.0,
+      512.0,
+      4096.0,
+      32768.0
+     ]
+    }
+   },
+   "calibrado_24": {
+    "indice": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.004769152714358194,
+      "desviacion": 0.0008625603619943383,
+      "minimo": 0.0021629416005767843,
+      "maximo": 0.005794547250927928
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.0010528564453125,
+      "desviacion": 0.000595962334321265,
+      "minimo": 0.00018310546875,
+      "maximo": 0.001953125
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.0010528564453125,
+      "desviacion": 0.000595962334321265,
+      "minimo": 0.00018310546875,
+      "maximo": 0.001953125
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 178.6,
+      "desviacion": 32.30202299632598,
+      "minimo": 81,
+      "maximo": 217
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 34.5,
+      "desviacion": 19.528493771039212,
+      "minimo": 6,
+      "maximo": 64
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 3450.0,
+      "desviacion": 1952.8493771039211,
+      "minimo": 600,
+      "maximo": 6400
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.23999999999999996,
+      "desviacion": 0.0,
+      "minimo": 0.24,
+      "maximo": 0.24
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 0.004677883333533828,
+      "desviacion": 0.002244528963951515,
+      "minimo": 0.0013343999999051448,
+      "maximo": 0.010451699999975972
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      15.733333333333333,
+      38.666666666666664,
+      60.8,
+      54.4
+     ]
+    },
+    "cota": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.0010948222916499772,
+      "desviacion": 0.0,
+      "minimo": 0.0010948222916499772,
+      "maximo": 0.0010948222916499772
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.0001708984375,
+      "desviacion": 9.900185469747246e-05,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.000244140625
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.0001708984375,
+      "desviacion": 9.900185469747246e-05,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.000244140625
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 41.0,
+      "desviacion": 0.0,
+      "minimo": 41,
+      "maximo": 41
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 5.6,
+      "desviacion": 3.2440927747267776,
+      "minimo": 1,
+      "maximo": 8
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 560.0,
+      "desviacion": 324.40927747267773,
+      "minimo": 100,
+      "maximo": 800
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.23999999999999996,
+      "desviacion": 0.0,
+      "minimo": 0.24,
+      "maximo": 0.24
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 0.0014308200000111052,
+      "desviacion": 0.0002559114452372799,
+      "minimo": 0.0010508000013942365,
+      "maximo": 0.001930000000356813
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      8.0,
+      8.0,
+      8.0,
+      8.0
+     ]
+    }
+   },
+   "calibrado_28": {
+    "indice": {
+     "casos": 25,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 25,
+      "media": 0.008016235413495687,
+      "desviacion": 0.0037969600783897915,
+      "minimo": 0.001949317738791423,
+      "maximo": 0.016048492616625276
+     },
+     "fraccion_hojas": {
+      "n": 25,
+      "media": 0.002642822265625,
+      "desviacion": 0.002073642673464793,
+      "minimo": 0.0001220703125,
+      "maximo": 0.007293701171875
+     },
+     "fraccion_consultas": {
+      "n": 25,
+      "media": 0.002642822265625,
+      "desviacion": 0.002073642673464793,
+      "minimo": 0.0001220703125,
+      "maximo": 0.007293701171875
+     },
+     "nodos_explorados": {
+      "n": 25,
+      "media": 300.2,
+      "desviacion": 142.1923579756193,
+      "minimo": 73,
+      "maximo": 601
+     },
+     "hojas_evaluadas": {
+      "n": 25,
+      "media": 86.6,
+      "desviacion": 67.94912312409434,
+      "minimo": 4,
+      "maximo": 239
+     },
+     "consultas_cobradas": {
+      "n": 25,
+      "media": 8660.0,
+      "desviacion": 6794.912312409435,
+      "minimo": 400,
+      "maximo": 23900
+     },
+     "optimo": {
+      "n": 25,
+      "media": 0.28,
+      "desviacion": 0.0,
+      "minimo": 0.28,
+      "maximo": 0.28
+     },
+     "segundos_cpu": {
+      "n": 25,
+      "media": 0.0086595760002092,
+      "desviacion": 0.005106397765651607,
+      "minimo": 0.0011981999996351078,
+      "maximo": 0.019355200000063633
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      26.24,
+      53.12,
+      106.88,
+      104.96
+     ]
+    },
+    "cota": {
+     "casos": 25,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 25,
+      "media": 0.0010948222916499772,
+      "desviacion": 0.0,
+      "minimo": 0.0010948222916499772,
+      "maximo": 0.0010948222916499772
+     },
+     "fraccion_hojas": {
+      "n": 25,
+      "media": 9.1552734375e-05,
+      "desviacion": 3.411968959808029e-05,
+      "minimo": 6.103515625e-05,
+      "maximo": 0.000244140625
+     },
+     "fraccion_consultas": {
+      "n": 25,
+      "media": 9.1552734375e-05,
+      "desviacion": 3.411968959808029e-05,
+      "minimo": 6.103515625e-05,
+      "maximo": 0.000244140625
+     },
+     "nodos_explorados": {
+      "n": 25,
+      "media": 41.0,
+      "desviacion": 0.0,
+      "minimo": 41,
+      "maximo": 41
+     },
+     "hojas_evaluadas": {
+      "n": 25,
+      "media": 3.0,
+      "desviacion": 1.118033988749895,
+      "minimo": 2,
+      "maximo": 8
+     },
+     "consultas_cobradas": {
+      "n": 25,
+      "media": 300.0,
+      "desviacion": 111.80339887498948,
+      "minimo": 200,
+      "maximo": 800
+     },
+     "optimo": {
+      "n": 25,
+      "media": 0.28,
+      "desviacion": 0.0,
+      "minimo": 0.28,
+      "maximo": 0.28
+     },
+     "segundos_cpu": {
+      "n": 25,
+      "media": 0.0012748079999437322,
+      "desviacion": 0.0001294147465393086,
+      "minimo": 0.0011128999994980404,
+      "maximo": 0.0016570000007050112
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      8.0,
+      8.0,
+      8.0,
+      8.0
+     ]
+    }
+   },
+   "disyuntivo": {
+    "indice": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.9999430336368572,
+      "desviacion": 0.00019379682006349672,
+      "minimo": 0.9991455045528586,
+      "maximo": 1.0
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.9999348958333333,
+      "desviacion": 0.00022148123518548246,
+      "minimo": 0.9990234375,
+      "maximo": 1.0
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.9999348958333333,
+      "desviacion": 0.00022148123518548246,
+      "minimo": 0.9990234375,
+      "maximo": 1.0
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 37446.86666666667,
+      "desviacion": 7.257497114557889,
+      "minimo": 37417,
+      "maximo": 37449
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 32765.866666666665,
+      "desviacion": 7.257497114557889,
+      "minimo": 32736,
+      "maximo": 32768
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 3276586.6666666665,
+      "desviacion": 725.749711455789,
+      "minimo": 3273600,
+      "maximo": 3276800
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.4983333333333333,
+      "desviacion": 0.017632910713489297,
+      "minimo": 0.47,
+      "maximo": 0.54
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 4.787239926666795,
+      "desviacion": 0.08010491336321209,
+      "minimo": 4.666413400000238,
+      "maximo": 4.949601800000892
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      64.0,
+      512.0,
+      4096.0,
+      32765.866666666665
+     ]
+    },
+    "cota": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.9999430336368572,
+      "desviacion": 0.00019379682006349672,
+      "minimo": 0.9991455045528586,
+      "maximo": 1.0
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.9999348958333333,
+      "desviacion": 0.00022148123518548246,
+      "minimo": 0.9990234375,
+      "maximo": 1.0
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.9999348958333333,
+      "desviacion": 0.00022148123518548246,
+      "minimo": 0.9990234375,
+      "maximo": 1.0
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 37446.86666666667,
+      "desviacion": 7.257497114557889,
+      "minimo": 37417,
+      "maximo": 37449
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 32765.866666666665,
+      "desviacion": 7.257497114557889,
+      "minimo": 32736,
+      "maximo": 32768
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 3276586.6666666665,
+      "desviacion": 725.749711455789,
+      "minimo": 3273600,
+      "maximo": 3276800
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.4983333333333333,
+      "desviacion": 0.017632910713489297,
+      "minimo": 0.47,
+      "maximo": 0.54
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 5.056977340000109,
+      "desviacion": 0.2775728671642802,
+      "minimo": 4.872359400000278,
+      "maximo": 6.482876199999737
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      64.0,
+      512.0,
+      4096.0,
+      32765.866666666665
+     ]
+    }
+   },
+   "sin_limpias": {
+    "indice": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.015713815233161545,
+      "desviacion": 0.007660461120516953,
+      "minimo": 0.004085556356645037,
+      "maximo": 0.032711153835883466
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.005500284830729166,
+      "desviacion": 0.004455448798379987,
+      "minimo": 0.000244140625,
+      "maximo": 0.01904296875
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.005500284830729166,
+      "desviacion": 0.004455448798379987,
+      "minimo": 0.000244140625,
+      "maximo": 0.01904296875
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 588.4666666666667,
+      "desviacion": 286.8766085022394,
+      "minimo": 153,
+      "maximo": 1225
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 180.23333333333332,
+      "desviacion": 145.9961462253154,
+      "minimo": 8,
+      "maximo": 624
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 18023.333333333332,
+      "desviacion": 14599.61462253154,
+      "minimo": 800,
+      "maximo": 62400
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.49033333333333334,
+      "desviacion": 0.07752567242570342,
+      "minimo": 0.35,
+      "maximo": 0.66
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 0.016085489999871545,
+      "desviacion": 0.010153412523106989,
+      "minimo": 0.0029114000008121366,
+      "maximo": 0.04120119999970484
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      47.733333333333334,
+      122.93333333333334,
+      198.66666666666666,
+      210.13333333333333
+     ]
+    },
+    "cota": {
+     "casos": 30,
+     "nodos_peor_caso": 37449,
+     "hojas_peor_caso": 32768,
+     "consultas_peor_caso": 3276800,
+     "fraccion_nodos": {
+      "n": 30,
+      "media": 0.00798063143653146,
+      "desviacion": 0.005951846111399143,
+      "minimo": 0.0015220700152207,
+      "maximo": 0.023525327779112926
+     },
+     "fraccion_hojas": {
+      "n": 30,
+      "media": 0.0023518880208333332,
+      "desviacion": 0.0023116652423987756,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.00750732421875
+     },
+     "fraccion_consultas": {
+      "n": 30,
+      "media": 0.0023518880208333332,
+      "desviacion": 0.0023116652423987756,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.00750732421875
+     },
+     "nodos_explorados": {
+      "n": 30,
+      "media": 298.8666666666667,
+      "desviacion": 222.8906850257865,
+      "minimo": 57,
+      "maximo": 881
+     },
+     "hojas_evaluadas": {
+      "n": 30,
+      "media": 77.06666666666666,
+      "desviacion": 75.74864666292308,
+      "minimo": 1,
+      "maximo": 246
+     },
+     "consultas_cobradas": {
+      "n": 30,
+      "media": 7706.666666666667,
+      "desviacion": 7574.864666292308,
+      "minimo": 100,
+      "maximo": 24600
+     },
+     "optimo": {
+      "n": 30,
+      "media": 0.49033333333333334,
+      "desviacion": 0.07752567242570342,
+      "minimo": 0.35,
+      "maximo": 0.66
+     },
+     "segundos_cpu": {
+      "n": 30,
+      "media": 0.010763449999952475,
+      "desviacion": 0.008560404671480974,
+      "minimo": 0.0016745999982958892,
+      "maximo": 0.03248700000040117
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      8.0,
+      39.733333333333334,
+      76.8,
+      92.26666666666667,
+      81.06666666666666
+     ]
+    }
+   },
+   "3sat_v10_r2": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 20480,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.024328285295554468,
+      "desviacion": 0.01455173170426018,
+      "minimo": 0.013190034196384953,
+      "maximo": 0.06106497313141182
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00751953125,
+      "desviacion": 0.007494759318105427,
+      "minimo": 0.001953125,
+      "maximo": 0.0244140625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00751953125,
+      "desviacion": 0.007494759318105427,
+      "minimo": 0.001953125,
+      "maximo": 0.0244140625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 49.8,
+      "desviacion": 29.78739479862059,
+      "minimo": 27,
+      "maximo": 125
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 7.7,
+      "desviacion": 7.674633541739957,
+      "minimo": 2,
+      "maximo": 25
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 154.0,
+      "desviacion": 153.49267083479916,
+      "minimo": 40,
+      "maximo": 500
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.000641199999517994,
+      "desviacion": 0.0004710405599841747,
+      "minimo": 0.0003053999989788281,
+      "maximo": 0.0018447000002197456
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      3.0,
+      4.2,
+      6.6,
+      8.8,
+      8.8,
+      9.0
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 20480,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.020127015144113337,
+      "desviacion": 0.014392323128620712,
+      "minimo": 0.010258915486077186,
+      "maximo": 0.057156814851001464
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.005078125,
+      "desviacion": 0.0055204340952343944,
+      "minimo": 0.0009765625,
+      "maximo": 0.0185546875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.005078125,
+      "desviacion": 0.0055204340952343944,
+      "minimo": 0.0009765625,
+      "maximo": 0.0185546875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 41.2,
+      "desviacion": 29.461085444286596,
+      "minimo": 21,
+      "maximo": 117
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 5.2,
+      "desviacion": 5.65292451352002,
+      "minimo": 1,
+      "maximo": 19
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 104.0,
+      "desviacion": 113.0584902704004,
+      "minimo": 20,
+      "maximo": 380
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0008166499997969368,
+      "desviacion": 0.0005923997957841551,
+      "minimo": 0.00038070000118750613,
+      "maximo": 0.0023387999990518438
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      2.8,
+      3.8,
+      5.6,
+      7.2,
+      6.4,
+      6.0
+     ]
+    }
+   },
+   "3sat_v10_r3": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 30720,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.03527112848070347,
+      "desviacion": 0.01725304218194384,
+      "minimo": 0.014167073766487542,
+      "maximo": 0.06790425012212994
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0095703125,
+      "desviacion": 0.004598953909492021,
+      "minimo": 0.001953125,
+      "maximo": 0.017578125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0095703125,
+      "desviacion": 0.004598953909492021,
+      "minimo": 0.001953125,
+      "maximo": 0.017578125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 72.2,
+      "desviacion": 35.316977346439046,
+      "minimo": 29,
+      "maximo": 139
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 9.8,
+      "desviacion": 4.7093288033198295,
+      "minimo": 2,
+      "maximo": 18
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 294.0,
+      "desviacion": 141.27986409959487,
+      "minimo": 60,
+      "maximo": 540
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.001189410000188218,
+      "desviacion": 0.0005779230294082135,
+      "minimo": 0.0004103999999642838,
+      "maximo": 0.002122700001564226
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.2,
+      3.4,
+      5.0,
+      7.0,
+      9.6,
+      13.0,
+      15.0,
+      12.0
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 30720,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.02872496336101612,
+      "desviacion": 0.016410193274553404,
+      "minimo": 0.010258915486077186,
+      "maximo": 0.057156814851001464
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0056640625,
+      "desviacion": 0.0033766412708046718,
+      "minimo": 0.0009765625,
+      "maximo": 0.0107421875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0056640625,
+      "desviacion": 0.0033766412708046718,
+      "minimo": 0.0009765625,
+      "maximo": 0.0107421875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 58.8,
+      "desviacion": 33.59166563301082,
+      "minimo": 21,
+      "maximo": 117
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 5.8,
+      "desviacion": 3.457680661303984,
+      "minimo": 1,
+      "maximo": 11
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 174.0,
+      "desviacion": 103.73041983911952,
+      "minimo": 30,
+      "maximo": 330
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0016056199998274677,
+      "desviacion": 0.0009698788527052634,
+      "minimo": 0.0005264999999781139,
+      "maximo": 0.0032920000012381934
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.2,
+      3.4,
+      4.8,
+      6.4,
+      8.0,
+      10.4,
+      11.6,
+      7.0
+     ]
+    }
+   },
+   "3sat_v10_r4": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 40960,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.08969223253541768,
+      "desviacion": 0.055470938185572985,
+      "minimo": 0.014167073766487542,
+      "maximo": 0.17635564240351734
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.02666015625,
+      "desviacion": 0.02293039546453439,
+      "minimo": 0.001953125,
+      "maximo": 0.0791015625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.02666015625,
+      "desviacion": 0.02293039546453439,
+      "minimo": 0.001953125,
+      "maximo": 0.0791015625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 183.6,
+      "desviacion": 113.5490104658679,
+      "minimo": 29,
+      "maximo": 361
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 27.3,
+      "desviacion": 23.480724955683215,
+      "minimo": 2,
+      "maximo": 81
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1092.0,
+      "desviacion": 939.2289982273286,
+      "minimo": 80,
+      "maximo": 3240
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9949999999999999,
+      "desviacion": 0.010540925533894607,
+      "minimo": 0.975,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.003930450000189012,
+      "desviacion": 0.0025129355930955046,
+      "minimo": 0.0005373000003601192,
+      "maximo": 0.007712700000411132
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.4,
+      4.0,
+      7.2,
+      12.4,
+      20.6,
+      30.8,
+      37.6,
+      37.0,
+      28.6
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 40960,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.07591597459697116,
+      "desviacion": 0.0567446099907026,
+      "minimo": 0.010258915486077186,
+      "maximo": 0.17440156326331216
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.01611328125,
+      "desviacion": 0.015004003485014992,
+      "minimo": 0.0009765625,
+      "maximo": 0.041015625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.01611328125,
+      "desviacion": 0.015004003485014992,
+      "minimo": 0.0009765625,
+      "maximo": 0.041015625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 155.4,
+      "desviacion": 116.15621665096822,
+      "minimo": 21,
+      "maximo": 357
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 16.5,
+      "desviacion": 15.364099568655352,
+      "minimo": 1,
+      "maximo": 42
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 660.0,
+      "desviacion": 614.563982746214,
+      "minimo": 40,
+      "maximo": 1680
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9949999999999999,
+      "desviacion": 0.010540925533894607,
+      "minimo": 0.975,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.005806970000230649,
+      "desviacion": 0.0042094248569095665,
+      "minimo": 0.0007044000012683682,
+      "maximo": 0.012918700000227545
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.4,
+      4.0,
+      7.2,
+      12.0,
+      19.4,
+      28.2,
+      33.2,
+      29.0,
+      17.0
+     ]
+    }
+   },
+   "3sat_v10_r4.26": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 44032,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.09193942354665363,
+      "desviacion": 0.04693452404787047,
+      "minimo": 0.01612115290669272,
+      "maximo": 0.1626770884220811
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0259765625,
+      "desviacion": 0.021730557654123867,
+      "minimo": 0.001953125,
+      "maximo": 0.07421875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0259765625,
+      "desviacion": 0.021730557654123867,
+      "minimo": 0.001953125,
+      "maximo": 0.07421875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 188.2,
+      "desviacion": 96.07497072599085,
+      "minimo": 33,
+      "maximo": 333
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 26.6,
+      "desviacion": 22.25209103782284,
+      "minimo": 2,
+      "maximo": 76
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1143.8,
+      "desviacion": 956.8399146263821,
+      "minimo": 86,
+      "maximo": 3268
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9953488372093023,
+      "desviacion": 0.009805512124553132,
+      "minimo": 0.9767441860465116,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.004344569999921078,
+      "desviacion": 0.0023499524075392473,
+      "minimo": 0.0006434000006265705,
+      "maximo": 0.007853299999624141
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.6,
+      4.4,
+      8.2,
+      14.2,
+      24.4,
+      31.0,
+      36.8,
+      35.6,
+      28.0
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 44032,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.07855398143624817,
+      "desviacion": 0.04878777738690443,
+      "minimo": 0.010258915486077186,
+      "maximo": 0.1607230092818759
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.01533203125,
+      "desviacion": 0.014492441948013331,
+      "minimo": 0.0009765625,
+      "maximo": 0.041015625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.01533203125,
+      "desviacion": 0.014492441948013331,
+      "minimo": 0.0009765625,
+      "maximo": 0.041015625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 160.8,
+      "desviacion": 99.86858031099338,
+      "minimo": 21,
+      "maximo": 329
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 15.7,
+      "desviacion": 14.840260554765651,
+      "minimo": 1,
+      "maximo": 42
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 675.1,
+      "desviacion": 638.131203854923,
+      "minimo": 43,
+      "maximo": 1806
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9953488372093023,
+      "desviacion": 0.009805512124553132,
+      "minimo": 0.9767441860465116,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.006353909999779717,
+      "desviacion": 0.004058447854862054,
+      "minimo": 0.0007386999986920273,
+      "maximo": 0.013099699999656877
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.6,
+      4.4,
+      8.2,
+      13.8,
+      23.4,
+      28.6,
+      32.2,
+      28.2,
+      16.4
+     ]
+    }
+   },
+   "3sat_v10_r5": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 51200,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.09711773326819736,
+      "desviacion": 0.0344619460366894,
+      "minimo": 0.03859306301905227,
+      "maximo": 0.15095261358085002
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.02744140625,
+      "desviacion": 0.01853726109660644,
+      "minimo": 0.0048828125,
+      "maximo": 0.06640625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.02744140625,
+      "desviacion": 0.01853726109660644,
+      "minimo": 0.0048828125,
+      "maximo": 0.06640625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 198.8,
+      "desviacion": 70.54360353710321,
+      "minimo": 79,
+      "maximo": 309
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 28.1,
+      "desviacion": 18.982155362924996,
+      "minimo": 5,
+      "maximo": 68
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1405.0,
+      "desviacion": 949.1077681462499,
+      "minimo": 250,
+      "maximo": 3400
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.994,
+      "desviacion": 0.009660917830792967,
+      "minimo": 0.98,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.005201890000171261,
+      "desviacion": 0.0019900042280426087,
+      "minimo": 0.0018216000007669209,
+      "maximo": 0.00815859999966051
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      5.2,
+      9.6,
+      14.8,
+      24.2,
+      33.4,
+      39.0,
+      37.4,
+      29.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 51200,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.08402540302882266,
+      "desviacion": 0.039837582878114536,
+      "minimo": 0.024914509037616023,
+      "maximo": 0.14899853444064484
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.01630859375,
+      "desviacion": 0.01206668452196574,
+      "minimo": 0.001953125,
+      "maximo": 0.0390625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.01630859375,
+      "desviacion": 0.01206668452196574,
+      "minimo": 0.001953125,
+      "maximo": 0.0390625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 172.0,
+      "desviacion": 81.54753215150045,
+      "minimo": 51,
+      "maximo": 305
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 16.7,
+      "desviacion": 12.356284950492919,
+      "minimo": 2,
+      "maximo": 40
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 835.0,
+      "desviacion": 617.8142475246459,
+      "minimo": 100,
+      "maximo": 2000
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.994,
+      "desviacion": 0.009660917830792967,
+      "minimo": 0.98,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.007736529999601771,
+      "desviacion": 0.003810388323899746,
+      "minimo": 0.002220399999714573,
+      "maximo": 0.013829399998940062
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      5.2,
+      9.6,
+      14.6,
+      23.6,
+      31.4,
+      34.2,
+      30.0,
+      17.6
+     ]
+    }
+   },
+   "3sat_v10_r6": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 61440,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.1702979970688813,
+      "desviacion": 0.06622730115632242,
+      "minimo": 0.10503175378602833,
+      "maximo": 0.2799218368343918
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.04482421875,
+      "desviacion": 0.024226493007868194,
+      "minimo": 0.021484375,
+      "maximo": 0.083984375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.04482421875,
+      "desviacion": 0.024226493007868194,
+      "minimo": 0.021484375,
+      "maximo": 0.083984375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 348.6,
+      "desviacion": 135.56728546699196,
+      "minimo": 215,
+      "maximo": 573
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 45.9,
+      "desviacion": 24.80792884005703,
+      "minimo": 22,
+      "maximo": 86
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 2754.0,
+      "desviacion": 1488.4757304034217,
+      "minimo": 1320,
+      "maximo": 5160
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9833333333333334,
+      "desviacion": 0.01360827634879543,
+      "minimo": 0.9666666666666667,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.010772840000208816,
+      "desviacion": 0.004134399931298237,
+      "minimo": 0.006481500000518281,
+      "maximo": 0.017833500000051572
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.6,
+      7.0,
+      13.6,
+      23.8,
+      39.6,
+      63.4,
+      75.8,
+      72.0,
+      46.8
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 2047,
+     "hojas_peor_caso": 1024,
+     "consultas_peor_caso": 61440,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.156228627259404,
+      "desviacion": 0.06945186896226607,
+      "minimo": 0.09623839765510503,
+      "maximo": 0.26917440156326333
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.032421875,
+      "desviacion": 0.02293848097641185,
+      "minimo": 0.0029296875,
+      "maximo": 0.0673828125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.032421875,
+      "desviacion": 0.02293848097641185,
+      "minimo": 0.0029296875,
+      "maximo": 0.0673828125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 319.8,
+      "desviacion": 142.16797576575863,
+      "minimo": 197,
+      "maximo": 551
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 33.2,
+      "desviacion": 23.489004519845736,
+      "minimo": 3,
+      "maximo": 69
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1992.0,
+      "desviacion": 1409.340271190744,
+      "minimo": 180,
+      "maximo": 4140
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9833333333333334,
+      "desviacion": 0.01360827634879543,
+      "minimo": 0.9666666666666667,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.017551080000339427,
+      "desviacion": 0.008062681234606246,
+      "minimo": 0.010553599999184371,
+      "maximo": 0.02994790000047942
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.6,
+      7.0,
+      13.6,
+      23.6,
+      39.2,
+      62.2,
+      71.0,
+      62.6,
+      34.0
+     ]
+    }
+   },
+   "3sat_v12_r2": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 98304,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.006397265291173239,
+      "desviacion": 0.0038487298291345466,
+      "minimo": 0.0030521303870101333,
+      "maximo": 0.014772311073129044
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00146484375,
+      "desviacion": 0.0014603156286561165,
+      "minimo": 0.000244140625,
+      "maximo": 0.005126953125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00146484375,
+      "desviacion": 0.0014603156286561165,
+      "minimo": 0.000244140625,
+      "maximo": 0.005126953125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 52.4,
+      "desviacion": 31.524946030441072,
+      "minimo": 25,
+      "maximo": 121
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 6.0,
+      "desviacion": 5.981452814975453,
+      "minimo": 1,
+      "maximo": 21
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 144.0,
+      "desviacion": 143.5548675594109,
+      "minimo": 24,
+      "maximo": 504
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0007237700001496705,
+      "desviacion": 0.00044366592055451384,
+      "minimo": 0.00030979999974078964,
+      "maximo": 0.0015192999999271706
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      2.8,
+      3.0,
+      4.4,
+      5.8,
+      5.6,
+      8.0,
+      6.0,
+      7.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 98304,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.005591502869002564,
+      "desviacion": 0.003463052579466665,
+      "minimo": 0.0030521303870101333,
+      "maximo": 0.013551458918324991
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0008056640625,
+      "desviacion": 0.000789429968279803,
+      "minimo": 0.000244140625,
+      "maximo": 0.00244140625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0008056640625,
+      "desviacion": 0.000789429968279803,
+      "minimo": 0.000244140625,
+      "maximo": 0.00244140625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 45.8,
+      "desviacion": 28.365863678411454,
+      "minimo": 25,
+      "maximo": 111
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 3.3,
+      "desviacion": 3.2335051500740732,
+      "minimo": 1,
+      "maximo": 10
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 79.2,
+      "desviacion": 77.60412360177776,
+      "minimo": 24,
+      "maximo": 240
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0010493599998881108,
+      "desviacion": 0.0006591533087628171,
+      "minimo": 0.0005365999986679526,
+      "maximo": 0.0025128999986918643
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      2.8,
+      3.0,
+      4.4,
+      5.8,
+      5.4,
+      6.8,
+      4.0,
+      4.2
+     ]
+    }
+   },
+   "3sat_v12_r3": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 147456,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.017043096081064583,
+      "desviacion": 0.01430895669619576,
+      "minimo": 0.0030521303870101333,
+      "maximo": 0.047735319252838485
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.002734375,
+      "desviacion": 0.0021339622444738436,
+      "minimo": 0.000244140625,
+      "maximo": 0.006591796875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.002734375,
+      "desviacion": 0.0021339622444738436,
+      "minimo": 0.000244140625,
+      "maximo": 0.006591796875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 139.6,
+      "desviacion": 117.20466429853947,
+      "minimo": 25,
+      "maximo": 391
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 11.2,
+      "desviacion": 8.740709353364863,
+      "minimo": 1,
+      "maximo": 27
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 403.2,
+      "desviacion": 314.6655367211351,
+      "minimo": 36,
+      "maximo": 972
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0026005900002928684,
+      "desviacion": 0.002111098612084579,
+      "minimo": 0.0004530000005615875,
+      "maximo": 0.007023199999821372
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.4,
+      3.4,
+      5.2,
+      7.4,
+      13.4,
+      16.6,
+      19.8,
+      29.8,
+      23.4,
+      13.2
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 147456,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.014796728116225125,
+      "desviacion": 0.013994584933021706,
+      "minimo": 0.0030521303870101333,
+      "maximo": 0.04553778537419118
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0015625,
+      "desviacion": 0.0013081726105084713,
+      "minimo": 0.000244140625,
+      "maximo": 0.0048828125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0015625,
+      "desviacion": 0.0013081726105084713,
+      "minimo": 0.000244140625,
+      "maximo": 0.0048828125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 121.2,
+      "desviacion": 114.6296451863808,
+      "minimo": 25,
+      "maximo": 373
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 6.4,
+      "desviacion": 5.358275012642698,
+      "minimo": 1,
+      "maximo": 20
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 230.4,
+      "desviacion": 192.89790045513715,
+      "minimo": 36,
+      "maximo": 720
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.004102420000162965,
+      "desviacion": 0.003849932923915547,
+      "minimo": 0.0007480999993276782,
+      "maximo": 0.012582000001202687
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.4,
+      3.4,
+      5.2,
+      7.4,
+      13.2,
+      15.8,
+      17.8,
+      25.4,
+      17.8,
+      7.8
+     ]
+    }
+   },
+   "3sat_v12_r4": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 196608,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.053082651690880236,
+      "desviacion": 0.0426105891511251,
+      "minimo": 0.004272982541814186,
+      "maximo": 0.1214747894030033
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0071044921875,
+      "desviacion": 0.007332758693144066,
+      "minimo": 0.0009765625,
+      "maximo": 0.025634765625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0071044921875,
+      "desviacion": 0.007332758693144066,
+      "minimo": 0.0009765625,
+      "maximo": 0.025634765625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 434.8,
+      "desviacion": 349.0233357368657,
+      "minimo": 35,
+      "maximo": 995
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 29.1,
+      "desviacion": 30.034979607118096,
+      "minimo": 4,
+      "maximo": 105
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1396.8,
+      "desviacion": 1441.6790211416687,
+      "minimo": 192,
+      "maximo": 5040
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9958333333333333,
+      "desviacion": 0.008784104611578848,
+      "minimo": 0.9791666666666666,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.010295169999881181,
+      "desviacion": 0.008157124154379207,
+      "minimo": 0.0008539000009477604,
+      "maximo": 0.024318699999639648
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.2,
+      5.4,
+      9.4,
+      16.8,
+      28.0,
+      49.8,
+      70.8,
+      79.0,
+      84.6,
+      53.4,
+      31.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 196608,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.04998168721767794,
+      "desviacion": 0.04178665410133082,
+      "minimo": 0.0030521303870101333,
+      "maximo": 0.11659138078378709
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0053955078125,
+      "desviacion": 0.006666673421856319,
+      "minimo": 0.000244140625,
+      "maximo": 0.022705078125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0053955078125,
+      "desviacion": 0.006666673421856319,
+      "minimo": 0.000244140625,
+      "maximo": 0.022705078125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 409.4,
+      "desviacion": 342.27448374400075,
+      "minimo": 25,
+      "maximo": 955
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 22.1,
+      "desviacion": 27.30669433592348,
+      "minimo": 1,
+      "maximo": 93
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1060.8,
+      "desviacion": 1310.721328124327,
+      "minimo": 48,
+      "maximo": 4464
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9958333333333333,
+      "desviacion": 0.008784104611578848,
+      "minimo": 0.9791666666666666,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.01817646000035893,
+      "desviacion": 0.015290304974199063,
+      "minimo": 0.000981000001047505,
+      "maximo": 0.04199250000056054
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.2,
+      5.4,
+      9.4,
+      16.8,
+      28.0,
+      49.8,
+      70.0,
+      76.4,
+      79.2,
+      44.8,
+      23.4
+     ]
+    }
+   },
+   "3sat_v12_r4.26": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 208896,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0541570015871078,
+      "desviacion": 0.03924947168626654,
+      "minimo": 0.006470516420461482,
+      "maximo": 0.1146380173361006
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0064453125,
+      "desviacion": 0.005724679750446433,
+      "minimo": 0.001953125,
+      "maximo": 0.019775390625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0064453125,
+      "desviacion": 0.005724679750446433,
+      "minimo": 0.001953125,
+      "maximo": 0.019775390625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 443.6,
+      "desviacion": 321.4924225822092,
+      "minimo": 53,
+      "maximo": 939
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 26.4,
+      "desviacion": 23.44828825782859,
+      "minimo": 8,
+      "maximo": 81
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1346.4,
+      "desviacion": 1195.862701149258,
+      "minimo": 408,
+      "maximo": 4131
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9921568627450981,
+      "desviacion": 0.010125446656751438,
+      "minimo": 0.9803921568627451,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.01109894999954122,
+      "desviacion": 0.008126899383682839,
+      "minimo": 0.0015053999995870981,
+      "maximo": 0.024374800001169206
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.4,
+      6.0,
+      10.8,
+      19.8,
+      31.4,
+      55.8,
+      71.0,
+      78.6,
+      83.8,
+      51.4,
+      28.6
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 208896,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.05068978146746429,
+      "desviacion": 0.03861127312450084,
+      "minimo": 0.004761323403735807,
+      "maximo": 0.11170797216457087
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.004833984375,
+      "desviacion": 0.005447977973782675,
+      "minimo": 0.000732421875,
+      "maximo": 0.018310546875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.004833984375,
+      "desviacion": 0.005447977973782675,
+      "minimo": 0.000732421875,
+      "maximo": 0.018310546875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 415.2,
+      "desviacion": 316.2649381627864,
+      "minimo": 39,
+      "maximo": 915
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 19.8,
+      "desviacion": 22.314917780613836,
+      "minimo": 3,
+      "maximo": 75
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1009.8,
+      "desviacion": 1138.0608068113056,
+      "minimo": 153,
+      "maximo": 3825
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9921568627450981,
+      "desviacion": 0.010125446656751438,
+      "minimo": 0.9803921568627451,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.019304510000074514,
+      "desviacion": 0.014852274887111076,
+      "minimo": 0.0016496999996888917,
+      "maximo": 0.04334290000042529
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.4,
+      6.0,
+      10.8,
+      19.6,
+      31.2,
+      55.4,
+      69.4,
+      75.4,
+      77.2,
+      42.8,
+      21.0
+     ]
+    }
+   },
+   "3sat_v12_r5": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 245760,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.07010133072884873,
+      "desviacion": 0.03484927887399475,
+      "minimo": 0.02844585520693444,
+      "maximo": 0.14369429862043706
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00810546875,
+      "desviacion": 0.006516314060723921,
+      "minimo": 0.000732421875,
+      "maximo": 0.02392578125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00810546875,
+      "desviacion": 0.006516314060723921,
+      "minimo": 0.000732421875,
+      "maximo": 0.02392578125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 574.2,
+      "desviacion": 285.450443256891,
+      "minimo": 233,
+      "maximo": 1177
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 33.2,
+      "desviacion": 26.69082239272518,
+      "minimo": 3,
+      "maximo": 98
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1992.0,
+      "desviacion": 1601.4493435635109,
+      "minimo": 180,
+      "maximo": 5880
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.985,
+      "desviacion": 0.009460770203292451,
+      "minimo": 0.9666666666666667,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.016991860000052837,
+      "desviacion": 0.00850559734629459,
+      "minimo": 0.006715999999869382,
+      "maximo": 0.03499349999947299
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      7.8,
+      14.8,
+      27.8,
+      48.2,
+      75.8,
+      99.2,
+      98.6,
+      92.8,
+      66.4,
+      35.8
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 245760,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0670492003418386,
+      "desviacion": 0.034639601154610594,
+      "minimo": 0.023074105725796604,
+      "maximo": 0.13905506043218166
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0067626953125,
+      "desviacion": 0.006501305880966621,
+      "minimo": 0.00048828125,
+      "maximo": 0.022705078125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0067626953125,
+      "desviacion": 0.006501305880966621,
+      "minimo": 0.00048828125,
+      "maximo": 0.022705078125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 549.2,
+      "desviacion": 283.7329730574154,
+      "minimo": 189,
+      "maximo": 1139
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 27.7,
+      "desviacion": 26.629348888439278,
+      "minimo": 2,
+      "maximo": 93
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1662.0,
+      "desviacion": 1597.7609333063567,
+      "minimo": 120,
+      "maximo": 5580
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.985,
+      "desviacion": 0.009460770203292451,
+      "minimo": 0.9666666666666667,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.030028210000455146,
+      "desviacion": 0.015414544416050157,
+      "minimo": 0.010907800000495627,
+      "maximo": 0.06259970000064641
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      7.8,
+      14.8,
+      27.6,
+      48.0,
+      75.4,
+      97.8,
+      95.8,
+      87.0,
+      58.6,
+      29.4
+     ]
+    }
+   },
+   "3sat_v12_r6": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 294912,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.09583689415211818,
+      "desviacion": 0.03682146229594744,
+      "minimo": 0.055792943474545234,
+      "maximo": 0.19106336222683434
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0109619140625,
+      "desviacion": 0.008192727902327002,
+      "minimo": 0.004150390625,
+      "maximo": 0.032470703125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0109619140625,
+      "desviacion": 0.008192727902327002,
+      "minimo": 0.004150390625,
+      "maximo": 0.032470703125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 785.0,
+      "desviacion": 301.60459766610546,
+      "minimo": 457,
+      "maximo": 1565
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 44.9,
+      "desviacion": 33.5574134879314,
+      "minimo": 17,
+      "maximo": 133
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 3232.8,
+      "desviacion": 2416.1337711310607,
+      "minimo": 1224,
+      "maximo": 9576
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9805555555555555,
+      "desviacion": 0.009711193038612533,
+      "minimo": 0.9722222222222222,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.027113550000103716,
+      "desviacion": 0.011149169196911758,
+      "minimo": 0.016080900000815745,
+      "maximo": 0.056406199999401
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.8,
+      30.2,
+      53.6,
+      90.4,
+      131.4,
+      150.8,
+      149.8,
+      100.6,
+      47.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 8191,
+     "hojas_peor_caso": 4096,
+     "consultas_peor_caso": 294912,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.09263826150653157,
+      "desviacion": 0.03767976017257727,
+      "minimo": 0.04431693321938713,
+      "maximo": 0.1878891466243438
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.009716796875,
+      "desviacion": 0.00861539330877953,
+      "minimo": 0.001953125,
+      "maximo": 0.03173828125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.009716796875,
+      "desviacion": 0.00861539330877953,
+      "minimo": 0.001953125,
+      "maximo": 0.03173828125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 758.8,
+      "desviacion": 308.63491557358043,
+      "minimo": 363,
+      "maximo": 1539
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 39.8,
+      "desviacion": 35.28865099276096,
+      "minimo": 8,
+      "maximo": 130
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 2865.6,
+      "desviacion": 2540.782871478789,
+      "minimo": 576,
+      "maximo": 9360
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9805555555555555,
+      "desviacion": 0.009711193038612533,
+      "minimo": 0.9722222222222222,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.04921350000022358,
+      "desviacion": 0.02015226728739208,
+      "minimo": 0.023613600000317092,
+      "maximo": 0.10014770000088902
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.8,
+      30.2,
+      53.4,
+      89.8,
+      129.8,
+      147.0,
+      143.0,
+      94.0,
+      40.8
+     ]
+    }
+   },
+   "3sat_v14_r2": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 458752,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0033997619556260872,
+      "desviacion": 0.002935112789846355,
+      "minimo": 0.0011902218695638905,
+      "maximo": 0.010467848750267038
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.000775146484375,
+      "desviacion": 0.0009278994407819217,
+      "minimo": 0.00018310546875,
+      "maximo": 0.00335693359375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.000775146484375,
+      "desviacion": 0.0009278994407819217,
+      "minimo": 0.00018310546875,
+      "maximo": 0.00335693359375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 111.4,
+      "desviacion": 96.17484078489551,
+      "minimo": 39,
+      "maximo": 343
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 12.7,
+      "desviacion": 15.202704437771006,
+      "minimo": 3,
+      "maximo": 55
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 355.6,
+      "desviacion": 425.6757242575882,
+      "minimo": 84,
+      "maximo": 1540
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.001840470000206551,
+      "desviacion": 0.0015144826789710015,
+      "minimo": 0.0006319999993138481,
+      "maximo": 0.005058500000814092
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.6,
+      3.2,
+      4.8,
+      7.0,
+      10.4,
+      12.6,
+      16.4,
+      15.2,
+      15.8,
+      14.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 458752,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0023987548448133793,
+      "desviacion": 0.0025142839899875927,
+      "minimo": 0.0008850367748039186,
+      "maximo": 0.009125034333323161
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0003173828125,
+      "desviacion": 0.00029030043915587514,
+      "minimo": 6.103515625e-05,
+      "maximo": 0.0008544921875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0003173828125,
+      "desviacion": 0.00029030043915587514,
+      "minimo": 6.103515625e-05,
+      "maximo": 0.0008544921875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 78.6,
+      "desviacion": 82.38554349992344,
+      "minimo": 29,
+      "maximo": 299
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 5.2,
+      "desviacion": 4.756282395129858,
+      "minimo": 1,
+      "maximo": 14
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 145.6,
+      "desviacion": 133.17590706363603,
+      "minimo": 28,
+      "maximo": 392
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0021021300000938934,
+      "desviacion": 0.0021775515405505447,
+      "minimo": 0.0007227999994938727,
+      "maximo": 0.007854400000724127
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      3.0,
+      4.0,
+      6.0,
+      8.8,
+      10.0,
+      12.0,
+      10.0,
+      7.2,
+      6.2
+     ]
+    }
+   },
+   "3sat_v14_r3": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 688128,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.010150456251716667,
+      "desviacion": 0.007871425089923048,
+      "minimo": 0.0016785180211798456,
+      "maximo": 0.024811548203985716
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001422119140625,
+      "desviacion": 0.0015968079536498655,
+      "minimo": 0.000244140625,
+      "maximo": 0.00567626953125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001422119140625,
+      "desviacion": 0.0015968079536498655,
+      "minimo": 0.000244140625,
+      "maximo": 0.00567626953125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 332.6,
+      "desviacion": 257.9229859215085,
+      "minimo": 55,
+      "maximo": 813
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 23.3,
+      "desviacion": 26.162101512599396,
+      "minimo": 4,
+      "maximo": 93
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 978.6,
+      "desviacion": 1098.8082635291746,
+      "minimo": 168,
+      "maximo": 3906
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.007193180000103894,
+      "desviacion": 0.005298486200435413,
+      "minimo": 0.0013615999996545725,
+      "maximo": 0.01615990000027523
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.4,
+      3.4,
+      5.8,
+      8.4,
+      13.6,
+      24.6,
+      43.0,
+      67.4,
+      57.4,
+      42.8,
+      33.8,
+      25.0
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 688128,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.00891750846888638,
+      "desviacion": 0.007834442120848184,
+      "minimo": 0.0010071108127079073,
+      "maximo": 0.024628437147129735
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.000927734375,
+      "desviacion": 0.0013822063642991154,
+      "minimo": 0.0001220703125,
+      "maximo": 0.00469970703125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.000927734375,
+      "desviacion": 0.0013822063642991154,
+      "minimo": 0.0001220703125,
+      "maximo": 0.00469970703125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 292.2,
+      "desviacion": 256.71116497383247,
+      "minimo": 33,
+      "maximo": 807
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 15.2,
+      "desviacion": 22.646069072676706,
+      "minimo": 2,
+      "maximo": 77
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 638.4,
+      "desviacion": 951.1349010524217,
+      "minimo": 84,
+      "maximo": 3234
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.01191043999970134,
+      "desviacion": 0.010682659256153554,
+      "minimo": 0.0013006999997742241,
+      "maximo": 0.03218609999930777
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.4,
+      3.4,
+      5.6,
+      8.2,
+      12.8,
+      23.2,
+      40.8,
+      63.4,
+      50.6,
+      36.0,
+      24.8,
+      16.0
+     ]
+    }
+   },
+   "3sat_v14_r4": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 917504,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.018738364818262278,
+      "desviacion": 0.014864439239473963,
+      "minimo": 0.0033875545518356883,
+      "maximo": 0.0489211706900235
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001708984375,
+      "desviacion": 0.0011786090786100455,
+      "minimo": 0.00067138671875,
+      "maximo": 0.0037841796875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001708984375,
+      "desviacion": 0.0011786090786100455,
+      "minimo": 0.00067138671875,
+      "maximo": 0.0037841796875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 614.0,
+      "desviacion": 487.06308055984334,
+      "minimo": 111,
+      "maximo": 1603
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 28.0,
+      "desviacion": 19.310331143946986,
+      "minimo": 11,
+      "maximo": 62
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1568.0,
+      "desviacion": 1081.378544061031,
+      "minimo": 616,
+      "maximo": 3472
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9964285714285713,
+      "desviacion": 0.007529232524210447,
+      "minimo": 0.9821428571428571,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.01757823999996617,
+      "desviacion": 0.013585782468958833,
+      "minimo": 0.0033333999999740627,
+      "maximo": 0.04600209999989602
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.4,
+      3.6,
+      6.6,
+      12.2,
+      21.0,
+      37.2,
+      63.8,
+      90.4,
+      127.6,
+      84.2,
+      70.4,
+      62.4,
+      29.2
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 917504,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.017108676412244027,
+      "desviacion": 0.015500994254399651,
+      "minimo": 0.002044740134891812,
+      "maximo": 0.04806665242469558
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001043701171875,
+      "desviacion": 0.0010954067761040109,
+      "minimo": 0.00030517578125,
+      "maximo": 0.003173828125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001043701171875,
+      "desviacion": 0.0010954067761040109,
+      "minimo": 0.00030517578125,
+      "maximo": 0.003173828125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 560.6,
+      "desviacion": 507.92107873391336,
+      "minimo": 67,
+      "maximo": 1575
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 17.1,
+      "desviacion": 17.947144619688114,
+      "minimo": 5,
+      "maximo": 52
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 957.6,
+      "desviacion": 1005.0400987025344,
+      "minimo": 280,
+      "maximo": 2912
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9964285714285713,
+      "desviacion": 0.007529232524210447,
+      "minimo": 0.9821428571428571,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.029666569999972126,
+      "desviacion": 0.02729984525899716,
+      "minimo": 0.0034866000005422393,
+      "maximo": 0.08652339999935066
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.4,
+      3.6,
+      6.6,
+      12.0,
+      20.8,
+      36.6,
+      62.4,
+      88.0,
+      123.6,
+      78.4,
+      60.2,
+      45.2,
+      17.8
+     ]
+    }
+   },
+   "3sat_v14_r4.26": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 983040,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0217474898525956,
+      "desviacion": 0.012994206501954183,
+      "minimo": 0.006927701651051363,
+      "maximo": 0.05008087405011139
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001800537109375,
+      "desviacion": 0.0017605818608893054,
+      "minimo": 0.0006103515625,
+      "maximo": 0.00592041015625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001800537109375,
+      "desviacion": 0.0017605818608893054,
+      "minimo": 0.0006103515625,
+      "maximo": 0.00592041015625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 712.6,
+      "desviacion": 425.7811644495327,
+      "minimo": 227,
+      "maximo": 1641
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 29.5,
+      "desviacion": 28.84537320881038,
+      "minimo": 10,
+      "maximo": 97
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1770.0,
+      "desviacion": 1730.7223925286228,
+      "minimo": 600,
+      "maximo": 5820
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9949999999999999,
+      "desviacion": 0.008050764858994157,
+      "minimo": 0.9833333333333333,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.020531449999907636,
+      "desviacion": 0.01206751578148616,
+      "minimo": 0.006816699999035336,
+      "maximo": 0.046685200000865734
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      4.8,
+      9.0,
+      17.0,
+      28.6,
+      46.6,
+      73.2,
+      103.4,
+      145.8,
+      96.8,
+      83.0,
+      67.8,
+      30.8
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 983040,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.020081179235206154,
+      "desviacion": 0.013456667178697073,
+      "minimo": 0.003204443494979705,
+      "maximo": 0.04910428174687948
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001275634765625,
+      "desviacion": 0.0015053826333471622,
+      "minimo": 0.00030517578125,
+      "maximo": 0.0047607421875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001275634765625,
+      "desviacion": 0.0015053826333471622,
+      "minimo": 0.00030517578125,
+      "maximo": 0.0047607421875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 658.0,
+      "desviacion": 440.93461344436696,
+      "minimo": 105,
+      "maximo": 1609
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 20.9,
+      "desviacion": 24.664189064759906,
+      "minimo": 5,
+      "maximo": 78
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1254.0,
+      "desviacion": 1479.8513438855946,
+      "minimo": 300,
+      "maximo": 4680
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9949999999999999,
+      "desviacion": 0.008050764858994157,
+      "minimo": 0.9833333333333333,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.036313070000142035,
+      "desviacion": 0.024160781996032433,
+      "minimo": 0.005900599999222322,
+      "maximo": 0.08863329999985581
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      4.8,
+      9.0,
+      16.8,
+      28.4,
+      46.0,
+      71.8,
+      100.4,
+      140.4,
+      89.2,
+      72.6,
+      50.8,
+      22.0
+     ]
+    }
+   },
+   "3sat_v14_r5": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 1146880,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.035901974547563095,
+      "desviacion": 0.013018561656137968,
+      "minimo": 0.02206488235114597,
+      "maximo": 0.055391094698934905
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.002349853515625,
+      "desviacion": 0.001795962281550369,
+      "minimo": 0.000732421875,
+      "maximo": 0.00555419921875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.002349853515625,
+      "desviacion": 0.001795962281550369,
+      "minimo": 0.000732421875,
+      "maximo": 0.00555419921875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1176.4,
+      "desviacion": 426.57920978667283,
+      "minimo": 723,
+      "maximo": 1815
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 38.5,
+      "desviacion": 29.425046020921247,
+      "minimo": 12,
+      "maximo": 91
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 2695.0,
+      "desviacion": 2059.7532214644875,
+      "minimo": 840,
+      "maximo": 6370
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9871428571428572,
+      "desviacion": 0.00810923160282209,
+      "minimo": 0.9714285714285714,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.03868703999996796,
+      "desviacion": 0.013980493093778284,
+      "minimo": 0.024329100000613835,
+      "maximo": 0.060614199999690754
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.6,
+      7.2,
+      14.0,
+      27.2,
+      48.4,
+      78.6,
+      131.2,
+      183.2,
+      221.6,
+      180.4,
+      142.6,
+      95.8,
+      39.6
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 1146880,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.03351542710654012,
+      "desviacion": 0.013648723024712844,
+      "minimo": 0.019501327555162207,
+      "maximo": 0.0554521317178869
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0014892578125,
+      "desviacion": 0.0008584551271118493,
+      "minimo": 0.000244140625,
+      "maximo": 0.003173828125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0014892578125,
+      "desviacion": 0.0008584551271118493,
+      "minimo": 0.000244140625,
+      "maximo": 0.003173828125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1098.2,
+      "desviacion": 447.2277073507658,
+      "minimo": 639,
+      "maximo": 1817
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 24.4,
+      "desviacion": 14.064928802600539,
+      "minimo": 4,
+      "maximo": 52
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1708.0,
+      "desviacion": 984.5450161820377,
+      "minimo": 280,
+      "maximo": 3640
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9871428571428572,
+      "desviacion": 0.00810923160282209,
+      "minimo": 0.9714285714285714,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.06847196999988228,
+      "desviacion": 0.028044730149271994,
+      "minimo": 0.0395606999991287,
+      "maximo": 0.11454190000040398
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.6,
+      7.2,
+      14.0,
+      27.0,
+      47.8,
+      77.4,
+      129.2,
+      179.2,
+      214.8,
+      170.0,
+      125.2,
+      74.6,
+      25.2
+     ]
+    }
+   },
+   "3sat_v14_r6": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 1376256,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.05741142002624592,
+      "desviacion": 0.0176214307125336,
+      "minimo": 0.03054902798547319,
+      "maximo": 0.0859096041749321
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00455322265625,
+      "desviacion": 0.003648997250951162,
+      "minimo": 0.00054931640625,
+      "maximo": 0.01165771484375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00455322265625,
+      "desviacion": 0.003648997250951162,
+      "minimo": 0.00054931640625,
+      "maximo": 0.01165771484375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1881.2,
+      "desviacion": 577.4014201575884,
+      "minimo": 1001,
+      "maximo": 2815
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 74.6,
+      "desviacion": 59.78517095958384,
+      "minimo": 9,
+      "maximo": 191
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 6266.4,
+      "desviacion": 5021.954360605042,
+      "minimo": 756,
+      "maximo": 16044
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9821428571428571,
+      "desviacion": 0.008417937871268445,
+      "minimo": 0.9642857142857143,
+      "maximo": 0.9880952380952381
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.07416974999978265,
+      "desviacion": 0.023453633043510884,
+      "minimo": 0.036602899999707006,
+      "maximo": 0.10818280000057712
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.6,
+      31.0,
+      56.6,
+      101.4,
+      175.8,
+      272.4,
+      350.8,
+      339.0,
+      271.0,
+      176.8,
+      75.8
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 32767,
+     "hojas_peor_caso": 16384,
+     "consultas_peor_caso": 1376256,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.05486617633594776,
+      "desviacion": 0.019513191194449567,
+      "minimo": 0.027558214056825465,
+      "maximo": 0.08542130802331614
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0037353515625,
+      "desviacion": 0.0030073262932244767,
+      "minimo": 0.0006103515625,
+      "maximo": 0.010009765625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0037353515625,
+      "desviacion": 0.0030073262932244767,
+      "minimo": 0.0006103515625,
+      "maximo": 0.010009765625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1797.8,
+      "desviacion": 639.388735868529,
+      "minimo": 903,
+      "maximo": 2799
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 61.2,
+      "desviacion": 49.272033988189825,
+      "minimo": 10,
+      "maximo": 164
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 5140.8,
+      "desviacion": 4138.850855007945,
+      "minimo": 840,
+      "maximo": 13776
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9821428571428571,
+      "desviacion": 0.008417937871268445,
+      "minimo": 0.9642857142857143,
+      "maximo": 0.9880952380952381
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.13390122000018892,
+      "desviacion": 0.04830847974999772,
+      "minimo": 0.06489850000070874,
+      "maximo": 0.20705650000127207
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.6,
+      30.8,
+      56.0,
+      99.6,
+      172.0,
+      265.0,
+      342.4,
+      325.4,
+      252.2,
+      161.6,
+      62.2
+     ]
+    }
+   },
+   "3sat_v16_r2": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 2097152,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0015503047966369372,
+      "desviacion": 0.0015478653573421962,
+      "minimo": 0.0002822897513561352,
+      "maximo": 0.005134621693585919
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0004791259765625,
+      "desviacion": 0.0009851396910697332,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.00323486328125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0004791259765625,
+      "desviacion": 0.0009851396910697332,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.00323486328125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 203.2,
+      "desviacion": 202.880260252199,
+      "minimo": 37,
+      "maximo": 673
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 31.4,
+      "desviacion": 64.56211479394604,
+      "minimo": 3,
+      "maximo": 212
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1004.8,
+      "desviacion": 2065.987673406273,
+      "minimo": 96,
+      "maximo": 6784
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0038350299995727256,
+      "desviacion": 0.004321370693316842,
+      "minimo": 0.00083710000035353,
+      "maximo": 0.014754799998627277
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.6,
+      4.0,
+      6.4,
+      9.4,
+      16.0,
+      23.4,
+      24.0,
+      36.2,
+      35.2,
+      33.0
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 2097152,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.001200875861174478,
+      "desviacion": 0.001409571992519735,
+      "minimo": 0.0002517719403987152,
+      "maximo": 0.0048599613949691384
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00038909912109375,
+      "desviacion": 0.0009303899870472659,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.003021240234375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00038909912109375,
+      "desviacion": 0.0009303899870472659,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.003021240234375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 157.4,
+      "desviacion": 184.7540106315542,
+      "minimo": 33,
+      "maximo": 637
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 25.5,
+      "desviacion": 60.974038191129615,
+      "minimo": 2,
+      "maximo": 198
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 816.0,
+      "desviacion": 1951.1692221161477,
+      "minimo": 64,
+      "maximo": 6336
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.005119730000114941,
+      "desviacion": 0.006473034986945527,
+      "minimo": 0.0010318000004190253,
+      "maximo": 0.022258200000578654
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.4,
+      3.4,
+      5.2,
+      7.0,
+      11.0,
+      15.6,
+      17.4,
+      26.6,
+      29.2,
+      26.6
+     ]
+    }
+   },
+   "3sat_v16_r3": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 3145728,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.004150422290209123,
+      "desviacion": 0.004532156084981514,
+      "minimo": 0.0004501377116219454,
+      "maximo": 0.014991874632832587
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0004608154296875,
+      "desviacion": 0.0004973002470086224,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.0013427734375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0004608154296875,
+      "desviacion": 0.0004973002470086224,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.0013427734375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 544.0,
+      "desviacion": 594.034230214612,
+      "minimo": 59,
+      "maximo": 1965
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 30.2,
+      "desviacion": 32.59106898795708,
+      "minimo": 3,
+      "maximo": 88
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1449.6,
+      "desviacion": 1564.37131142194,
+      "minimo": 144,
+      "maximo": 4224
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.01308870000011666,
+      "desviacion": 0.014542818765681224,
+      "minimo": 0.0015960000000632135,
+      "maximo": 0.04871090000051481
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.2,
+      2.6,
+      3.8,
+      6.0,
+      10.4,
+      18.0,
+      34.0,
+      57.4,
+      81.2,
+      88.2,
+      73.0,
+      67.4,
+      62.6,
+      32.2
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 3145728,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.0037002845785871776,
+      "desviacion": 0.004635482589359546,
+      "minimo": 0.0002517719403987152,
+      "maximo": 0.014778249956130647
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00032806396484375,
+      "desviacion": 0.00038084190415525737,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.0010986328125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00032806396484375,
+      "desviacion": 0.00038084190415525737,
+      "minimo": 3.0517578125e-05,
+      "maximo": 0.0010986328125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 485.0,
+      "desviacion": 607.5773384699451,
+      "minimo": 33,
+      "maximo": 1937
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 21.5,
+      "desviacion": 24.958855030718947,
+      "minimo": 2,
+      "maximo": 72
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 1032.0,
+      "desviacion": 1198.0250414745094,
+      "minimo": 96,
+      "maximo": 3456
+     },
+     "optimo": {
+      "n": 10,
+      "media": 1.0,
+      "desviacion": 0.0,
+      "minimo": 1.0,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.021972919999825535,
+      "desviacion": 0.028921347252584054,
+      "minimo": 0.0014530999997077743,
+      "maximo": 0.09325179999905231
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.0,
+      2.2,
+      2.6,
+      3.8,
+      6.0,
+      10.2,
+      17.4,
+      32.6,
+      55.0,
+      76.0,
+      78.6,
+      63.2,
+      54.4,
+      55.0,
+      23.0
+     ]
+    }
+   },
+   "3sat_v16_r4": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 4194304,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.009495616879401241,
+      "desviacion": 0.008034962216364724,
+      "minimo": 0.0012130829855574459,
+      "maximo": 0.02843497035957611
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.000775146484375,
+      "desviacion": 0.0009223906786311682,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.003021240234375
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.000775146484375,
+      "desviacion": 0.0009223906786311682,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.003021240234375
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1244.6,
+      "desviacion": 1053.1505326611407,
+      "minimo": 159,
+      "maximo": 3727
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 50.8,
+      "desviacion": 60.44979551477224,
+      "minimo": 13,
+      "maximo": 198
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 3251.2,
+      "desviacion": 3868.7869129454234,
+      "minimo": 832,
+      "maximo": 12672
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9984375,
+      "desviacion": 0.004941058844013093,
+      "minimo": 0.984375,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.03910276999995403,
+      "desviacion": 0.032527343241322615,
+      "minimo": 0.005209900000409107,
+      "maximo": 0.11513709999962884
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.6,
+      4.2,
+      7.0,
+      12.6,
+      24.0,
+      39.2,
+      61.2,
+      101.4,
+      145.2,
+      178.4,
+      204.6,
+      153.2,
+      141.6,
+      113.6,
+      52.8
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 4194304,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.008239808958503406,
+      "desviacion": 0.007013998231074306,
+      "minimo": 0.0010147172143342158,
+      "maximo": 0.024543949462505054
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0005615234375,
+      "desviacion": 0.0007430053688542467,
+      "minimo": 0.0001220703125,
+      "maximo": 0.00250244140625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0005615234375,
+      "desviacion": 0.0007430053688542467,
+      "minimo": 0.0001220703125,
+      "maximo": 0.00250244140625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1080.0,
+      "desviacion": 919.3317621451404,
+      "minimo": 133,
+      "maximo": 3217
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 36.8,
+      "desviacion": 48.69359985323191,
+      "minimo": 8,
+      "maximo": 164
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 2355.2,
+      "desviacion": 3116.390390606842,
+      "minimo": 512,
+      "maximo": 10496
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9984375,
+      "desviacion": 0.004941058844013093,
+      "minimo": 0.984375,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.06332594000014069,
+      "desviacion": 0.05398855709838629,
+      "minimo": 0.008063100000072154,
+      "maximo": 0.18928989999949408
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.6,
+      4.2,
+      7.0,
+      12.6,
+      24.0,
+      38.6,
+      60.0,
+      98.6,
+      137.6,
+      164.4,
+      180.0,
+      123.4,
+      106.2,
+      79.6,
+      38.2
+     ]
+    }
+   },
+   "3sat_v16_r4.26": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 4456448,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.011158837576580632,
+      "desviacion": 0.009316727211189205,
+      "minimo": 0.0015030021896529362,
+      "maximo": 0.026313982498035415
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.0009521484375,
+      "desviacion": 0.001146209431104474,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.0032501220703125
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.0009521484375,
+      "desviacion": 0.001146209431104474,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.0032501220703125
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1462.6,
+      "desviacion": 1221.1527522977806,
+      "minimo": 197,
+      "maximo": 3449
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 62.4,
+      "desviacion": 75.1179812768628,
+      "minimo": 13,
+      "maximo": 213
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 4243.2,
+      "desviacion": 5108.022726826671,
+      "minimo": 884,
+      "maximo": 14484
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9970588235294118,
+      "desviacion": 0.006200544431702683,
+      "minimo": 0.9852941176470589,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.049918240000260995,
+      "desviacion": 0.041722845397875456,
+      "minimo": 0.006827499999417341,
+      "maximo": 0.11978699999963283
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      4.6,
+      7.8,
+      14.2,
+      27.4,
+      45.4,
+      69.6,
+      116.6,
+      173.6,
+      211.8,
+      226.0,
+      174.8,
+      173.4,
+      147.0,
+      64.6
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 4456448,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.010064774053757124,
+      "desviacion": 0.008479466051144241,
+      "minimo": 0.0010147172143342158,
+      "maximo": 0.023185906874899864
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00072784423828125,
+      "desviacion": 0.0009041839343244489,
+      "minimo": 0.0001220703125,
+      "maximo": 0.002410888671875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00072784423828125,
+      "desviacion": 0.0009041839343244489,
+      "minimo": 0.0001220703125,
+      "maximo": 0.002410888671875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 1319.2,
+      "desviacion": 1111.412094789527,
+      "minimo": 133,
+      "maximo": 3039
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 47.7,
+      "desviacion": 59.25659831988708,
+      "minimo": 8,
+      "maximo": 158
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 3243.6,
+      "desviacion": 4029.4486857523216,
+      "minimo": 544,
+      "maximo": 10744
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.9970588235294118,
+      "desviacion": 0.006200544431702683,
+      "minimo": 0.9852941176470589,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.0859604199999012,
+      "desviacion": 0.06928666072215157,
+      "minimo": 0.014990800000305171,
+      "maximo": 0.20047899999917718
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      2.8,
+      4.6,
+      7.8,
+      14.2,
+      27.4,
+      44.8,
+      68.4,
+      114.0,
+      166.6,
+      199.6,
+      205.2,
+      148.6,
+      145.6,
+      117.2,
+      49.4
+     ]
+    }
+   },
+   "3sat_v16_r5": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 5242880,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.016325502971671842,
+      "desviacion": 0.007367606777953737,
+      "minimo": 0.0029525982101303873,
+      "maximo": 0.027031151055534785
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00078277587890625,
+      "desviacion": 0.0008052391318805001,
+      "minimo": 0.0001068115234375,
+      "maximo": 0.00250244140625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00078277587890625,
+      "desviacion": 0.0008052391318805001,
+      "minimo": 0.0001068115234375,
+      "maximo": 0.00250244140625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 2139.8,
+      "desviacion": 965.6795879931742,
+      "minimo": 387,
+      "maximo": 3543
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 51.3,
+      "desviacion": 52.77215174692046,
+      "minimo": 7,
+      "maximo": 164
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 4104.0,
+      "desviacion": 4221.772139753637,
+      "minimo": 560,
+      "maximo": 13120
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.99,
+      "desviacion": 0.00527046276694728,
+      "minimo": 0.9875,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.085813650000091,
+      "desviacion": 0.03832784840796553,
+      "minimo": 0.022625000001426088,
+      "maximo": 0.14784490000056394
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.8,
+      7.4,
+      14.6,
+      28.4,
+      51.0,
+      90.2,
+      139.2,
+      204.4,
+      281.8,
+      338.2,
+      342.8,
+      235.8,
+      217.6,
+      128.2,
+      53.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 5242880,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.015371821379252467,
+      "desviacion": 0.006771147592307398,
+      "minimo": 0.0028152680608219973,
+      "maximo": 0.024406619313196664
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00056304931640625,
+      "desviacion": 0.0005567750712650641,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.001617431640625
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00056304931640625,
+      "desviacion": 0.0005567750712650641,
+      "minimo": 4.57763671875e-05,
+      "maximo": 0.001617431640625
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 2014.8,
+      "desviacion": 887.5010860713229,
+      "minimo": 369,
+      "maximo": 3199
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 36.9,
+      "desviacion": 36.48881107042724,
+      "minimo": 3,
+      "maximo": 106
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 2952.0,
+      "desviacion": 2919.104885634179,
+      "minimo": 240,
+      "maximo": 8480
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.99,
+      "desviacion": 0.00527046276694728,
+      "minimo": 0.9875,
+      "maximo": 1.0
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.1616923699995823,
+      "desviacion": 0.06723069557181427,
+      "minimo": 0.0359654000003502,
+      "maximo": 0.2574647000001278
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      3.8,
+      7.4,
+      14.6,
+      28.4,
+      51.0,
+      90.2,
+      139.2,
+      203.8,
+      277.0,
+      326.4,
+      324.6,
+      212.8,
+      193.8,
+      100.2,
+      38.6
+     ]
+    }
+   },
+   "3sat_v16_r6": {
+    "indice": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 6291456,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.02928336550419238,
+      "desviacion": 0.017010386803020503,
+      "minimo": 0.009635998809805372,
+      "maximo": 0.060142975944335514
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.00165557861328125,
+      "desviacion": 0.0023339602426144124,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.007781982421875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.00165557861328125,
+      "desviacion": 0.0023339602426144124,
+      "minimo": 0.0001983642578125,
+      "maximo": 0.007781982421875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 3838.2,
+      "desviacion": 2229.5684086587003,
+      "minimo": 1263,
+      "maximo": 7883
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 108.5,
+      "desviacion": 152.95841845997813,
+      "minimo": 13,
+      "maximo": 510
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 10416.0,
+      "desviacion": 14684.0081721579,
+      "minimo": 1248,
+      "maximo": 48960
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.984375,
+      "desviacion": 0.007365695637359896,
+      "minimo": 0.96875,
+      "maximo": 0.9895833333333334
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.1729382399995302,
+      "desviacion": 0.10642211223923724,
+      "minimo": 0.05450369999925897,
+      "maximo": 0.38314250000075845
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.8,
+      31.2,
+      56.8,
+      105.6,
+      190.4,
+      308.6,
+      487.2,
+      618.8,
+      636.6,
+      534.8,
+      458.6,
+      268.4,
+      110.4
+     ]
+    },
+    "cota": {
+     "casos": 10,
+     "nodos_peor_caso": 131071,
+     "hojas_peor_caso": 65536,
+     "consultas_peor_caso": 6291456,
+     "fraccion_nodos": {
+      "n": 10,
+      "media": 0.027881072090698934,
+      "desviacion": 0.015853786659794217,
+      "minimo": 0.009452891944060852,
+      "maximo": 0.054466663106255385
+     },
+     "fraccion_hojas": {
+      "n": 10,
+      "media": 0.001141357421875,
+      "desviacion": 0.0014980024684583763,
+      "minimo": 0.000152587890625,
+      "maximo": 0.00506591796875
+     },
+     "fraccion_consultas": {
+      "n": 10,
+      "media": 0.001141357421875,
+      "desviacion": 0.0014980024684583763,
+      "minimo": 0.000152587890625,
+      "maximo": 0.00506591796875
+     },
+     "nodos_explorados": {
+      "n": 10,
+      "media": 3654.4,
+      "desviacion": 2077.971671285888,
+      "minimo": 1239,
+      "maximo": 7139
+     },
+     "hojas_evaluadas": {
+      "n": 10,
+      "media": 74.8,
+      "desviacion": 98.17308977288815,
+      "minimo": 10,
+      "maximo": 332
+     },
+     "consultas_cobradas": {
+      "n": 10,
+      "media": 7180.8,
+      "desviacion": 9424.616618197262,
+      "minimo": 960,
+      "maximo": 31872
+     },
+     "optimo": {
+      "n": 10,
+      "media": 0.984375,
+      "desviacion": 0.007365695637359896,
+      "minimo": 0.96875,
+      "maximo": 0.9895833333333334
+     },
+     "segundos_cpu": {
+      "n": 10,
+      "media": 0.3183284500000809,
+      "desviacion": 0.18222216417619616,
+      "minimo": 0.10864330000003974,
+      "maximo": 0.6238539999994828
+     },
+     "nodos_por_nivel_medio": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      15.8,
+      31.2,
+      56.8,
+      105.6,
+      190.2,
+      307.0,
+      484.0,
+      610.4,
+      618.2,
+      502.6,
+      418.2,
+      223.2,
+      76.2
+     ]
+    }
+   }
+  },
+  "corridas": 712
+ }
+}
