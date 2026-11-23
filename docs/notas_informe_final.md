@@ -31,6 +31,14 @@ Puntos que deben entrar en el informe final, anotados durante el desarrollo. Nin
 - Causa común: con evaluación todo o nada y precisiones bajas, la probabilidad de que una configuración con precisión real μ no acierte ninguna de m instancias es (1 − μ)^m; con pocas instancias, las diferencias reales quedan tapadas por el ruido de muestreo. Ver `docs/derivaciones/algoritmo4_reparto.md`, Sección 2, y los resultados del Algoritmo 4 en `resultados/fase5_reparto.json`.
 - UCB1: citar el Teorema 1 de Auer, Cesa-Bianchi y Fischer (2002, p. 237) y aclarar que es una garantía de regret acumulado bajo recompensas independientes (Sección 4 de la misma derivación).
 
-## 6. Correcciones de la primera entrega
+## 6. Validación experimental (Fase 6): cómo leer las figuras
+
+- Fuentes: `resultados/fase6_validacion.json` (resumen), `resultados/fase6_cocientes.md` (tablas de cocientes generadas), `figuras/fase6_*.png`.
+- **Q** coincide con la fórmula teórica en todos los algoritmos con conteo exacto (cociente 1 en todos los tamaños); en el Algoritmo 3, Q queda por debajo de su cota superior.
+- **Tiempo de CPU** (con el oráculo sintético, no de GPU): se modela con dos términos, un costo fijo por evaluación más un costo por consulta, porque en tamaños pequeños el costo fijo domina y baja la pendiente observada. Explicar que por eso la pendiente observada puede quedar por debajo de la del término dominante y que se acerca a ella al crecer el tamaño.
+- **UCB1 frente a |S|:** el término asintótico B·|S| del cálculo del índice tiene un coeficiente tan pequeño (cálculo vectorizado) que en el rango medido (|S| ≤ 1024) domina el costo por jugada; la pendiente observada queda cerca de 1, no de 2. Decirlo así, sin afirmar que se observó el término cuadrático.
+- **Backtracking en 3-SAT:** se compara con el peor caso, no se ajusta: Q y K contra el peor caso sin escalar, y el tiempo contra el peor caso con la constante de CPU medida en el peor caso construido. Lo observado queda varios órdenes por debajo y su pendiente log-log es menor que 1, aunque crece con |C| (coherente con la Sección 4 de estas notas).
+
+## 7. Correcciones de la primera entrega
 
 - Ver `docs/correcciones_primera_entrega.md` (Fases 8 y 9).

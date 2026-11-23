@@ -1,0 +1,5426 @@
+{
+ "descripcion": "Fase 6: validación experimental de Q (consultas), K (cotas) y tiempo de CPU con el oráculo sintético (no es tiempo de GPU) contra las funciones teóricas",
+ "parametros": {
+  "repeticiones": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "calentamiento": "una corrida descartada por experimento",
+  "experimentos": [
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "medidas": {
+     "Q": "|C|·n con |C| = 4^4",
+     "CPU": "a·|C| (por evaluación) + b·|C|·n (por consulta)"
+    }
+   },
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "C",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "medidas": {
+     "Q": "|C|·n con n = 50",
+     "CPU": "∝ |C|·n"
+    }
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "medidas": {
+     "Q": "|C|·n",
+     "K": "(|C| − 1)/(k − 1)",
+     "CPU": "a·(hojas + cotas) + b·(hojas + cotas)·n"
+    }
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "C",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "medidas": {
+     "Q": "|C|·n",
+     "K": "(|C| − 1)/(k − 1)",
+     "CPU": "∝ |C|·n"
+    }
+   },
+   {
+    "algoritmo": "backtracking_3sat",
+    "dimension": "C",
+    "tamanos": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "medidas": {
+     "Q": "peor caso |C|·n",
+     "K": "peor caso (|C| − 1)/(k − 1)",
+     "CPU": "peor caso ∝ |C|·n"
+    }
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "S",
+    "tamanos": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "medidas": {
+     "Q_sin": "fórmula exacta sin reutilizar",
+     "Q_con": "fórmula exacta con reutilización",
+     "CPU": "a·Σ|S_r| (evaluaciones) + b·Q_sin"
+    }
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "medidas": {
+     "Q_sin": "fórmula exacta sin reutilizar",
+     "Q_con": "fórmula exacta con reutilización",
+     "CPU": "a·Σ|S_r| (evaluaciones) + b·Q_sin"
+    }
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "medidas": {
+     "Q": "cota n·[1 + I·Σ(k_p − 1)]",
+     "CPU": "a·(evaluaciones) + b·cota"
+    }
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "m",
+    "tamanos": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "medidas": {
+     "Q": "cota n·[1 + I·Σ(k_p − 1)]",
+     "CPU": "∝ cota"
+    }
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "S",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "medidas": {
+     "Q": "|S|·m con m = 10",
+     "CPU": "∝ |S|·m"
+    }
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "m",
+    "tamanos": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ],
+    "medidas": {
+     "Q": "|S|·m con |S| = 128",
+     "CPU": "a·|S| (evaluaciones) + b·|S|·m"
+    }
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "B",
+    "tamanos": [
+     2,
+     4,
+     8,
+     16,
+     32,
+     64
+    ],
+    "medidas": {
+     "Q": "B",
+     "CPU": "a (fijo por corrida) + b·B (cada jugada: una consulta y el índice de los |S| brazos)"
+    }
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "S",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "medidas": {
+     "Q": "B = 16·|S|",
+     "CPU": "a·B (consulta por jugada) + b·B·|S| (índice), B = 16·|S|"
+    }
+   }
+  ]
+ },
+ "semilla": {
+  "oraculos_y_muestras": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ]
+ },
+ "metadatos": {
+  "fecha": "2026-11-22 23:25:59",
+  "git_hash": "de82d339fa2f81716e7b13bc9f99305a4be56f15",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "resumen": [
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "Q",
+    "teoria": "|C|·n con |C| = 4^4",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     6400.0,
+     12800.0,
+     25600.0,
+     51200.0,
+     102400.0,
+     204800.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     6400,
+     12800,
+     25600,
+     51200,
+     102400,
+     204800
+    ],
+    "observado_maximo": [
+     6400,
+     12800,
+     25600,
+     51200,
+     102400,
+     204800
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      6400,
+      12800,
+      25600,
+      51200,
+      102400,
+      204800
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     6400.0,
+     12800.0,
+     25600.0,
+     51200.0,
+     102400.0,
+     204800.0
+    ],
+    "pendiente_loglog_observada": 1.0000000000000002,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6400.0,
+       "teorico": 6400.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 12800.0,
+       "teorico": 12800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 25600.0,
+       "teorico": 25600.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 51200.0,
+       "teorico": 51200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 102400.0,
+       "teorico": 102400.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 204800.0,
+       "teorico": 204800.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6400.0,
+       "teorico": 6400,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 12800.0,
+       "teorico": 12800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 25600.0,
+       "teorico": 25600,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 51200.0,
+       "teorico": 51200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 102400.0,
+       "teorico": 102400,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 204800.0,
+       "teorico": 204800,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "CPU",
+    "teoria": "a·|C| (por evaluación) + b·|C|·n (por consulta)",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     0.004483240000263322,
+     0.00788140000004205,
+     0.01425689999923634,
+     0.027260999999634807,
+     0.05555204000011145,
+     0.11792057999955433
+    ],
+    "observado_desviacion": [
+     0.0002534299861627451,
+     0.0008668543335417352,
+     0.00102012913890052,
+     0.0015777483024428842,
+     0.0014277835389291625,
+     0.016021137144081838
+    ],
+    "observado_minimo": [
+     0.0041430000001128064,
+     0.007137900000088848,
+     0.013576199999079108,
+     0.025555599999279366,
+     0.05384260000028007,
+     0.10964899999999034
+    ],
+    "observado_maximo": [
+     0.004792499999894062,
+     0.009069800000361283,
+     0.016034599999329657,
+     0.02916460000051302,
+     0.05754210000122839,
+     0.14654759999939415
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      256,
+      256,
+      256,
+      256,
+      256,
+      256
+     ],
+     [
+      6400,
+      12800,
+      25600,
+      51200,
+      102400,
+      204800
+     ]
+    ],
+    "coeficientes": [
+     0.0,
+     5.674968910235683e-07
+    ],
+    "teorico_ajustado": [
+     0.003631980102550837,
+     0.007263960205101674,
+     0.014527920410203348,
+     0.029055840820406697,
+     0.058111681640813394,
+     0.11622336328162679
+    ],
+    "pendiente_loglog_observada": 0.9420793219512934,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.004483240000263322,
+       "teorico": 0.003631980102550837,
+       "cociente": 1.2343790091566367
+      },
+      {
+       "tamano": 50,
+       "observado": 0.00788140000004205,
+       "teorico": 0.007263960205101674,
+       "cociente": 1.0850004374344908
+      },
+      {
+       "tamano": 100,
+       "observado": 0.01425689999923634,
+       "teorico": 0.014527920410203348,
+       "cociente": 0.9813448584990413
+      },
+      {
+       "tamano": 200,
+       "observado": 0.027260999999634807,
+       "teorico": 0.029055840820406697,
+       "cociente": 0.9382278822400718
+      },
+      {
+       "tamano": 400,
+       "observado": 0.05555204000011145,
+       "teorico": 0.058111681640813394,
+       "cociente": 0.9559530619588156
+      },
+      {
+       "tamano": 800,
+       "observado": 0.11792057999955433,
+       "teorico": 0.11622336328162679,
+       "cociente": 1.0146030597463862
+      }
+     ],
+     "c1": 0.9382278822400718,
+     "c2": 1.2343790091566367
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.004483240000263322,
+       "teorico": 6400,
+       "cociente": 7.00506250041144e-07
+      },
+      {
+       "tamano": 50,
+       "observado": 0.00788140000004205,
+       "teorico": 12800,
+       "cociente": 6.157343750032852e-07
+      },
+      {
+       "tamano": 100,
+       "observado": 0.01425689999923634,
+       "teorico": 25600,
+       "cociente": 5.569101562201695e-07
+      },
+      {
+       "tamano": 200,
+       "observado": 0.027260999999634807,
+       "teorico": 51200,
+       "cociente": 5.324414062428674e-07
+      },
+      {
+       "tamano": 400,
+       "observado": 0.05555204000011145,
+       "teorico": 102400,
+       "cociente": 5.425003906260884e-07
+      },
+      {
+       "tamano": 800,
+       "observado": 0.11792057999955433,
+       "teorico": 204800,
+       "cociente": 5.757840820290739e-07
+      }
+     ],
+     "c1": 5.324414062428674e-07,
+     "c2": 7.00506250041144e-07
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 4^m",
+    "medida": "Q",
+    "teoria": "|C|·n con n = 50",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "eje_x": [
+     16,
+     64,
+     256,
+     1024,
+     4096
+    ],
+    "observado_medio": [
+     800.0,
+     3200.0,
+     12800.0,
+     51200.0,
+     204800.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     800,
+     3200,
+     12800,
+     51200,
+     204800
+    ],
+    "observado_maximo": [
+     800,
+     3200,
+     12800,
+     51200,
+     204800
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      800,
+      3200,
+      12800,
+      51200,
+      204800
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     800.0,
+     3200.0,
+     12800.0,
+     51200.0,
+     204800.0
+    ],
+    "pendiente_loglog_observada": 1.0,
+    "pendiente_loglog_ajuste": 1.0,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 800.0,
+       "teorico": 800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 3200.0,
+       "teorico": 3200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 12800.0,
+       "teorico": 12800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 51200.0,
+       "teorico": 51200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 204800.0,
+       "teorico": 204800.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 800.0,
+       "teorico": 800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 3200.0,
+       "teorico": 3200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 12800.0,
+       "teorico": 12800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 51200.0,
+       "teorico": 51200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 204800.0,
+       "teorico": 204800,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "fuerza_bruta",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 4^m",
+    "medida": "CPU",
+    "teoria": "∝ |C|·n",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "eje_x": [
+     16,
+     64,
+     256,
+     1024,
+     4096
+    ],
+    "observado_medio": [
+     0.00045879999997850974,
+     0.0018807399999786866,
+     0.008450819999779924,
+     0.03829334000001836,
+     0.14964247999960206
+    ],
+    "observado_desviacion": [
+     1.4915260825937292e-05,
+     0.0001605491925152191,
+     0.0007717904191251558,
+     0.005291728590997362,
+     0.005749381122763065
+    ],
+    "observado_minimo": [
+     0.0004484999990381766,
+     0.0017483999999967637,
+     0.007583500000691856,
+     0.0338541000000987,
+     0.14333049999913783
+    ],
+    "observado_maximo": [
+     0.00048520000018470455,
+     0.0021219000009295996,
+     0.009417599998414516,
+     0.04679829999986396,
+     0.15789739999854646
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      800,
+      3200,
+      12800,
+      51200,
+      204800
+     ]
+    ],
+    "coeficientes": [
+     7.31393382445742e-07
+    ],
+    "teorico_ajustado": [
+     0.0005851147059565936,
+     0.0023404588238263744,
+     0.009361835295305498,
+     0.03744734118122199,
+     0.14978936472488796
+    ],
+    "pendiente_loglog_observada": 1.0523299261624428,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 0.00045879999997850974,
+       "teorico": 0.0005851147059565936,
+       "cociente": 0.7841197551656574
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0018807399999786866,
+       "teorico": 0.0023404588238263744,
+       "cociente": 0.8035774784125014
+      },
+      {
+       "tamano": 256,
+       "observado": 0.008450819999779924,
+       "teorico": 0.009361835295305498,
+       "cociente": 0.9026883867544216
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.03829334000001836,
+       "teorico": 0.03744734118122199,
+       "cociente": 1.0225916925504073
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.14964247999960206,
+       "teorico": 0.14978936472488796,
+       "cociente": 0.9990193914931432
+      }
+     ],
+     "c1": 0.7841197551656574,
+     "c2": 1.0225916925504073
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 0.00045879999997850974,
+       "teorico": 800,
+       "cociente": 5.734999999731372e-07
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0018807399999786866,
+       "teorico": 3200,
+       "cociente": 5.877312499933395e-07
+      },
+      {
+       "tamano": 256,
+       "observado": 0.008450819999779924,
+       "teorico": 12800,
+       "cociente": 6.602203124828066e-07
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.03829334000001836,
+       "teorico": 51200,
+       "cociente": 7.479167968753586e-07
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.14964247999960206,
+       "teorico": 204800,
+       "cociente": 7.30676171873057e-07
+      }
+     ],
+     "c1": 5.734999999731372e-07,
+     "c2": 7.479167968753586e-07
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "Q",
+    "teoria": "|C|·n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     6400.0,
+     12800.0,
+     25600.0,
+     51200.0,
+     102400.0,
+     204800.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     6400,
+     12800,
+     25600,
+     51200,
+     102400,
+     204800
+    ],
+    "observado_maximo": [
+     6400,
+     12800,
+     25600,
+     51200,
+     102400,
+     204800
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      6400,
+      12800,
+      25600,
+      51200,
+      102400,
+      204800
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     6400.0,
+     12800.0,
+     25600.0,
+     51200.0,
+     102400.0,
+     204800.0
+    ],
+    "pendiente_loglog_observada": 1.0000000000000002,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6400.0,
+       "teorico": 6400.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 12800.0,
+       "teorico": 12800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 25600.0,
+       "teorico": 25600.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 51200.0,
+       "teorico": 51200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 102400.0,
+       "teorico": 102400.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 204800.0,
+       "teorico": 204800.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6400.0,
+       "teorico": 6400,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 12800.0,
+       "teorico": 12800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 25600.0,
+       "teorico": 25600,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 51200.0,
+       "teorico": 51200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 102400.0,
+       "teorico": 102400,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 204800.0,
+       "teorico": 204800,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "K",
+    "teoria": "(|C| − 1)/(k − 1)",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     85.0,
+     85.0,
+     85.0,
+     85.0,
+     85.0,
+     85.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     85,
+     85,
+     85,
+     85,
+     85,
+     85
+    ],
+    "observado_maximo": [
+     85,
+     85,
+     85,
+     85,
+     85,
+     85
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      85,
+      85,
+      85,
+      85,
+      85,
+      85
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     85.0,
+     85.0,
+     85.0,
+     85.0,
+     85.0,
+     85.0
+    ],
+    "pendiente_loglog_observada": 0.0,
+    "pendiente_loglog_ajuste": 0.0,
+    "pendiente_loglog_termino_dominante": 0.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "CPU",
+    "teoria": "a·(hojas + cotas) + b·(hojas + cotas)·n",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     0.006926820000080625,
+     0.011394399999335291,
+     0.02312675999964995,
+     0.04499062000068079,
+     0.09351218000010704,
+     0.1826379199999792
+    ],
+    "observado_desviacion": [
+     0.0008433625418480441,
+     0.00016876748779506503,
+     0.0007887898186659227,
+     0.0020111410245519565,
+     0.0016581657896477012,
+     0.0009923044427685682
+    ],
+    "observado_minimo": [
+     0.0063241999996535014,
+     0.011202899999261717,
+     0.022400500000003376,
+     0.042782600001373794,
+     0.09181669999998121,
+     0.18104200000016135
+    ],
+    "observado_maximo": [
+     0.008397300000069663,
+     0.011594799998420058,
+     0.023988199998711934,
+     0.04773180000120192,
+     0.09553840000080527,
+     0.18376630000057048
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      341,
+      341,
+      341,
+      341,
+      341,
+      341
+     ],
+     [
+      8525,
+      17050,
+      34100,
+      68200,
+      136400,
+      272800
+     ]
+    ],
+    "coeficientes": [
+     1.458946907363576e-06,
+     6.69559548717343e-07
+    ],
+    "teorico_ajustado": [
+     0.006205496048226329,
+     0.011913491201041678,
+     0.023329481506672377,
+     0.046161462117933774,
+     0.09182542334045657,
+     0.18315334578550216
+    ],
+    "pendiente_loglog_observada": 0.9621084507813126,
+    "pendiente_loglog_ajuste": 0.9782924394433831,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.006926820000080625,
+       "teorico": 0.006205496048226329,
+       "cociente": 1.1162395312555984
+      },
+      {
+       "tamano": 50,
+       "observado": 0.011394399999335291,
+       "teorico": 0.011913491201041678,
+       "cociente": 0.9564282884885164
+      },
+      {
+       "tamano": 100,
+       "observado": 0.02312675999964995,
+       "teorico": 0.023329481506672377,
+       "cociente": 0.9913105009657224
+      },
+      {
+       "tamano": 200,
+       "observado": 0.04499062000068079,
+       "teorico": 0.046161462117933774,
+       "cociente": 0.9746359395146171
+      },
+      {
+       "tamano": 400,
+       "observado": 0.09351218000010704,
+       "teorico": 0.09182542334045657,
+       "cociente": 1.0183691683445506
+      },
+      {
+       "tamano": 800,
+       "observado": 0.1826379199999792,
+       "teorico": 0.18315334578550216,
+       "cociente": 0.9971858238062077
+      }
+     ],
+     "c1": 0.9564282884885164,
+     "c2": 1.1162395312555984
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.006926820000080625,
+       "teorico": 8525,
+       "cociente": 8.125302052880499e-07
+      },
+      {
+       "tamano": 50,
+       "observado": 0.011394399999335291,
+       "teorico": 17050,
+       "cociente": 6.682932550929789e-07
+      },
+      {
+       "tamano": 100,
+       "observado": 0.02312675999964995,
+       "teorico": 34100,
+       "cociente": 6.782041055615821e-07
+      },
+      {
+       "tamano": 200,
+       "observado": 0.04499062000068079,
+       "teorico": 68200,
+       "cociente": 6.596865102739119e-07
+      },
+      {
+       "tamano": 400,
+       "observado": 0.09351218000010704,
+       "teorico": 136400,
+       "cociente": 6.855731671562099e-07
+      },
+      {
+       "tamano": 800,
+       "observado": 0.1826379199999792,
+       "teorico": 272800,
+       "cociente": 6.694938416421525e-07
+      }
+     ],
+     "c1": 6.596865102739119e-07,
+     "c2": 8.125302052880499e-07
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 4^m",
+    "medida": "Q",
+    "teoria": "|C|·n",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "eje_x": [
+     16,
+     64,
+     256,
+     1024,
+     4096,
+     16384
+    ],
+    "observado_medio": [
+     800.0,
+     3200.0,
+     12800.0,
+     51200.0,
+     204800.0,
+     819200.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     800,
+     3200,
+     12800,
+     51200,
+     204800,
+     819200
+    ],
+    "observado_maximo": [
+     800,
+     3200,
+     12800,
+     51200,
+     204800,
+     819200
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      800,
+      3200,
+      12800,
+      51200,
+      204800,
+      819200
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     800.0,
+     3200.0,
+     12800.0,
+     51200.0,
+     204800.0,
+     819200.0
+    ],
+    "pendiente_loglog_observada": 1.0,
+    "pendiente_loglog_ajuste": 1.0,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 800.0,
+       "teorico": 800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 3200.0,
+       "teorico": 3200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 12800.0,
+       "teorico": 12800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 51200.0,
+       "teorico": 51200.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 204800.0,
+       "teorico": 204800.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 16384,
+       "observado": 819200.0,
+       "teorico": 819200.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 800.0,
+       "teorico": 800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 3200.0,
+       "teorico": 3200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 12800.0,
+       "teorico": 12800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 51200.0,
+       "teorico": 51200,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 204800.0,
+       "teorico": 204800,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 16384,
+       "observado": 819200.0,
+       "teorico": 819200,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 4^m",
+    "medida": "K",
+    "teoria": "(|C| − 1)/(k − 1)",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "eje_x": [
+     16,
+     64,
+     256,
+     1024,
+     4096,
+     16384
+    ],
+    "observado_medio": [
+     5.0,
+     21.0,
+     85.0,
+     341.0,
+     1365.0,
+     5461.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     5,
+     21,
+     85,
+     341,
+     1365,
+     5461
+    ],
+    "observado_maximo": [
+     5,
+     21,
+     85,
+     341,
+     1365,
+     5461
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      5,
+      21,
+      85,
+      341,
+      1365,
+      5461
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     5.0,
+     21.0,
+     85.0,
+     341.0,
+     1365.0,
+     5461.0
+    ],
+    "pendiente_loglog_observada": 1.0076635309272335,
+    "pendiente_loglog_ajuste": 1.0076635309272335,
+    "pendiente_loglog_termino_dominante": 1.0076635309272335,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 5.0,
+       "teorico": 5.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 21.0,
+       "teorico": 21.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 85.0,
+       "teorico": 85.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 341.0,
+       "teorico": 341.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 1365.0,
+       "teorico": 1365.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 16384,
+       "observado": 5461.0,
+       "teorico": 5461.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 5.0,
+       "teorico": 5,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 21.0,
+       "teorico": 21,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 85.0,
+       "teorico": 85,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 341.0,
+       "teorico": 341,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 1365.0,
+       "teorico": 1365,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 16384,
+       "observado": 5461.0,
+       "teorico": 5461,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_peor_caso",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 4^m",
+    "medida": "CPU",
+    "teoria": "∝ |C|·n",
+    "tamanos": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "eje_x": [
+     16,
+     64,
+     256,
+     1024,
+     4096,
+     16384
+    ],
+    "observado_medio": [
+     0.000660260000222479,
+     0.0029412200001388555,
+     0.013043299999844748,
+     0.05110420000019076,
+     0.22445059999954536,
+     1.052223679999588
+    ],
+    "observado_desviacion": [
+     2.862250846784647e-05,
+     0.0002606818222736664,
+     0.001844635268736939,
+     0.001189874155793234,
+     0.0030721058258856774,
+     0.009431092770207644
+    ],
+    "observado_minimo": [
+     0.0006387000012182398,
+     0.0027062999997724546,
+     0.011376700000255369,
+     0.05001379999885103,
+     0.2214994999994815,
+     1.0379291999997804
+    ],
+    "observado_maximo": [
+     0.0007100000002537854,
+     0.0033771000016713515,
+     0.016008799999326584,
+     0.05250920000071346,
+     0.2283724999997503,
+     1.0600993999996717
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      800,
+      3200,
+      12800,
+      51200,
+      204800,
+      819200
+     ]
+    ],
+    "coeficientes": [
+     1.2722927218471662e-06
+    ],
+    "teorico_ajustado": [
+     0.001017834177477733,
+     0.004071336709910932,
+     0.01628534683964373,
+     0.06514138735857491,
+     0.26056554943429966,
+     1.0422621977371986
+    ],
+    "pendiente_loglog_observada": 1.0560321291974897,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 0.000660260000222479,
+       "teorico": 0.001017834177477733,
+       "cociente": 0.6486911275259505
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0029412200001388555,
+       "teorico": 0.004071336709910932,
+       "cociente": 0.7224212119275195
+      },
+      {
+       "tamano": 256,
+       "observado": 0.013043299999844748,
+       "teorico": 0.01628534683964373,
+       "cociente": 0.8009224567507027
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.05110420000019076,
+       "teorico": 0.06514138735857491,
+       "cociente": 0.7845119987832687
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.22445059999954536,
+       "teorico": 0.26056554943429966,
+       "cociente": 0.8613978343907643
+      },
+      {
+       "tamano": 16384,
+       "observado": 1.052223679999588,
+       "teorico": 1.0422621977371986,
+       "cociente": 1.0095575588215866
+      }
+     ],
+     "c1": 0.6486911275259505,
+     "c2": 1.0095575588215866
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 16,
+       "observado": 0.000660260000222479,
+       "teorico": 800,
+       "cociente": 8.253250002780987e-07
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0029412200001388555,
+       "teorico": 3200,
+       "cociente": 9.191312500433923e-07
+      },
+      {
+       "tamano": 256,
+       "observado": 0.013043299999844748,
+       "teorico": 12800,
+       "cociente": 1.019007812487871e-06
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.05110420000019076,
+       "teorico": 51200,
+       "cociente": 9.981289062537258e-07
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.22445059999954536,
+       "teorico": 204800,
+       "cociente": 1.09595019531028e-06
+      },
+      {
+       "tamano": 16384,
+       "observado": 1.052223679999588,
+       "teorico": 819200,
+       "cociente": 1.2844527343744972e-06
+      }
+     ],
+     "c1": 8.253250002780987e-07,
+     "c2": 1.2844527343744972e-06
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "backtracking_3sat",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 2^v (razón 4,26)",
+    "medida": "Q",
+    "teoria": "peor caso |C|·n",
+    "tamanos": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "eje_x": [
+     1024,
+     4096,
+     16384,
+     65536,
+     262144,
+     1048576
+    ],
+    "observado_medio": [
+     731.0,
+     1040.4,
+     2100.0,
+     3808.0,
+     6960.8,
+     7004.0
+    ],
+    "observado_desviacion": [
+     516.0,
+     918.4249016658902,
+     2129.788721915862,
+     5972.397843412644,
+     5902.842298418618,
+     4975.441437701785
+    ],
+    "observado_minimo": [
+     86,
+     459,
+     600,
+     884,
+     1155,
+     1700
+    ],
+    "observado_maximo": [
+     1462,
+     2652,
+     5820,
+     14484,
+     15939,
+     13430
+    ],
+    "curva_sin_ajuste": true,
+    "bases": [
+     [
+      44032,
+      208896,
+      983040,
+      4456448,
+      20185088,
+      89128960
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     44032.0,
+     208896.0,
+     983040.0,
+     4456448.0,
+     20185088.0,
+     89128960.0
+    ],
+    "pendiente_loglog_observada": 0.3626595352951622,
+    "pendiente_loglog_ajuste": 1.0982755249855722,
+    "pendiente_loglog_termino_dominante": 1.0982755249855722,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 731.0,
+       "teorico": 44032.0,
+       "cociente": 0.0166015625
+      },
+      {
+       "tamano": 4096,
+       "observado": 1040.4,
+       "teorico": 208896.0,
+       "cociente": 0.0049804687500000005
+      },
+      {
+       "tamano": 16384,
+       "observado": 2100.0,
+       "teorico": 983040.0,
+       "cociente": 0.00213623046875
+      },
+      {
+       "tamano": 65536,
+       "observado": 3808.0,
+       "teorico": 4456448.0,
+       "cociente": 0.0008544921875
+      },
+      {
+       "tamano": 262144,
+       "observado": 6960.8,
+       "teorico": 20185088.0,
+       "cociente": 0.0003448486328125
+      },
+      {
+       "tamano": 1048576,
+       "observado": 7004.0,
+       "teorico": 89128960.0,
+       "cociente": 7.8582763671875e-05
+      }
+     ],
+     "c1": 7.8582763671875e-05,
+     "c2": 0.0166015625
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 731.0,
+       "teorico": 44032,
+       "cociente": 0.0166015625
+      },
+      {
+       "tamano": 4096,
+       "observado": 1040.4,
+       "teorico": 208896,
+       "cociente": 0.0049804687500000005
+      },
+      {
+       "tamano": 16384,
+       "observado": 2100.0,
+       "teorico": 983040,
+       "cociente": 0.00213623046875
+      },
+      {
+       "tamano": 65536,
+       "observado": 3808.0,
+       "teorico": 4456448,
+       "cociente": 0.0008544921875
+      },
+      {
+       "tamano": 262144,
+       "observado": 6960.8,
+       "teorico": 20185088,
+       "cociente": 0.0003448486328125
+      },
+      {
+       "tamano": 1048576,
+       "observado": 7004.0,
+       "teorico": 89128960,
+       "cociente": 7.8582763671875e-05
+      }
+     ],
+     "c1": 7.8582763671875e-05,
+     "c2": 0.0166015625
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_3sat",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 2^v (razón 4,26)",
+    "medida": "K",
+    "teoria": "peor caso (|C| − 1)/(k − 1)",
+    "tamanos": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "eje_x": [
+     1024,
+     4096,
+     16384,
+     65536,
+     262144,
+     1048576
+    ],
+    "observado_medio": [
+     143.8,
+     309.4,
+     823.0,
+     1029.4,
+     5806.2,
+     2422.6
+    ],
+    "observado_desviacion": [
+     90.8140958221795,
+     243.2258209976893,
+     468.907240293856,
+     1202.6282883750905,
+     4645.49041544593,
+     1149.9499119526902
+    ],
+    "observado_minimo": [
+     29,
+     39,
+     381,
+     175,
+     287,
+     827
+    ],
+    "observado_maximo": [
+     267,
+     541,
+     1615,
+     3075,
+     11447,
+     3947
+    ],
+    "curva_sin_ajuste": true,
+    "bases": [
+     [
+      1023,
+      4095,
+      16383,
+      65535,
+      262143,
+      1048575
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     1023.0,
+     4095.0,
+     16383.0,
+     65535.0,
+     262143.0,
+     1048575.0
+    ],
+    "pendiente_loglog_observada": 0.47692985767270324,
+    "pendiente_loglog_ajuste": 1.000116389941004,
+    "pendiente_loglog_termino_dominante": 1.000116389941004,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 143.8,
+       "teorico": 1023.0,
+       "cociente": 0.14056695992179863
+      },
+      {
+       "tamano": 4096,
+       "observado": 309.4,
+       "teorico": 4095.0,
+       "cociente": 0.07555555555555556
+      },
+      {
+       "tamano": 16384,
+       "observado": 823.0,
+       "teorico": 16383.0,
+       "cociente": 0.05023499969480559
+      },
+      {
+       "tamano": 65536,
+       "observado": 1029.4,
+       "teorico": 65535.0,
+       "cociente": 0.015707637140459297
+      },
+      {
+       "tamano": 262144,
+       "observado": 5806.2,
+       "teorico": 262143.0,
+       "cociente": 0.022148979755324382
+      },
+      {
+       "tamano": 1048576,
+       "observado": 2422.6,
+       "teorico": 1048575.0,
+       "cociente": 0.0023103736022697468
+      }
+     ],
+     "c1": 0.0023103736022697468,
+     "c2": 0.14056695992179863
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 143.8,
+       "teorico": 1023,
+       "cociente": 0.14056695992179863
+      },
+      {
+       "tamano": 4096,
+       "observado": 309.4,
+       "teorico": 4095,
+       "cociente": 0.07555555555555556
+      },
+      {
+       "tamano": 16384,
+       "observado": 823.0,
+       "teorico": 16383,
+       "cociente": 0.05023499969480559
+      },
+      {
+       "tamano": 65536,
+       "observado": 1029.4,
+       "teorico": 65535,
+       "cociente": 0.015707637140459297
+      },
+      {
+       "tamano": 262144,
+       "observado": 5806.2,
+       "teorico": 262143,
+       "cociente": 0.022148979755324382
+      },
+      {
+       "tamano": 1048576,
+       "observado": 2422.6,
+       "teorico": 1048575,
+       "cociente": 0.0023103736022697468
+      }
+     ],
+     "c1": 0.0023103736022697468,
+     "c2": 0.14056695992179863
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "backtracking_3sat",
+    "dimension": "C",
+    "etiqueta_tamano": "|C| = 2^v (razón 4,26)",
+    "medida": "CPU",
+    "teoria": "peor caso ∝ |C|·n",
+    "tamanos": [
+     10,
+     12,
+     14,
+     16,
+     18,
+     20
+    ],
+    "eje_x": [
+     1024,
+     4096,
+     16384,
+     65536,
+     262144,
+     1048576
+    ],
+    "observado_medio": [
+     0.0036208199999236967,
+     0.008418899999742279,
+     0.025048339999921156,
+     0.03637940000080562,
+     0.21405046000036237,
+     0.10174930000030144
+    ],
+    "observado_desviacion": [
+     0.002314064370335053,
+     0.006300758741864407,
+     0.012927206677652759,
+     0.044108652320051976,
+     0.17158910715815487,
+     0.04911129751486033
+    ],
+    "observado_minimo": [
+     0.0006562999988091178,
+     0.0017194999982166337,
+     0.010801299999002367,
+     0.006724200000462588,
+     0.011161500000525848,
+     0.03427629999896453
+    ],
+    "observado_maximo": [
+     0.006735000000844593,
+     0.01575779999984661,
+     0.0460787000010896,
+     0.11246280000159459,
+     0.41641640000125335,
+     0.1650336000002426
+    ],
+    "curva_sin_ajuste": true,
+    "bases": [
+     [
+      44032,
+      208896,
+      983040,
+      4456448,
+      20185088,
+      89128960
+     ]
+    ],
+    "coeficientes": [
+     1.2722927218471662e-06
+    ],
+    "teorico_ajustado": [
+     0.056021593128374424,
+     0.26577686042298565,
+     1.2507146372846383,
+     5.66990635569036,
+     25.68134055224457,
+     113.3981271138072
+    ],
+    "pendiente_loglog_observada": 0.551510369942847,
+    "pendiente_loglog_ajuste": 1.0982755249855722,
+    "pendiente_loglog_termino_dominante": 1.0982755249855722,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 0.0036208199999236967,
+       "teorico": 0.056021593128374424,
+       "cociente": 0.06463257822080366
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.008418899999742279,
+       "teorico": 0.26577686042298565,
+       "cociente": 0.03167657254413926
+      },
+      {
+       "tamano": 16384,
+       "observado": 0.025048339999921156,
+       "teorico": 1.2507146372846383,
+       "cociente": 0.02002722224016048
+      },
+      {
+       "tamano": 65536,
+       "observado": 0.03637940000080562,
+       "teorico": 5.66990635569036,
+       "cociente": 0.006416225898386308
+      },
+      {
+       "tamano": 262144,
+       "observado": 0.21405046000036237,
+       "teorico": 25.68134055224457,
+       "cociente": 0.008334863188504939
+      },
+      {
+       "tamano": 1048576,
+       "observado": 0.10174930000030144,
+       "teorico": 113.3981271138072,
+       "cociente": 0.0008972749602661875
+      }
+     ],
+     "c1": 0.0008972749602661875,
+     "c2": 0.06463257822080366
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 1024,
+       "observado": 0.0036208199999236967,
+       "teorico": 44032,
+       "cociente": 8.223155886454616e-08
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.008418899999742279,
+       "teorico": 208896,
+       "cociente": 4.030187270097215e-08
+      },
+      {
+       "tamano": 16384,
+       "observado": 0.025048339999921156,
+       "teorico": 983040,
+       "cociente": 2.548048909497188e-08
+      },
+      {
+       "tamano": 65536,
+       "observado": 0.03637940000080562,
+       "teorico": 4456448,
+       "cociente": 8.163317512244196e-09
+      },
+      {
+       "tamano": 262144,
+       "observado": 0.21405046000036237,
+       "teorico": 20185088,
+       "cociente": 1.0604385772326698e-08
+      },
+      {
+       "tamano": 1048576,
+       "observado": 0.10174930000030144,
+       "teorico": 89128960,
+       "cociente": 1.1415964014423757e-09
+      }
+     ],
+     "c1": 1.1415964014423757e-09,
+     "c2": 8.223155886454616e-08
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "S",
+    "etiqueta_tamano": "|S| = 2^R",
+    "medida": "Q_sin",
+    "teoria": "fórmula exacta sin reutilizar",
+    "tamanos": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "eje_x": [
+     64,
+     128,
+     256,
+     512,
+     1024,
+     2048,
+     4096
+    ],
+    "observado_medio": [
+     384.0,
+     896.0,
+     1992.0,
+     4184.0,
+     8568.0,
+     17336.0,
+     34872.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     384,
+     896,
+     1992,
+     4184,
+     8568,
+     17336,
+     34872
+    ],
+    "observado_maximo": [
+     384,
+     896,
+     1992,
+     4184,
+     8568,
+     17336,
+     34872
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      384,
+      896,
+      1992,
+      4184,
+      8568,
+      17336,
+      34872
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     384.0,
+     896.0,
+     1992.0,
+     4184.0,
+     8568.0,
+     17336.0,
+     34872.0
+    ],
+    "pendiente_loglog_observada": 1.0774091009876015,
+    "pendiente_loglog_ajuste": 1.0774091009876015,
+    "pendiente_loglog_termino_dominante": 1.0774091009876015,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 384.0,
+       "teorico": 384.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 896.0,
+       "teorico": 896.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 1992.0,
+       "teorico": 1992.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 4184.0,
+       "teorico": 4184.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 8568.0,
+       "teorico": 8568.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 17336.0,
+       "teorico": 17336.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 34872.0,
+       "teorico": 34872.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 384.0,
+       "teorico": 384,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 896.0,
+       "teorico": 896,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 1992.0,
+       "teorico": 1992,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 4184.0,
+       "teorico": 4184,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 8568.0,
+       "teorico": 8568,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 17336.0,
+       "teorico": 17336,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 34872.0,
+       "teorico": 34872,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "S",
+    "etiqueta_tamano": "|S| = 2^R",
+    "medida": "Q_con",
+    "teoria": "fórmula exacta con reutilización",
+    "tamanos": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "eje_x": [
+     64,
+     128,
+     256,
+     512,
+     1024,
+     2048,
+     4096
+    ],
+    "observado_medio": [
+     224.0,
+     512.0,
+     1096.0,
+     2192.0,
+     4384.0,
+     8768.0,
+     17536.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     224,
+     512,
+     1096,
+     2192,
+     4384,
+     8768,
+     17536
+    ],
+    "observado_maximo": [
+     224,
+     512,
+     1096,
+     2192,
+     4384,
+     8768,
+     17536
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      224,
+      512,
+      1096,
+      2192,
+      4384,
+      8768,
+      17536
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     224.0,
+     512.0,
+     1096.0,
+     2192.0,
+     4384.0,
+     8768.0,
+     17536.0
+    ],
+    "pendiente_loglog_observada": 1.0381462731653508,
+    "pendiente_loglog_ajuste": 1.0381462731653508,
+    "pendiente_loglog_termino_dominante": 1.0381462731653508,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 224.0,
+       "teorico": 224.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 512.0,
+       "teorico": 512.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 1096.0,
+       "teorico": 1096.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 2192.0,
+       "teorico": 2192.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 4384.0,
+       "teorico": 4384.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 8768.0,
+       "teorico": 8768.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 17536.0,
+       "teorico": 17536.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 224.0,
+       "teorico": 224,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 512.0,
+       "teorico": 512,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 1096.0,
+       "teorico": 1096,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 2192.0,
+       "teorico": 2192,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 4384.0,
+       "teorico": 4384,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 8768.0,
+       "teorico": 8768,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 17536.0,
+       "teorico": 17536,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "S",
+    "etiqueta_tamano": "|S| = 2^R",
+    "medida": "CPU",
+    "teoria": "a·Σ|S_r| (evaluaciones) + b·Q_sin",
+    "tamanos": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "eje_x": [
+     64,
+     128,
+     256,
+     512,
+     1024,
+     2048,
+     4096
+    ],
+    "observado_medio": [
+     0.0007536599998275051,
+     0.0014874599997710901,
+     0.0030782000001636335,
+     0.005940240000199992,
+     0.01246681999982684,
+     0.026174580000224525,
+     0.05280800000000454
+    ],
+    "observado_desviacion": [
+     7.559889525608395e-05,
+     9.925171559816556e-05,
+     0.00030790627618452,
+     0.00012542712190160364,
+     0.0009482185073055256,
+     0.0016598329663133436,
+     0.0017394538217958525
+    ],
+    "observado_minimo": [
+     0.0007064000001264503,
+     0.001385600000503473,
+     0.002855200000340119,
+     0.005773599999884027,
+     0.011948999999731313,
+     0.02441250000083528,
+     0.05017230000157724
+    ],
+    "observado_maximo": [
+     0.0008868999993865145,
+     0.0016400000004068715,
+     0.0036073999999644,
+     0.006109599999035709,
+     0.014155900000332622,
+     0.028787600000214297,
+     0.05506570000034117
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192
+     ],
+     [
+      384,
+      896,
+      1992,
+      4184,
+      8568,
+      17336,
+      34872
+     ]
+    ],
+    "coeficientes": [
+     0.0,
+     1.5099629700346395e-06
+    ],
+    "teorico_ajustado": [
+     0.0005798257804933016,
+     0.0013529268211510369,
+     0.0030078462363090017,
+     0.006317685066624931,
+     0.01293736272725679,
+     0.02617671804852051,
+     0.052655428691047945
+    ],
+    "pendiente_loglog_observada": 1.0244470879861678,
+    "pendiente_loglog_ajuste": 1.0774091009876015,
+    "pendiente_loglog_termino_dominante": 1.0774091009876015,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 0.0007536599998275051,
+       "teorico": 0.0005798257804933016,
+       "cociente": 1.2998042259975224
+      },
+      {
+       "tamano": 128,
+       "observado": 0.0014874599997710901,
+       "teorico": 0.0013529268211510369,
+       "cociente": 1.099438621895008
+      },
+      {
+       "tamano": 256,
+       "observado": 0.0030782000001636335,
+       "teorico": 0.0030078462363090017,
+       "cociente": 1.0233900799200975
+      },
+      {
+       "tamano": 512,
+       "observado": 0.005940240000199992,
+       "teorico": 0.006317685066624931,
+       "cociente": 0.9402557958422293
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.01246681999982684,
+       "teorico": 0.01293736272725679,
+       "cociente": 0.9636291617271735
+      },
+      {
+       "tamano": 2048,
+       "observado": 0.026174580000224525,
+       "teorico": 0.02617671804852051,
+       "cociente": 0.9999183225226317
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.05280800000000454,
+       "teorico": 0.052655428691047945,
+       "cociente": 1.0028975418631914
+      }
+     ],
+     "c1": 0.9402557958422293,
+     "c2": 1.2998042259975224
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 64,
+       "observado": 0.0007536599998275051,
+       "teorico": 384,
+       "cociente": 1.9626562495507945e-06
+      },
+      {
+       "tamano": 128,
+       "observado": 0.0014874599997710901,
+       "teorico": 896,
+       "cociente": 1.6601116068873773e-06
+      },
+      {
+       "tamano": 256,
+       "observado": 0.0030782000001636335,
+       "teorico": 1992,
+       "cociente": 1.5452811245801373e-06
+      },
+      {
+       "tamano": 512,
+       "observado": 0.005940240000199992,
+       "teorico": 4184,
+       "cociente": 1.4197514340822161e-06
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.01246681999982684,
+       "teorico": 8568,
+       "cociente": 1.4550443510535527e-06
+      },
+      {
+       "tamano": 2048,
+       "observado": 0.026174580000224525,
+       "teorico": 17336,
+       "cociente": 1.5098396400683275e-06
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.05280800000000454,
+       "teorico": 34872,
+       "cociente": 1.5143381509521834e-06
+      }
+     ],
+     "c1": 1.4197514340822161e-06,
+     "c2": 1.9626562495507945e-06
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "Q_sin",
+    "teoria": "fórmula exacta sin reutilizar",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     6670.0,
+     7644.0,
+     8568.0,
+     9392.0,
+     10016.0,
+     10240.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     6670,
+     7644,
+     8568,
+     9392,
+     10016,
+     10240
+    ],
+    "observado_maximo": [
+     6670,
+     7644,
+     8568,
+     9392,
+     10016,
+     10240
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      6670,
+      7644,
+      8568,
+      9392,
+      10016,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     6670.0,
+     7644.0,
+     8568.0,
+     9392.0,
+     10016.0,
+     10240.0
+    ],
+    "pendiente_loglog_observada": 0.1255565578372103,
+    "pendiente_loglog_ajuste": 0.1255565578372103,
+    "pendiente_loglog_termino_dominante": 0.1255565578372103,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6670.0,
+       "teorico": 6670.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 7644.0,
+       "teorico": 7644.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 8568.0,
+       "teorico": 8568.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 9392.0,
+       "teorico": 9392.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 10016.0,
+       "teorico": 10016.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 10240.0,
+       "teorico": 10240.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 6670.0,
+       "teorico": 6670,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 7644.0,
+       "teorico": 7644,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 8568.0,
+       "teorico": 8568,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 9392.0,
+       "teorico": 9392,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 10016.0,
+       "teorico": 10016,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 10240.0,
+       "teorico": 10240,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "Q_con",
+    "teoria": "fórmula exacta con reutilización",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     3360.0,
+     3872.0,
+     4384.0,
+     4896.0,
+     5408.0,
+     5632.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     3360,
+     3872,
+     4384,
+     4896,
+     5408,
+     5632
+    ],
+    "observado_maximo": [
+     3360,
+     3872,
+     4384,
+     4896,
+     5408,
+     5632
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      3360,
+      3872,
+      4384,
+      4896,
+      5408,
+      5632
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     3360.0,
+     3872.0,
+     4384.0,
+     4896.0,
+     5408.0,
+     5632.0
+    ],
+    "pendiente_loglog_observada": 0.15232385318887895,
+    "pendiente_loglog_ajuste": 0.15232385318887895,
+    "pendiente_loglog_termino_dominante": 0.15232385318887895,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 3360.0,
+       "teorico": 3360.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 3872.0,
+       "teorico": 3872.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 4384.0,
+       "teorico": 4384.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 4896.0,
+       "teorico": 4896.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 5408.0,
+       "teorico": 5408.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 5632.0,
+       "teorico": 5632.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 3360.0,
+       "teorico": 3360,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 50,
+       "observado": 3872.0,
+       "teorico": 3872,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 100,
+       "observado": 4384.0,
+       "teorico": 4384,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 200,
+       "observado": 4896.0,
+       "teorico": 4896,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 400,
+       "observado": 5408.0,
+       "teorico": 5408,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 800,
+       "observado": 5632.0,
+       "teorico": 5632,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "successive_halving",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "CPU",
+    "teoria": "a·Σ|S_r| (evaluaciones) + b·Q_sin",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     0.0112879400003294,
+     0.012156999999933759,
+     0.012223760000051698,
+     0.01275582000016584,
+     0.013465339999675053,
+     0.013684439999997267
+    ],
+    "observado_desviacion": [
+     0.00014663031082047051,
+     0.0007123010703523616,
+     0.00036656474599730554,
+     0.0008392986100394712,
+     0.0006389423667708696,
+     0.0006220288361115301
+    ],
+    "observado_minimo": [
+     0.0110858999996708,
+     0.011676000000079512,
+     0.011731300000974443,
+     0.012181800000689691,
+     0.012912299998788512,
+     0.013143399999535177
+    ],
+    "observado_maximo": [
+     0.011486100000183797,
+     0.013401899999735178,
+     0.012625200000911718,
+     0.014222300000255927,
+     0.014527499999530846,
+     0.014725299999554409
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      2048,
+      2048,
+      2048,
+      2048,
+      2048,
+      2048
+     ],
+     [
+      6670,
+      7644,
+      8568,
+      9392,
+      10016,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     3.4945489592063834e-06,
+     6.212313418889171e-07
+    ],
+    "teorico_ajustado": [
+     0.01130044931885375,
+     0.011905528645853557,
+     0.012479546405758914,
+     0.012991441031475382,
+     0.013379089388814068,
+     0.013518245209397185
+    ],
+    "pendiente_loglog_observada": 0.054075102575190444,
+    "pendiente_loglog_ajuste": 0.05301941310418609,
+    "pendiente_loglog_termino_dominante": 0.1255565578372103,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.0112879400003294,
+       "teorico": 0.01130044931885375,
+       "cociente": 0.9988930246779233
+      },
+      {
+       "tamano": 50,
+       "observado": 0.012156999999933759,
+       "teorico": 0.011905528645853557,
+       "cociente": 1.02112223333886
+      },
+      {
+       "tamano": 100,
+       "observado": 0.012223760000051698,
+       "teorico": 0.012479546405758914,
+       "cociente": 0.9795035494567993
+      },
+      {
+       "tamano": 200,
+       "observado": 0.01275582000016584,
+       "teorico": 0.012991441031475382,
+       "cociente": 0.9818633644459699
+      },
+      {
+       "tamano": 400,
+       "observado": 0.013465339999675053,
+       "teorico": 0.013379089388814068,
+       "cociente": 1.0064466727409038
+      },
+      {
+       "tamano": 800,
+       "observado": 0.013684439999997267,
+       "teorico": 0.013518245209397185,
+       "cociente": 1.0122941097772478
+      }
+     ],
+     "c1": 0.9795035494567993,
+     "c2": 1.02112223333886
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.0112879400003294,
+       "teorico": 6670,
+       "cociente": 1.692344827635592e-06
+      },
+      {
+       "tamano": 50,
+       "observado": 0.012156999999933759,
+       "teorico": 7644,
+       "cociente": 1.590397697531889e-06
+      },
+      {
+       "tamano": 100,
+       "observado": 0.012223760000051698,
+       "teorico": 8568,
+       "cociente": 1.426676003740861e-06
+      },
+      {
+       "tamano": 200,
+       "observado": 0.01275582000016584,
+       "teorico": 9392,
+       "cociente": 1.3581580068319677e-06
+      },
+      {
+       "tamano": 400,
+       "observado": 0.013465339999675053,
+       "teorico": 10016,
+       "cociente": 1.3443829871880045e-06
+      },
+      {
+       "tamano": 800,
+       "observado": 0.013684439999997267,
+       "teorico": 10240,
+       "cociente": 1.336371093749733e-06
+      }
+     ],
+     "c1": 1.336371093749733e-06,
+     "c2": 1.692344827635592e-06
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "Q",
+    "teoria": "cota n·[1 + I·Σ(k_p − 1)]",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     1240.0,
+     2400.0,
+     4760.0,
+     9880.0,
+     18960.0,
+     38080.0
+    ],
+    "observado_desviacion": [
+     170.11025836204,
+     187.08286933869707,
+     450.55521304275237,
+     1145.4256850621082,
+     2475.479751482528,
+     4950.959502965056
+    ],
+    "observado_minimo": [
+     1050,
+     2150,
+     4200,
+     8400,
+     16400,
+     33600
+    ],
+    "observado_maximo": [
+     1500,
+     2650,
+     5400,
+     11200,
+     22800,
+     45600
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      2650,
+      5300,
+      10600,
+      21200,
+      42400,
+      84800
+     ]
+    ],
+    "coeficientes": [
+     0.44952380952380955
+    ],
+    "teorico_ajustado": [
+     1191.2380952380954,
+     2382.476190476191,
+     4764.952380952382,
+     9529.904761904763,
+     19059.809523809527,
+     38119.61904761905
+    ],
+    "pendiente_loglog_observada": 0.9914918483643227,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 1240.0,
+       "teorico": 1191.2380952380954,
+       "cociente": 1.0409338023664854
+      },
+      {
+       "tamano": 50,
+       "observado": 2400.0,
+       "teorico": 2382.476190476191,
+       "cociente": 1.0073552926127276
+      },
+      {
+       "tamano": 100,
+       "observado": 4760.0,
+       "teorico": 4764.952380952382,
+       "cociente": 0.9989606651742883
+      },
+      {
+       "tamano": 200,
+       "observado": 9880.0,
+       "teorico": 9529.904761904763,
+       "cociente": 1.0367364886472656
+      },
+      {
+       "tamano": 400,
+       "observado": 18960.0,
+       "teorico": 19059.809523809527,
+       "cociente": 0.9947633514550686
+      },
+      {
+       "tamano": 800,
+       "observado": 38080.0,
+       "teorico": 38119.61904761905,
+       "cociente": 0.9989606651742883
+      }
+     ],
+     "c1": 0.9947633514550686,
+     "c2": 1.0409338023664854
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 1240.0,
+       "teorico": 2650,
+       "cociente": 0.4679245283018868
+      },
+      {
+       "tamano": 50,
+       "observado": 2400.0,
+       "teorico": 5300,
+       "cociente": 0.4528301886792453
+      },
+      {
+       "tamano": 100,
+       "observado": 4760.0,
+       "teorico": 10600,
+       "cociente": 0.4490566037735849
+      },
+      {
+       "tamano": 200,
+       "observado": 9880.0,
+       "teorico": 21200,
+       "cociente": 0.4660377358490566
+      },
+      {
+       "tamano": 400,
+       "observado": 18960.0,
+       "teorico": 42400,
+       "cociente": 0.44716981132075473
+      },
+      {
+       "tamano": 800,
+       "observado": 38080.0,
+       "teorico": 84800,
+       "cociente": 0.4490566037735849
+      }
+     ],
+     "c1": 0.44716981132075473,
+     "c2": 0.4679245283018868
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "n",
+    "etiqueta_tamano": "n",
+    "medida": "CPU",
+    "teoria": "a·(evaluaciones) + b·cota",
+    "tamanos": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "eje_x": [
+     25,
+     50,
+     100,
+     200,
+     400,
+     800
+    ],
+    "observado_medio": [
+     0.0015723399999842513,
+     0.002363139999579289,
+     0.0038156200000230454,
+     0.007928159999573836,
+     0.013697360000151093,
+     0.027360719999705907
+    ],
+    "observado_desviacion": [
+     0.000402819218659659,
+     0.00039782664961960875,
+     0.0004883633301913816,
+     0.0013222360170339397,
+     0.002179011829861198,
+     0.0037580839683028595
+    ],
+    "observado_minimo": [
+     0.0012019999994663522,
+     0.0018263999991177116,
+     0.003151699998852564,
+     0.0059917999988101656,
+     0.01155290000133391,
+     0.02217899999959627
+    ],
+    "observado_maximo": [
+     0.0022200999992492143,
+     0.0028265000000828877,
+     0.004519199999776902,
+     0.009574100000463659,
+     0.01635040000110166,
+     0.03115339999931166
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      106,
+      106,
+      106,
+      106,
+      106,
+      106
+     ],
+     [
+      2650,
+      5300,
+      10600,
+      21200,
+      42400,
+      84800
+     ]
+    ],
+    "coeficientes": [
+     6.987025249677828e-06,
+     3.132290622355335e-07
+    ],
+    "teorico_ajustado": [
+     0.0015706816913900134,
+     0.002400738706314177,
+     0.004060852736162504,
+     0.00738108079585916,
+     0.014021536915252469,
+     0.02730244915403909
+    ],
+    "pendiente_loglog_observada": 0.8361724713853175,
+    "pendiente_loglog_ajuste": 0.8313762888787146,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.0015723399999842513,
+       "teorico": 0.0015706816913900134,
+       "cociente": 1.0010557890903855
+      },
+      {
+       "tamano": 50,
+       "observado": 0.002363139999579289,
+       "teorico": 0.002400738706314177,
+       "cociente": 0.9843386926548899
+      },
+      {
+       "tamano": 100,
+       "observado": 0.0038156200000230454,
+       "teorico": 0.004060852736162504,
+       "cociente": 0.9396105320550966
+      },
+      {
+       "tamano": 200,
+       "observado": 0.007928159999573836,
+       "teorico": 0.00738108079585916,
+       "cociente": 1.0741191187097683
+      },
+      {
+       "tamano": 400,
+       "observado": 0.013697360000151093,
+       "teorico": 0.014021536915252469,
+       "cociente": 0.9768800726296459
+      },
+      {
+       "tamano": 800,
+       "observado": 0.027360719999705907,
+       "teorico": 0.02730244915403909,
+       "cociente": 1.0021342717401671
+      }
+     ],
+     "c1": 0.9396105320550966,
+     "c2": 1.0741191187097683
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 25,
+       "observado": 0.0015723399999842513,
+       "teorico": 2650,
+       "cociente": 5.933358490506609e-07
+      },
+      {
+       "tamano": 50,
+       "observado": 0.002363139999579289,
+       "teorico": 5300,
+       "cociente": 4.4587547161873375e-07
+      },
+      {
+       "tamano": 100,
+       "observado": 0.0038156200000230454,
+       "teorico": 10600,
+       "cociente": 3.599641509455703e-07
+      },
+      {
+       "tamano": 200,
+       "observado": 0.007928159999573836,
+       "teorico": 21200,
+       "cociente": 3.739698113006526e-07
+      },
+      {
+       "tamano": 400,
+       "observado": 0.013697360000151093,
+       "teorico": 42400,
+       "cociente": 3.230509433997899e-07
+      },
+      {
+       "tamano": 800,
+       "observado": 0.027360719999705907,
+       "teorico": 84800,
+       "cociente": 3.226499999965319e-07
+      }
+     ],
+     "c1": 3.226499999965319e-07,
+     "c2": 5.933358490506609e-07
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "m",
+    "etiqueta_tamano": "m",
+    "medida": "Q",
+    "teoria": "cota n·[1 + I·Σ(k_p − 1)]",
+    "tamanos": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "eje_x": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "observado_medio": [
+     3000.0,
+     3900.0,
+     4760.0,
+     6300.0,
+     7320.0,
+     9940.0
+    ],
+    "observado_desviacion": [
+     316.22776601683796,
+     187.08286933869707,
+     450.55521304275237,
+     777.8174593052023,
+     1112.2050170719426,
+     1248.198702130394
+    ],
+    "observado_minimo": [
+     2600,
+     3700,
+     4200,
+     5200,
+     5900,
+     8400
+    ],
+    "observado_maximo": [
+     3400,
+     4200,
+     5400,
+     7100,
+     8500,
+     11400
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      6400,
+      8500,
+      10600,
+      12700,
+      14800,
+      16900
+     ]
+    ],
+    "coeficientes": [
+     0.5150116095164384
+    ],
+    "teorico_ajustado": [
+     3296.0743009052057,
+     4377.598680889727,
+     5459.123060874247,
+     6540.647440858768,
+     7622.1718208432885,
+     8703.69620082781
+    ],
+    "pendiente_loglog_observada": 1.1822457438189662,
+    "pendiente_loglog_ajuste": 0.9900738437425604,
+    "pendiente_loglog_termino_dominante": 0.9900738437425619,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 3,
+       "observado": 3000.0,
+       "teorico": 3296.0743009052057,
+       "cociente": 0.9101736569397436
+      },
+      {
+       "tamano": 4,
+       "observado": 3900.0,
+       "teorico": 4377.598680889727,
+       "cociente": 0.8908993912633725
+      },
+      {
+       "tamano": 5,
+       "observado": 4760.0,
+       "teorico": 5459.123060874247,
+       "cociente": 0.8719349146230299
+      },
+      {
+       "tamano": 6,
+       "observado": 6300.0,
+       "teorico": 6540.647440858768,
+       "cociente": 0.963207397580327
+      },
+      {
+       "tamano": 7,
+       "observado": 7320.0,
+       "teorico": 7622.1718208432885,
+       "cociente": 0.9603562045115565
+      },
+      {
+       "tamano": 8,
+       "observado": 9940.0,
+       "teorico": 8703.69620082781,
+       "cociente": 1.1420435376701918
+      }
+     ],
+     "c1": 0.8719349146230299,
+     "c2": 1.1420435376701918
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 3,
+       "observado": 3000.0,
+       "teorico": 6400,
+       "cociente": 0.46875
+      },
+      {
+       "tamano": 4,
+       "observado": 3900.0,
+       "teorico": 8500,
+       "cociente": 0.4588235294117647
+      },
+      {
+       "tamano": 5,
+       "observado": 4760.0,
+       "teorico": 10600,
+       "cociente": 0.4490566037735849
+      },
+      {
+       "tamano": 6,
+       "observado": 6300.0,
+       "teorico": 12700,
+       "cociente": 0.49606299212598426
+      },
+      {
+       "tamano": 7,
+       "observado": 7320.0,
+       "teorico": 14800,
+       "cociente": 0.4945945945945946
+      },
+      {
+       "tamano": 8,
+       "observado": 9940.0,
+       "teorico": 16900,
+       "cociente": 0.5881656804733728
+      }
+     ],
+     "c1": 0.4490566037735849,
+     "c2": 0.5881656804733728
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "coordenadas",
+    "dimension": "m",
+    "etiqueta_tamano": "m",
+    "medida": "CPU",
+    "teoria": "∝ cota",
+    "tamanos": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "eje_x": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "observado_medio": [
+     0.002719559999604826,
+     0.0031542199991235974,
+     0.0039912800002639415,
+     0.005448819999219268,
+     0.006489919999876292,
+     0.00893714000012551
+    ],
+    "observado_desviacion": [
+     0.0007104103971185714,
+     0.00029595657949218655,
+     0.0007091081702388133,
+     0.0008105887719241366,
+     0.001213418803409483,
+     0.0011419279302226665
+    ],
+    "observado_minimo": [
+     0.0022243999992497265,
+     0.002823099999659462,
+     0.003095000000030268,
+     0.004163599998719292,
+     0.0048022999999375315,
+     0.00765520000095421
+    ],
+    "observado_maximo": [
+     0.003952899998694193,
+     0.0034784999988914933,
+     0.004944199999954435,
+     0.006207299999005045,
+     0.008167100000719074,
+     0.010141700000531273
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      6400,
+      8500,
+      10600,
+      12700,
+      14800,
+      16900
+     ]
+    ],
+    "coeficientes": [
+     4.5183129519937433e-07
+    ],
+    "teorico_ajustado": [
+     0.0028917202892759955,
+     0.0038405660091946816,
+     0.004789411729113368,
+     0.005738257449032054,
+     0.00668710316895074,
+     0.007635948888869426
+    ],
+    "pendiente_loglog_observada": 1.207724752164348,
+    "pendiente_loglog_ajuste": 0.9900738437425617,
+    "pendiente_loglog_termino_dominante": 0.9900738437425619,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 3,
+       "observado": 0.002719559999604826,
+       "teorico": 0.0028917202892759955,
+       "cociente": 0.9404644044205694
+      },
+      {
+       "tamano": 4,
+       "observado": 0.0031542199991235974,
+       "teorico": 0.0038405660091946816,
+       "cociente": 0.8212904013554496
+      },
+      {
+       "tamano": 5,
+       "observado": 0.0039912800002639415,
+       "teorico": 0.004789411729113368,
+       "cociente": 0.833354955892009
+      },
+      {
+       "tamano": 6,
+       "observado": 0.005448819999219268,
+       "teorico": 0.005738257449032054,
+       "cociente": 0.9495600445982763
+      },
+      {
+       "tamano": 7,
+       "observado": 0.006489919999876292,
+       "teorico": 0.00668710316895074,
+       "cociente": 0.9705129165660251
+      },
+      {
+       "tamano": 8,
+       "observado": 0.00893714000012551,
+       "teorico": 0.007635948888869426,
+       "cociente": 1.1704033290679527
+      }
+     ],
+     "c1": 0.8212904013554496,
+     "c2": 1.1704033290679527
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 3,
+       "observado": 0.002719559999604826,
+       "teorico": 6400,
+       "cociente": 4.2493124993825407e-07
+      },
+      {
+       "tamano": 4,
+       "observado": 0.0031542199991235974,
+       "teorico": 8500,
+       "cociente": 3.7108470577924673e-07
+      },
+      {
+       "tamano": 5,
+       "observado": 0.0039912800002639415,
+       "teorico": 10600,
+       "cociente": 3.7653584908150393e-07
+      },
+      {
+       "tamano": 6,
+       "observado": 0.005448819999219268,
+       "teorico": 12700,
+       "cociente": 4.290409448204148e-07
+      },
+      {
+       "tamano": 7,
+       "observado": 0.006489919999876292,
+       "teorico": 14800,
+       "cociente": 4.3850810809974945e-07
+      },
+      {
+       "tamano": 8,
+       "observado": 0.00893714000012551,
+       "teorico": 16900,
+       "cociente": 5.288248520784326e-07
+      }
+     ],
+     "c1": 3.7108470577924673e-07,
+     "c2": 5.288248520784326e-07
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "S",
+    "etiqueta_tamano": "|S|",
+    "medida": "Q",
+    "teoria": "|S|·m con m = 10",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "eje_x": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "observado_medio": [
+     320.0,
+     640.0,
+     1280.0,
+     2560.0,
+     5120.0,
+     10240.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     320,
+     640,
+     1280,
+     2560,
+     5120,
+     10240
+    ],
+    "observado_maximo": [
+     320,
+     640,
+     1280,
+     2560,
+     5120,
+     10240
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      320,
+      640,
+      1280,
+      2560,
+      5120,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     320.0,
+     640.0,
+     1280.0,
+     2560.0,
+     5120.0,
+     10240.0
+    ],
+    "pendiente_loglog_observada": 1.0000000000000002,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 320.0,
+       "teorico": 320.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 640.0,
+       "teorico": 640.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 1280.0,
+       "teorico": 1280.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 2560.0,
+       "teorico": 2560.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 5120.0,
+       "teorico": 5120.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 10240.0,
+       "teorico": 10240.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 320.0,
+       "teorico": 320,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 640.0,
+       "teorico": 640,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 1280.0,
+       "teorico": 1280,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 2560.0,
+       "teorico": 2560,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 5120.0,
+       "teorico": 5120,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 10240.0,
+       "teorico": 10240,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "S",
+    "etiqueta_tamano": "|S|",
+    "medida": "CPU",
+    "teoria": "∝ |S|·m",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "eje_x": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "observado_medio": [
+     0.0003302999997686129,
+     0.0005483400003868155,
+     0.001162780000595376,
+     0.002279899999848567,
+     0.004704060000585741,
+     0.009390039999925649
+    ],
+    "observado_desviacion": [
+     7.041161157444979e-05,
+     2.310915426510174e-05,
+     0.00014634825593372243,
+     0.00017035979497267983,
+     0.000261577776270849,
+     0.0007083913422379434
+    ],
+    "observado_minimo": [
+     0.00028369999927235767,
+     0.0005184000001463573,
+     0.0010399000002507819,
+     0.0021273000002111075,
+     0.004506400000536814,
+     0.009001799999168725
+    ],
+    "observado_maximo": [
+     0.0004544000003079418,
+     0.0005715000006603077,
+     0.0014157000005070586,
+     0.002508599998691352,
+     0.005159300000741496,
+     0.010652000000845874
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      320,
+      640,
+      1280,
+      2560,
+      5120,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     9.158963828038115e-07
+    ],
+    "teorico_ajustado": [
+     0.0002930868424972197,
+     0.0005861736849944394,
+     0.0011723473699888787,
+     0.0023446947399777575,
+     0.004689389479955515,
+     0.00937877895991103
+    ],
+    "pendiente_loglog_observada": 0.9834313155759092,
+    "pendiente_loglog_ajuste": 0.9999999999999998,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 0.0003302999997686129,
+       "teorico": 0.0002930868424972197,
+       "cociente": 1.1269697300442487
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0005483400003868155,
+       "teorico": 0.0005861736849944394,
+       "cociente": 0.9354565283701147
+      },
+      {
+       "tamano": 128,
+       "observado": 0.001162780000595376,
+       "teorico": 0.0011723473699888787,
+       "cociente": 0.9918391343398556
+      },
+      {
+       "tamano": 256,
+       "observado": 0.002279899999848567,
+       "teorico": 0.0023446947399777575,
+       "cociente": 0.9723653834230868
+      },
+      {
+       "tamano": 512,
+       "observado": 0.004704060000585741,
+       "teorico": 0.004689389479955515,
+       "cociente": 1.0031284500238111
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.009390039999925649,
+       "teorico": 0.00937877895991103,
+       "cociente": 1.001200693615102
+      }
+     ],
+     "c1": 0.9354565283701147,
+     "c2": 1.1269697300442487
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 0.0003302999997686129,
+       "teorico": 320,
+       "cociente": 1.0321874992769153e-06
+      },
+      {
+       "tamano": 64,
+       "observado": 0.0005483400003868155,
+       "teorico": 640,
+       "cociente": 8.567812506043993e-07
+      },
+      {
+       "tamano": 128,
+       "observado": 0.001162780000595376,
+       "teorico": 1280,
+       "cociente": 9.084218754651375e-07
+      },
+      {
+       "tamano": 256,
+       "observado": 0.002279899999848567,
+       "teorico": 2560,
+       "cociente": 8.905859374408465e-07
+      },
+      {
+       "tamano": 512,
+       "observado": 0.004704060000585741,
+       "teorico": 5120,
+       "cociente": 9.187617188644026e-07
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.009390039999925649,
+       "teorico": 10240,
+       "cociente": 9.169960937427391e-07
+      }
+     ],
+     "c1": 8.567812506043993e-07,
+     "c2": 1.0321874992769153e-06
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "m",
+    "etiqueta_tamano": "m",
+    "medida": "Q",
+    "teoria": "|S|·m con |S| = 128",
+    "tamanos": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ],
+    "eje_x": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ],
+    "observado_medio": [
+     640.0,
+     1280.0,
+     2560.0,
+     5120.0,
+     10240.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     640,
+     1280,
+     2560,
+     5120,
+     10240
+    ],
+    "observado_maximo": [
+     640,
+     1280,
+     2560,
+     5120,
+     10240
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      640,
+      1280,
+      2560,
+      5120,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     640.0,
+     1280.0,
+     2560.0,
+     5120.0,
+     10240.0
+    ],
+    "pendiente_loglog_observada": 1.0000000000000002,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 5,
+       "observado": 640.0,
+       "teorico": 640.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 10,
+       "observado": 1280.0,
+       "teorico": 1280.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 20,
+       "observado": 2560.0,
+       "teorico": 2560.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 40,
+       "observado": 5120.0,
+       "teorico": 5120.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 80,
+       "observado": 10240.0,
+       "teorico": 10240.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 5,
+       "observado": 640.0,
+       "teorico": 640,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 10,
+       "observado": 1280.0,
+       "teorico": 1280,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 20,
+       "observado": 2560.0,
+       "teorico": 2560,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 40,
+       "observado": 5120.0,
+       "teorico": 5120,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 80,
+       "observado": 10240.0,
+       "teorico": 10240,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "uniforme",
+    "dimension": "m",
+    "etiqueta_tamano": "m",
+    "medida": "CPU",
+    "teoria": "a·|S| (evaluaciones) + b·|S|·m",
+    "tamanos": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ],
+    "eje_x": [
+     5,
+     10,
+     20,
+     40,
+     80
+    ],
+    "observado_medio": [
+     0.0008228399998188252,
+     0.0011399199996958488,
+     0.001636819999839645,
+     0.002889379999760422,
+     0.005834300000060466
+    ],
+    "observado_desviacion": [
+     6.198494137651828e-05,
+     0.00014328196665617471,
+     5.871611332226045e-05,
+     0.00010597337849223321,
+     0.0008197706753640669
+    ],
+    "observado_minimo": [
+     0.0007650000006833579,
+     0.0010270999991917051,
+     0.0015889999995124526,
+     0.0027491000000736676,
+     0.005370599999878323
+    ],
+    "observado_maximo": [
+     0.0008994999989226926,
+     0.0013240999996924074,
+     0.0017360999991069548,
+     0.0030363999994733604,
+     0.007292000000234111
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      128,
+      128,
+      128,
+      128,
+      128
+     ],
+     [
+      640,
+      1280,
+      2560,
+      5120,
+      10240
+     ]
+    ],
+    "coeficientes": [
+     3.073587237404733e-06,
+     5.219840810098879e-07
+    ],
+    "teorico_ajustado": [
+     0.0007274889782341341,
+     0.0010615587900804624,
+     0.0017296984137731188,
+     0.003065977661158432,
+     0.0057385361559290585
+    ],
+    "pendiente_loglog_observada": 0.6993578852751242,
+    "pendiente_loglog_ajuste": 0.7489533855640075,
+    "pendiente_loglog_termino_dominante": 1.0000000000000002,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 5,
+       "observado": 0.0008228399998188252,
+       "teorico": 0.0007274889782341341,
+       "cociente": 1.131068682052257
+      },
+      {
+       "tamano": 10,
+       "observado": 0.0011399199996958488,
+       "teorico": 0.0010615587900804624,
+       "cociente": 1.0738171171937136
+      },
+      {
+       "tamano": 20,
+       "observado": 0.001636819999839645,
+       "teorico": 0.0017296984137731188,
+       "cociente": 0.9463036947979439
+      },
+      {
+       "tamano": 40,
+       "observado": 0.002889379999760422,
+       "teorico": 0.003065977661158432,
+       "cociente": 0.9424008649393469
+      },
+      {
+       "tamano": 80,
+       "observado": 0.005834300000060466,
+       "teorico": 0.0057385361559290585,
+       "cociente": 1.0166878523597807
+      }
+     ],
+     "c1": 0.9424008649393469,
+     "c2": 1.131068682052257
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 5,
+       "observado": 0.0008228399998188252,
+       "teorico": 640,
+       "cociente": 1.2856874997169144e-06
+      },
+      {
+       "tamano": 10,
+       "observado": 0.0011399199996958488,
+       "teorico": 1280,
+       "cociente": 8.905624997623819e-07
+      },
+      {
+       "tamano": 20,
+       "observado": 0.001636819999839645,
+       "teorico": 2560,
+       "cociente": 6.393828124373613e-07
+      },
+      {
+       "tamano": 40,
+       "observado": 0.002889379999760422,
+       "teorico": 5120,
+       "cociente": 5.643320312032074e-07
+      },
+      {
+       "tamano": 80,
+       "observado": 0.005834300000060466,
+       "teorico": 10240,
+       "cociente": 5.697558593809049e-07
+      }
+     ],
+     "c1": 5.643320312032074e-07,
+     "c2": 1.2856874997169144e-06
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "B",
+    "etiqueta_tamano": "B/|S| (|S| = 128)",
+    "medida": "Q",
+    "teoria": "B",
+    "tamanos": [
+     2,
+     4,
+     8,
+     16,
+     32,
+     64
+    ],
+    "eje_x": [
+     256,
+     512,
+     1024,
+     2048,
+     4096,
+     8192
+    ],
+    "observado_medio": [
+     256.0,
+     512.0,
+     1024.0,
+     2048.0,
+     4096.0,
+     8192.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     256,
+     512,
+     1024,
+     2048,
+     4096,
+     8192
+    ],
+    "observado_maximo": [
+     256,
+     512,
+     1024,
+     2048,
+     4096,
+     8192
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     256.0,
+     512.0,
+     1024.0,
+     2048.0,
+     4096.0,
+     8192.0
+    ],
+    "pendiente_loglog_observada": 1.0,
+    "pendiente_loglog_ajuste": 1.0,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 256,
+       "observado": 256.0,
+       "teorico": 256.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 512.0,
+       "teorico": 512.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 1024.0,
+       "teorico": 1024.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 2048.0,
+       "teorico": 2048.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 4096.0,
+       "teorico": 4096.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 8192,
+       "observado": 8192.0,
+       "teorico": 8192.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 256,
+       "observado": 256.0,
+       "teorico": 256,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 512.0,
+       "teorico": 512,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 1024.0,
+       "teorico": 1024,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 2048,
+       "observado": 2048.0,
+       "teorico": 2048,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 4096,
+       "observado": 4096.0,
+       "teorico": 4096,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 8192,
+       "observado": 8192.0,
+       "teorico": 8192,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "B",
+    "etiqueta_tamano": "B/|S| (|S| = 128)",
+    "medida": "CPU",
+    "teoria": "a (fijo por corrida) + b·B (cada jugada: una consulta y el índice de los |S| brazos)",
+    "tamanos": [
+     2,
+     4,
+     8,
+     16,
+     32,
+     64
+    ],
+    "eje_x": [
+     256,
+     512,
+     1024,
+     2048,
+     4096,
+     8192
+    ],
+    "observado_medio": [
+     0.002039340000192169,
+     0.004396120000092196,
+     0.009302160000152071,
+     0.019190819999857923,
+     0.04022402000009606,
+     0.08273776000060025
+    ],
+    "observado_desviacion": [
+     0.0002762423631741807,
+     0.00023169538654484322,
+     0.0001316579958651846,
+     0.0002769430753143564,
+     0.001799224571581276,
+     0.005337218972250226
+    ],
+    "observado_minimo": [
+     0.0017955999992409488,
+     0.004144099999393802,
+     0.009142400000200723,
+     0.0189979000006133,
+     0.03885169999921345,
+     0.07850230000076408
+    ],
+    "observado_maximo": [
+     0.0023380000002362067,
+     0.004681100001107552,
+     0.009478199999648496,
+     0.019671199999720557,
+     0.04305200000089826,
+     0.09162340000148106
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     [
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192
+     ]
+    ],
+    "coeficientes": [
+     0.0,
+     9.995305116817174e-06
+    ],
+    "teorico_ajustado": [
+     0.0025587981099051966,
+     0.005117596219810393,
+     0.010235192439620787,
+     0.020470384879241573,
+     0.040940769758483146,
+     0.08188153951696629
+    ],
+    "pendiente_loglog_observada": 1.066797167246374,
+    "pendiente_loglog_ajuste": 1.0000000000000002,
+    "pendiente_loglog_termino_dominante": 1.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 256,
+       "observado": 0.002039340000192169,
+       "teorico": 0.0025587981099051966,
+       "cociente": 0.7969913657110393
+      },
+      {
+       "tamano": 512,
+       "observado": 0.004396120000092196,
+       "teorico": 0.005117596219810393,
+       "cociente": 0.8590204876021016
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.009302160000152071,
+       "teorico": 0.010235192439620787,
+       "cociente": 0.9088407526313903
+      },
+      {
+       "tamano": 2048,
+       "observado": 0.019190819999857923,
+       "teorico": 0.020470384879241573,
+       "cociente": 0.9374918993007689
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.04022402000009606,
+       "teorico": 0.040940769758483146,
+       "cociente": 0.9824930072733044
+      },
+      {
+       "tamano": 8192,
+       "observado": 0.08273776000060025,
+       "teorico": 0.08188153951696629,
+       "cociente": 1.0104568195552375
+      }
+     ],
+     "c1": 0.7969913657110393,
+     "c2": 1.0104568195552375
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 256,
+       "observado": 0.002039340000192169,
+       "teorico": 256,
+       "cociente": 7.96617187575066e-06
+      },
+      {
+       "tamano": 512,
+       "observado": 0.004396120000092196,
+       "teorico": 512,
+       "cociente": 8.58617187518007e-06
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.009302160000152071,
+       "teorico": 1024,
+       "cociente": 9.084140625148507e-06
+      },
+      {
+       "tamano": 2048,
+       "observado": 0.019190819999857923,
+       "teorico": 2048,
+       "cociente": 9.370517578055627e-06
+      },
+      {
+       "tamano": 4096,
+       "observado": 0.04022402000009606,
+       "teorico": 4096,
+       "cociente": 9.820317382835952e-06
+      },
+      {
+       "tamano": 8192,
+       "observado": 0.08273776000060025,
+       "teorico": 8192,
+       "cociente": 1.0099824218823273e-05
+      }
+     ],
+     "c1": 7.96617187575066e-06,
+     "c2": 1.0099824218823273e-05
+    },
+    "es_cpu": true
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "S",
+    "etiqueta_tamano": "|S| (B = 16·|S|)",
+    "medida": "Q",
+    "teoria": "B = 16·|S|",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "eje_x": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "observado_medio": [
+     512.0,
+     1024.0,
+     2048.0,
+     4096.0,
+     8192.0,
+     16384.0
+    ],
+    "observado_desviacion": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "observado_minimo": [
+     512,
+     1024,
+     2048,
+     4096,
+     8192,
+     16384
+    ],
+    "observado_maximo": [
+     512,
+     1024,
+     2048,
+     4096,
+     8192,
+     16384
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384
+     ]
+    ],
+    "coeficientes": [
+     1.0
+    ],
+    "teorico_ajustado": [
+     512.0,
+     1024.0,
+     2048.0,
+     4096.0,
+     8192.0,
+     16384.0
+    ],
+    "pendiente_loglog_observada": 0.9999999999999998,
+    "pendiente_loglog_ajuste": 0.9999999999999998,
+    "pendiente_loglog_termino_dominante": 0.9999999999999998,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 512.0,
+       "teorico": 512.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 1024.0,
+       "teorico": 1024.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 2048.0,
+       "teorico": 2048.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 4096.0,
+       "teorico": 4096.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 8192.0,
+       "teorico": 8192.0,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 16384.0,
+       "teorico": 16384.0,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 512.0,
+       "teorico": 512,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 64,
+       "observado": 1024.0,
+       "teorico": 1024,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 128,
+       "observado": 2048.0,
+       "teorico": 2048,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 256,
+       "observado": 4096.0,
+       "teorico": 4096,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 512,
+       "observado": 8192.0,
+       "teorico": 8192,
+       "cociente": 1.0
+      },
+      {
+       "tamano": 1024,
+       "observado": 16384.0,
+       "teorico": 16384,
+       "cociente": 1.0
+      }
+     ],
+     "c1": 1.0,
+     "c2": 1.0
+    },
+    "es_cpu": false
+   },
+   {
+    "algoritmo": "ucb1",
+    "dimension": "S",
+    "etiqueta_tamano": "|S| (B = 16·|S|)",
+    "medida": "CPU",
+    "teoria": "a·B (consulta por jugada) + b·B·|S| (índice), B = 16·|S|",
+    "tamanos": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "eje_x": [
+     32,
+     64,
+     128,
+     256,
+     512,
+     1024
+    ],
+    "observado_medio": [
+     0.0045650600000954,
+     0.009356919999845559,
+     0.01903883999984828,
+     0.04022662000024866,
+     0.08815920000051847,
+     0.19436857999971835
+    ],
+    "observado_desviacion": [
+     0.000289748068061088,
+     0.00017447769818154971,
+     0.0002962020393530752,
+     0.0020983981999682984,
+     0.0013727095415851614,
+     0.002618273534991188
+    ],
+    "observado_minimo": [
+     0.004271499999958905,
+     0.009086399999432615,
+     0.018834799999240204,
+     0.03771260000030452,
+     0.086773600000015,
+     0.19203870000092138
+    ],
+    "observado_maximo": [
+     0.005036200000176905,
+     0.009517000000414555,
+     0.019553000000087195,
+     0.04289310000058322,
+     0.0902724000006856,
+     0.1986853999987943
+    ],
+    "curva_sin_ajuste": false,
+    "bases": [
+     [
+      512,
+      1024,
+      2048,
+      4096,
+      8192,
+      16384
+     ],
+     [
+      16384,
+      65536,
+      262144,
+      1048576,
+      4194304,
+      16777216
+     ]
+    ],
+    "coeficientes": [
+     9.386647246789535e-06,
+     2.4307944093097186e-09
+    ],
+    "teorico_ajustado": [
+     0.004845789525958373,
+     0.009771231323121006,
+     0.019861071731059055,
+     0.04099657980138628,
+     0.08709090495984526,
+     0.1945727913479813
+    ],
+    "pendiente_loglog_observada": 1.0813516692507732,
+    "pendiente_loglog_ajuste": 1.0614417590535616,
+    "pendiente_loglog_termino_dominante": 2.0,
+    "cocientes_frente_al_ajuste": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 0.0045650600000954,
+       "teorico": 0.004845789525958373,
+       "cociente": 0.9420673299244355
+      },
+      {
+       "tamano": 64,
+       "observado": 0.009356919999845559,
+       "teorico": 0.009771231323121006,
+       "cociente": 0.9575988624591161
+      },
+      {
+       "tamano": 128,
+       "observado": 0.01903883999984828,
+       "teorico": 0.019861071731059055,
+       "cociente": 0.9586008377420562
+      },
+      {
+       "tamano": 256,
+       "observado": 0.04022662000024866,
+       "teorico": 0.04099657980138628,
+       "cociente": 0.981218925947779
+      },
+      {
+       "tamano": 512,
+       "observado": 0.08815920000051847,
+       "teorico": 0.08709090495984526,
+       "cociente": 1.0122664363307026
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.19436857999971835,
+       "teorico": 0.1945727913479813,
+       "cociente": 0.9989504629766156
+      }
+     ],
+     "c1": 0.9420673299244355,
+     "c2": 1.0122664363307026
+    },
+    "cocientes_frente_al_termino_dominante": {
+     "filas": [
+      {
+       "tamano": 32,
+       "observado": 0.0045650600000954,
+       "teorico": 16384,
+       "cociente": 2.786291503964478e-07
+      },
+      {
+       "tamano": 64,
+       "observado": 0.009356919999845559,
+       "teorico": 65536,
+       "cociente": 1.4277526855233091e-07
+      },
+      {
+       "tamano": 128,
+       "observado": 0.01903883999984828,
+       "teorico": 262144,
+       "cociente": 7.26274108880931e-08
+      },
+      {
+       "tamano": 256,
+       "observado": 0.04022662000024866,
+       "teorico": 1048576,
+       "cociente": 3.8363094330071125e-08
+      },
+      {
+       "tamano": 512,
+       "observado": 0.08815920000051847,
+       "teorico": 4194304,
+       "cociente": 2.101879119885408e-08
+      },
+      {
+       "tamano": 1024,
+       "observado": 0.19436857999971835,
+       "teorico": 16777216,
+       "cociente": 1.1585270166380307e-08
+      }
+     ],
+     "c1": 1.1585270166380307e-08,
+     "c2": 2.786291503964478e-07
+    },
+    "es_cpu": true
+   }
+  ],
+  "corridas": 385
+ }
+}
