@@ -76,9 +76,9 @@
   "semilla_muestra": 2026
  },
  "metadatos": {
-  "fecha": "2026-11-22 21:51:01",
-  "git_hash": "93d1e0f6e3b5e43e64138d3baa25814e960964dc",
-  "git_sucio": true,
+  "fecha": "2026-11-22 21:55:15",
+  "git_hash": "9806479c794737c58de208bc98d639534fede480",
+  "git_sucio": false,
   "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
   "hardware": {
    "python": "3.12.10",
@@ -405,7 +405,8 @@
       "de": 0,
       "a": 7,
       "precision_antes": 0.09,
-      "precision_despues": 0.1
+      "precision_despues": 0.1,
+      "motivo": "mejora"
      },
      {
       "fase": "pasada 1",
@@ -413,7 +414,8 @@
       "de": 0,
       "a": 1,
       "precision_antes": 0.1,
-      "precision_despues": 0.11
+      "precision_despues": 0.11,
+      "motivo": "mejora"
      },
      {
       "fase": "pasada 1",
@@ -421,7 +423,8 @@
       "de": 0,
       "a": 7,
       "precision_antes": 0.11,
-      "precision_despues": 0.14
+      "precision_despues": 0.14,
+      "motivo": "mejora"
      }
     ]
    },
@@ -437,9 +440,9 @@
      ]
     }
    ],
-   "segundos_cpu_fuerza_bruta": 0.6425641999994696
+   "segundos_cpu_fuerza_bruta": 0.62361779999992
   },
-  "segundos_cpu_rejilla": 75.3465868000003,
+  "segundos_cpu_rejilla": 22.225047699999777,
   "fuentes": {
    "precision_inicial": "resultados/registro_busqueda.csv (9 %) y resultados/registro_busqueda_recalificado_a4cd966.csv (8 %)",
    "precision_optima": "README_curso.md (DanielMelo404, 2026): techo cercano al 24 %",
