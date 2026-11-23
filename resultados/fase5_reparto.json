@@ -1,0 +1,2691 @@
+{
+ "descripcion": "Fase 5: Algoritmo 4, reparto uniforme, SH y UCB1 con el mismo presupuesto B",
+ "parametros": {
+  "plan": "resultados/fase5_plan.json",
+  "commit_del_plan": "65e075742eb021e9fd7b9b63749427e151bf39bf",
+  "sha256_del_plan": "b079b50810d6039c4b1e45822bbfe2a9422dc06d1a2e2b9790d88ae77d8638d6"
+ },
+ "semilla": {
+  "permutaciones": "1 a 100",
+  "muestra_128": "6000 + i"
+ },
+ "metadatos": {
+  "fecha": "2026-11-22 23:10:15",
+  "git_hash": "9fa499d42541103f61353d109ce098b388877867",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "resumen": {
+   "calibrado_24|muestra_128": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.049999999999999996,
+       "desviacion": 0.04,
+       "minimo": 0.01,
+       "maximo": 0.09
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.053200000000000004,
+       "desviacion": 0.008254089895318563,
+       "minimo": 0.0451,
+       "maximo": 0.0616
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.08,
+       "desviacion": 0.06557438524302,
+       "minimo": 0.02,
+       "maximo": 0.15
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.043366666666666664,
+       "desviacion": 0.007205784713224049,
+       "minimo": 0.035699999999999996,
+       "maximo": 0.05
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09666666666666668,
+       "desviacion": 0.04509249752822895,
+       "minimo": 0.05,
+       "maximo": 0.14
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0341,
+       "desviacion": 0.004563989482897613,
+       "minimo": 0.028999999999999998,
+       "maximo": 0.0378
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.16666666666666666,
+       "desviacion": 0.10115993936995679,
+       "minimo": 0.05,
+       "maximo": 0.23
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.024533333333333334,
+       "desviacion": 0.0022744962812309344,
+       "minimo": 0.022,
+       "maximo": 0.026400000000000007
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.2733333333333334,
+       "desviacion": 0.13576941236277534,
+       "minimo": 0.13,
+       "maximo": 0.4
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.015733333333333332,
+       "desviacion": 0.001985782801147535,
+       "minimo": 0.014299999999999997,
+       "maximo": 0.018000000000000006
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.049999999999999996,
+       "desviacion": 0.04,
+       "minimo": 0.01,
+       "maximo": 0.09
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.053200000000000004,
+       "desviacion": 0.008254089895318563,
+       "minimo": 0.0451,
+       "maximo": 0.0616
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.08,
+       "desviacion": 0.06557438524302,
+       "minimo": 0.02,
+       "maximo": 0.15
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.043466666666666674,
+       "desviacion": 0.007229338374521792,
+       "minimo": 0.035699999999999996,
+       "maximo": 0.05
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09999999999999999,
+       "desviacion": 0.0360555127546399,
+       "minimo": 0.06,
+       "maximo": 0.13
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0334,
+       "desviacion": 0.003950949253027685,
+       "minimo": 0.028899999999999995,
+       "maximo": 0.0363
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.18999999999999997,
+       "desviacion": 0.09539392014169457,
+       "minimo": 0.08,
+       "maximo": 0.25
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.02273333333333333,
+       "desviacion": 0.0023180451534284986,
+       "minimo": 0.020599999999999997,
+       "maximo": 0.025200000000000004
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.3133333333333333,
+       "desviacion": 0.1484362938547488,
+       "minimo": 0.15,
+       "maximo": 0.44
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.013300000000000001,
+       "desviacion": 0.0012288205727444546,
+       "minimo": 0.012399999999999998,
+       "maximo": 0.014700000000000005
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "successive_halving": {
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09333333333333334,
+       "desviacion": 0.11930353445448855,
+       "minimo": 0.01,
+       "maximo": 0.23
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03416666666666667,
+       "desviacion": 0.010715565002991369,
+       "minimo": 0.0242,
+       "maximo": 0.045500000000000006
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.22333333333333336,
+       "desviacion": 0.226789182575654,
+       "minimo": 0.05,
+       "maximo": 0.48
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.019966666666666667,
+       "desviacion": 0.010373202655560791,
+       "minimo": 0.011399999999999999,
+       "maximo": 0.03150000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 968.0,
+       "desviacion": 0.0,
+       "minimo": 968.0,
+       "maximo": 968.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.4666666666666666,
+       "desviacion": 0.28536526301099324,
+       "minimo": 0.25,
+       "maximo": 0.79
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0088,
+       "desviacion": 0.005543464620614082,
+       "minimo": 0.0036999999999999993,
+       "maximo": 0.014700000000000005
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2000.0,
+       "desviacion": 0.0,
+       "minimo": 2000.0,
+       "maximo": 2000.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.77,
+       "desviacion": 0.2007485989988473,
+       "minimo": 0.63,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0026333333333333334,
+       "desviacion": 0.002400694344004113,
+       "minimo": 0.0,
+       "maximo": 0.004700000000000003
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    }
+   },
+   "calibrado_24|vecindario_doble": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0033333333333333335,
+       "desviacion": 0.005773502691896258,
+       "minimo": 0.0,
+       "maximo": 0.01
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.11186666666666667,
+       "desviacion": 0.03055508686509225,
+       "minimo": 0.07660000000000002,
+       "maximo": 0.1304
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.02,
+       "desviacion": 0.017320508075688773,
+       "minimo": 0.0,
+       "maximo": 0.03
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.09899999999999999,
+       "desviacion": 0.02624290380274255,
+       "minimo": 0.06870000000000001,
+       "maximo": 0.1145
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.06666666666666667,
+       "desviacion": 0.06506407098647712,
+       "minimo": 0.0,
+       "maximo": 0.13
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.079,
+       "desviacion": 0.020285955732969544,
+       "minimo": 0.05580000000000001,
+       "maximo": 0.09340000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.22333333333333336,
+       "desviacion": 0.15631165450257806,
+       "minimo": 0.08,
+       "maximo": 0.39
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.048966666666666665,
+       "desviacion": 0.012973177457097135,
+       "minimo": 0.03760000000000001,
+       "maximo": 0.0631
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.49666666666666665,
+       "desviacion": 0.2939954648176283,
+       "minimo": 0.17,
+       "maximo": 0.74
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.016100000000000007,
+       "desviacion": 0.004413615298142788,
+       "minimo": 0.0115,
+       "maximo": 0.020300000000000012
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0033333333333333335,
+       "desviacion": 0.005773502691896258,
+       "minimo": 0.0,
+       "maximo": 0.01
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.11186666666666667,
+       "desviacion": 0.03055508686509225,
+       "minimo": 0.07660000000000002,
+       "maximo": 0.1304
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.023333333333333334,
+       "desviacion": 0.020816659994661327,
+       "minimo": 0.0,
+       "maximo": 0.04
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.09866666666666668,
+       "desviacion": 0.025952328090815532,
+       "minimo": 0.06870000000000001,
+       "maximo": 0.11379999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09999999999999999,
+       "desviacion": 0.06557438524302,
+       "minimo": 0.03,
+       "maximo": 0.16
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07433333333333335,
+       "desviacion": 0.019137746297130526,
+       "minimo": 0.052800000000000014,
+       "maximo": 0.08940000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.32333333333333336,
+       "desviacion": 0.22007574453658754,
+       "minimo": 0.1,
+       "maximo": 0.54
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03790000000000001,
+       "desviacion": 0.007977468270071652,
+       "minimo": 0.0317,
+       "maximo": 0.046900000000000004
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.5966666666666667,
+       "desviacion": 0.26083200212652846,
+       "minimo": 0.3,
+       "maximo": 0.79
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.010666666666666672,
+       "desviacion": 0.0050362022728771905,
+       "minimo": 0.006599999999999999,
+       "maximo": 0.01630000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "successive_halving": {
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.25333333333333335,
+       "desviacion": 0.03511884584284245,
+       "minimo": 0.22,
+       "maximo": 0.29
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.035800000000000005,
+       "desviacion": 0.02631710470397532,
+       "minimo": 0.0071000000000000065,
+       "maximo": 0.0588
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3754.0,
+       "desviacion": 0.0,
+       "minimo": 3754.0,
+       "maximo": 3754.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.6566666666666666,
+       "desviacion": 0.06027713773341708,
+       "minimo": 0.6,
+       "maximo": 0.72
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.015066666666666667,
+       "desviacion": 0.011871955750142152,
+       "minimo": 0.0028000000000000026,
+       "maximo": 0.0265
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7705.0,
+       "desviacion": 0.0,
+       "minimo": 7705.0,
+       "maximo": 7705.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.9199999999999999,
+       "desviacion": 0.026457513110645866,
+       "minimo": 0.9,
+       "maximo": 0.95
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0028000000000000004,
+       "desviacion": 0.0025238858928247924,
+       "minimo": 0.0005000000000000004,
+       "maximo": 0.0055000000000000005
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 14872.0,
+       "desviacion": 0.0,
+       "minimo": 14872.0,
+       "maximo": 14872.0
+      }
+     }
+    }
+   },
+   "calibrado_28|muestra_128": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.026457513110645904,
+       "minimo": 0.01,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0653,
+       "desviacion": 0.02498019215298393,
+       "minimo": 0.0472,
+       "maximo": 0.0938
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.06666666666666667,
+       "desviacion": 0.03214550253664318,
+       "minimo": 0.03,
+       "maximo": 0.09
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.054266666666666664,
+       "desviacion": 0.013886804288004255,
+       "minimo": 0.040999999999999995,
+       "maximo": 0.0687
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.15333333333333335,
+       "desviacion": 0.10016652800877814,
+       "minimo": 0.04,
+       "maximo": 0.23
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04133333333333333,
+       "desviacion": 0.004735328218121037,
+       "minimo": 0.0363,
+       "maximo": 0.045700000000000005
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.19999999999999998,
+       "desviacion": 0.12124355652982141,
+       "minimo": 0.07,
+       "maximo": 0.31
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03233333333333333,
+       "desviacion": 0.003300505011863083,
+       "minimo": 0.0296,
+       "maximo": 0.036
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.44333333333333336,
+       "desviacion": 0.1724335620850342,
+       "minimo": 0.29,
+       "maximo": 0.63
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.015199999999999997,
+       "desviacion": 0.0015716233645501714,
+       "minimo": 0.013499999999999998,
+       "maximo": 0.0166
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.026457513110645904,
+       "minimo": 0.01,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.06476666666666667,
+       "desviacion": 0.024067890088940763,
+       "minimo": 0.0472,
+       "maximo": 0.09219999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.06666666666666667,
+       "desviacion": 0.03214550253664318,
+       "minimo": 0.03,
+       "maximo": 0.09
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.054266666666666664,
+       "desviacion": 0.013886804288004255,
+       "minimo": 0.040999999999999995,
+       "maximo": 0.0687
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.16666666666666666,
+       "desviacion": 0.1096965511460289,
+       "minimo": 0.04,
+       "maximo": 0.23
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04036666666666666,
+       "desviacion": 0.005105226080530943,
+       "minimo": 0.035399999999999994,
+       "maximo": 0.045599999999999995
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.26,
+       "desviacion": 0.12529964086141668,
+       "minimo": 0.14,
+       "maximo": 0.39
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.029033333333333328,
+       "desviacion": 0.0022479620400116503,
+       "minimo": 0.0271,
+       "maximo": 0.0315
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.49666666666666665,
+       "desviacion": 0.1767295485574875,
+       "minimo": 0.38,
+       "maximo": 0.7
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.011199999999999996,
+       "desviacion": 0.0012767145334803738,
+       "minimo": 0.010099999999999991,
+       "maximo": 0.012599999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "successive_halving": {
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.38000000000000006,
+       "desviacion": 0.07549834435270751,
+       "minimo": 0.3,
+       "maximo": 0.45
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.019566666666666666,
+       "desviacion": 0.005727419430540541,
+       "minimo": 0.013099999999999999,
+       "maximo": 0.024
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.7166666666666667,
+       "desviacion": 0.1001665280087781,
+       "minimo": 0.64,
+       "maximo": 0.83
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.006899999999999996,
+       "desviacion": 0.005288667128870941,
+       "minimo": 0.0035999999999999995,
+       "maximo": 0.012999999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 968.0,
+       "desviacion": 0.0,
+       "minimo": 968.0,
+       "maximo": 968.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.9499999999999998,
+       "desviacion": 0.010000000000000009,
+       "minimo": 0.94,
+       "maximo": 0.96
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0011333333333333328,
+       "desviacion": 0.0010969655114602891,
+       "minimo": 0.000499999999999999,
+       "maximo": 0.0024
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2000.0,
+       "desviacion": 0.0,
+       "minimo": 2000.0,
+       "maximo": 2000.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 1.0,
+       "desviacion": 0.0,
+       "minimo": 1.0,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    }
+   },
+   "calibrado_28|vecindario_doble": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0883,
+       "desviacion": 0.009700000000000007,
+       "minimo": 0.07859999999999999,
+       "maximo": 0.098
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.006666666666666667,
+       "desviacion": 0.005773502691896258,
+       "minimo": 0.0,
+       "maximo": 0.01
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08886666666666666,
+       "desviacion": 0.012651613862797645,
+       "minimo": 0.07609999999999999,
+       "maximo": 0.1014
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.06666666666666667,
+       "desviacion": 0.06506407098647712,
+       "minimo": 0.0,
+       "maximo": 0.13
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0779,
+       "desviacion": 0.008507055894961547,
+       "minimo": 0.0696,
+       "maximo": 0.0866
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.19999999999999998,
+       "desviacion": 0.1769180601295413,
+       "minimo": 0.01,
+       "maximo": 0.36
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.049499999999999995,
+       "desviacion": 0.0029512709126747285,
+       "minimo": 0.04650000000000001,
+       "maximo": 0.05239999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.4066666666666667,
+       "desviacion": 0.28711205710198473,
+       "minimo": 0.09,
+       "maximo": 0.65
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.021299999999999996,
+       "desviacion": 0.006099999999999993,
+       "minimo": 0.0157,
+       "maximo": 0.027799999999999984
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0883,
+       "desviacion": 0.009700000000000007,
+       "minimo": 0.07859999999999999,
+       "maximo": 0.098
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.01,
+       "desviacion": 0.01,
+       "minimo": 0.0,
+       "maximo": 0.02
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08756666666666667,
+       "desviacion": 0.011750035460939402,
+       "minimo": 0.07579999999999999,
+       "maximo": 0.0993
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.07666666666666667,
+       "desviacion": 0.0862167810425171,
+       "minimo": 0.0,
+       "maximo": 0.17
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07050000000000001,
+       "desviacion": 0.006954135460285495,
+       "minimo": 0.06309999999999999,
+       "maximo": 0.07690000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.26,
+       "desviacion": 0.19313207915827965,
+       "minimo": 0.05,
+       "maximo": 0.43
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04089999999999999,
+       "desviacion": 0.0050318982501636475,
+       "minimo": 0.0377,
+       "maximo": 0.04669999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.5433333333333333,
+       "desviacion": 0.2874601421646718,
+       "minimo": 0.22,
+       "maximo": 0.77
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.011533333333333328,
+       "desviacion": 0.006528654787422385,
+       "minimo": 0.006899999999999998,
+       "maximo": 0.018999999999999986
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "successive_halving": {
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.4766666666666666,
+       "desviacion": 0.19731531449264988,
+       "minimo": 0.25,
+       "maximo": 0.61
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.026733333333333328,
+       "desviacion": 0.0045938364504336995,
+       "minimo": 0.0215,
+       "maximo": 0.030099999999999984
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3754.0,
+       "desviacion": 0.0,
+       "minimo": 3754.0,
+       "maximo": 3754.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.82,
+       "desviacion": 0.14730919862656236,
+       "minimo": 0.65,
+       "maximo": 0.91
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.007899999999999997,
+       "desviacion": 0.005071488933242382,
+       "minimo": 0.004299999999999999,
+       "maximo": 0.013699999999999992
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7705.0,
+       "desviacion": 0.0,
+       "minimo": 7705.0,
+       "maximo": 7705.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.9833333333333334,
+       "desviacion": 0.028867513459481315,
+       "minimo": 0.95,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0006666666666666664,
+       "desviacion": 0.0011547005383792512,
+       "minimo": 0.0,
+       "maximo": 0.001999999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 14872.0,
+       "desviacion": 0.0,
+       "minimo": 14872.0,
+       "maximo": 14872.0
+      }
+     }
+    }
+   },
+   "disyuntivo|muestra_128": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.04358898943540673,
+       "minimo": 0.0,
+       "maximo": 0.08
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.09673333333333332,
+       "desviacion": 0.02401090030243209,
+       "minimo": 0.07109999999999998,
+       "maximo": 0.11869999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03666666666666667,
+       "desviacion": 0.020816659994661327,
+       "minimo": 0.02,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08193333333333332,
+       "desviacion": 0.011082117727823207,
+       "minimo": 0.06919999999999998,
+       "maximo": 0.0894
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.04,
+       "desviacion": 0.017320508075688773,
+       "minimo": 0.03,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07676666666666666,
+       "desviacion": 0.009729508380865575,
+       "minimo": 0.06639999999999999,
+       "maximo": 0.0857
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.06,
+       "desviacion": 0.03605551275463989,
+       "minimo": 0.02,
+       "maximo": 0.09
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.061799999999999994,
+       "desviacion": 0.010332956982393768,
+       "minimo": 0.049899999999999986,
+       "maximo": 0.06849999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09333333333333334,
+       "desviacion": 0.020816659994661323,
+       "minimo": 0.07,
+       "maximo": 0.11
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04869999999999999,
+       "desviacion": 0.0057297469403107225,
+       "minimo": 0.042099999999999985,
+       "maximo": 0.052399999999999995
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03666666666666667,
+       "desviacion": 0.03214550253664318,
+       "minimo": 0.0,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08506666666666667,
+       "desviacion": 0.012833290043217035,
+       "minimo": 0.07279999999999999,
+       "maximo": 0.0984
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.04,
+       "desviacion": 0.017320508075688773,
+       "minimo": 0.03,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07513333333333333,
+       "desviacion": 0.010059986746180801,
+       "minimo": 0.06359999999999999,
+       "maximo": 0.08209999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03666666666666667,
+       "desviacion": 0.020816659994661327,
+       "minimo": 0.02,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0706,
+       "desviacion": 0.009808669634563099,
+       "minimo": 0.05949999999999998,
+       "maximo": 0.0781
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.05333333333333334,
+       "desviacion": 0.01527525231651947,
+       "minimo": 0.04,
+       "maximo": 0.07
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.05693333333333333,
+       "desviacion": 0.005284253337353669,
+       "minimo": 0.051099999999999986,
+       "maximo": 0.061399999999999996
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.1466666666666667,
+       "desviacion": 0.050332229568471665,
+       "minimo": 0.1,
+       "maximo": 0.2
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03393333333333332,
+       "desviacion": 0.0022030282189144518,
+       "minimo": 0.03179999999999998,
+       "maximo": 0.0362
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "successive_halving": {
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.09000000000000001,
+       "desviacion": 0.04,
+       "minimo": 0.05,
+       "maximo": 0.13
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.05203333333333332,
+       "desviacion": 0.007892612579706004,
+       "minimo": 0.046699999999999985,
+       "maximo": 0.0611
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.17,
+       "desviacion": 0.09000000000000001,
+       "minimo": 0.08,
+       "maximo": 0.26
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03413333333333333,
+       "desviacion": 0.004154916766113772,
+       "minimo": 0.0301,
+       "maximo": 0.0384
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 968.0,
+       "desviacion": 0.0,
+       "minimo": 968.0,
+       "maximo": 968.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.37000000000000005,
+       "desviacion": 0.14730919862656236,
+       "minimo": 0.2,
+       "maximo": 0.46
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.016766666666666662,
+       "desviacion": 0.0018009256878986854,
+       "minimo": 0.01469999999999999,
+       "maximo": 0.018000000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2000.0,
+       "desviacion": 0.0,
+       "minimo": 2000.0,
+       "maximo": 2000.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.65,
+       "desviacion": 0.11789826122551596,
+       "minimo": 0.52,
+       "maximo": 0.75
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.005399999999999999,
+       "desviacion": 0.0010148891565092235,
+       "minimo": 0.004500000000000001,
+       "maximo": 0.006500000000000003
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    }
+   },
+   "disyuntivo|vecindario_doble": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.083,
+       "desviacion": 0.009141115905621168,
+       "minimo": 0.07339999999999998,
+       "maximo": 0.09160000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.013333333333333334,
+       "desviacion": 0.015275252316519466,
+       "minimo": 0.0,
+       "maximo": 0.03
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07809999999999999,
+       "desviacion": 0.010209309477139003,
+       "minimo": 0.06979999999999999,
+       "maximo": 0.08950000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.023333333333333334,
+       "desviacion": 0.025166114784235832,
+       "minimo": 0.0,
+       "maximo": 0.05
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07403333333333333,
+       "desviacion": 0.01089694146691325,
+       "minimo": 0.06719999999999998,
+       "maximo": 0.0866
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.03,
+       "minimo": 0.0,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0639,
+       "desviacion": 0.010858637115218478,
+       "minimo": 0.05679999999999999,
+       "maximo": 0.07640000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.04,
+       "desviacion": 0.017320508075688773,
+       "minimo": 0.03,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.05366666666666666,
+       "desviacion": 0.009757731976916234,
+       "minimo": 0.04659999999999998,
+       "maximo": 0.06480000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.083,
+       "desviacion": 0.009141115905621168,
+       "minimo": 0.07339999999999998,
+       "maximo": 0.09160000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.02666666666666667,
+       "desviacion": 0.025166114784235832,
+       "minimo": 0.0,
+       "maximo": 0.05
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07256666666666667,
+       "desviacion": 0.011079861611650825,
+       "minimo": 0.06449999999999999,
+       "maximo": 0.08520000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.023333333333333334,
+       "desviacion": 0.025166114784235832,
+       "minimo": 0.0,
+       "maximo": 0.05
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.06713333333333332,
+       "desviacion": 0.010610529361598018,
+       "minimo": 0.059799999999999985,
+       "maximo": 0.07930000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.04,
+       "desviacion": 0.02,
+       "minimo": 0.02,
+       "maximo": 0.06
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.058566666666666656,
+       "desviacion": 0.009128161552762611,
+       "minimo": 0.051599999999999986,
+       "maximo": 0.0689
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.13333333333333333,
+       "desviacion": 0.06658328118479392,
+       "minimo": 0.09,
+       "maximo": 0.21
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04153333333333333,
+       "desviacion": 0.006161439225808649,
+       "minimo": 0.036799999999999986,
+       "maximo": 0.04850000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "successive_halving": {
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.18333333333333335,
+       "desviacion": 0.12662279942148386,
+       "minimo": 0.07,
+       "maximo": 0.32
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03063333333333332,
+       "desviacion": 0.003524674925909254,
+       "minimo": 0.027599999999999986,
+       "maximo": 0.0345
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3754.0,
+       "desviacion": 0.0,
+       "minimo": 3754.0,
+       "maximo": 3754.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.35333333333333333,
+       "desviacion": 0.13650396819628846,
+       "minimo": 0.26,
+       "maximo": 0.51
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.017799999999999996,
+       "desviacion": 0.003857460304397193,
+       "minimo": 0.014999999999999989,
+       "maximo": 0.022200000000000008
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7705.0,
+       "desviacion": 0.0,
+       "minimo": 7705.0,
+       "maximo": 7705.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.57,
+       "desviacion": 0.127671453348037,
+       "minimo": 0.46,
+       "maximo": 0.71
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0094,
+       "desviacion": 0.002685144316419516,
+       "minimo": 0.007799999999999997,
+       "maximo": 0.012500000000000006
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 14872.0,
+       "desviacion": 0.0,
+       "minimo": 14872.0,
+       "maximo": 14872.0
+      }
+     }
+    }
+   },
+   "sin_limpias|muestra_128": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.14333333333333334,
+       "desviacion": 0.19087517736293877,
+       "minimo": 0.0,
+       "maximo": 0.36
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.1559,
+       "desviacion": 0.028828631601239742,
+       "minimo": 0.12540000000000004,
+       "maximo": 0.1827
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.20666666666666667,
+       "desviacion": 0.18717193521821943,
+       "minimo": 0.07,
+       "maximo": 0.42
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.106,
+       "desviacion": 0.015072159765607569,
+       "minimo": 0.09510000000000003,
+       "maximo": 0.12319999999999999
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.27666666666666667,
+       "desviacion": 0.2369247419188915,
+       "minimo": 0.13,
+       "maximo": 0.55
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.07146666666666666,
+       "desviacion": 0.007857692621459139,
+       "minimo": 0.06239999999999999,
+       "maximo": 0.07629999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.31,
+       "desviacion": 0.20880613017821104,
+       "minimo": 0.17,
+       "maximo": 0.55
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04786666666666667,
+       "desviacion": 0.006406507108661747,
+       "minimo": 0.04129999999999999,
+       "maximo": 0.054100000000000016
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.39999999999999997,
+       "desviacion": 0.18357559750685817,
+       "minimo": 0.27,
+       "maximo": 0.61
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.03233333333333333,
+       "desviacion": 0.0034645827069552633,
+       "minimo": 0.029899999999999986,
+       "maximo": 0.03630000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.15,
+       "desviacion": 0.17435595774162693,
+       "minimo": 0.03,
+       "maximo": 0.35
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.14833333333333334,
+       "desviacion": 0.02514961895006229,
+       "minimo": 0.12090000000000002,
+       "maximo": 0.17029999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 256.0,
+       "desviacion": 0.0,
+       "minimo": 256.0,
+       "maximo": 256.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.21666666666666667,
+       "desviacion": 0.17785762095938798,
+       "minimo": 0.09,
+       "maximo": 0.42
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08849999999999998,
+       "desviacion": 0.0034698703145795103,
+       "minimo": 0.08449999999999998,
+       "maximo": 0.09070000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.29333333333333333,
+       "desviacion": 0.2064784088793144,
+       "minimo": 0.15,
+       "maximo": 0.53
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.051333333333333335,
+       "desviacion": 0.006117461347105802,
+       "minimo": 0.04549999999999999,
+       "maximo": 0.05770000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1024.0,
+       "desviacion": 0.0,
+       "minimo": 1024.0,
+       "maximo": 1024.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.4066666666666667,
+       "desviacion": 0.17785762095938798,
+       "minimo": 0.28,
+       "maximo": 0.61
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.032933333333333335,
+       "desviacion": 0.00536873666082939,
+       "minimo": 0.029299999999999993,
+       "maximo": 0.03910000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2048.0,
+       "desviacion": 0.0,
+       "minimo": 2048.0,
+       "maximo": 2048.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.7133333333333334,
+       "desviacion": 0.2362907813126304,
+       "minimo": 0.53,
+       "maximo": 0.98
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.009800000000000001,
+       "desviacion": 0.009226050075736646,
+       "minimo": 0.0009999999999999998,
+       "maximo": 0.019400000000000014
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    },
+    "successive_halving": {
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.3333333333333333,
+       "desviacion": 0.3189566323708183,
+       "minimo": 0.12,
+       "maximo": 0.7
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.04053333333333333,
+       "desviacion": 0.009575663597544224,
+       "minimo": 0.02979999999999999,
+       "maximo": 0.04820000000000003
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 512.0,
+       "desviacion": 0.0,
+       "minimo": 512.0,
+       "maximo": 512.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.5266666666666667,
+       "desviacion": 0.28676354952004157,
+       "minimo": 0.26,
+       "maximo": 0.83
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.020133333333333333,
+       "desviacion": 0.00850078427754367,
+       "minimo": 0.014399999999999984,
+       "maximo": 0.02990000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 968.0,
+       "desviacion": 0.0,
+       "minimo": 968.0,
+       "maximo": 968.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.82,
+       "desviacion": 0.21633307652783937,
+       "minimo": 0.58,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.005500000000000002,
+       "desviacion": 0.007389857914736935,
+       "minimo": 0.0,
+       "maximo": 0.013900000000000013
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 2000.0,
+       "desviacion": 0.0,
+       "minimo": 2000.0,
+       "maximo": 2000.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.9766666666666667,
+       "desviacion": 0.040414518843273774,
+       "minimo": 0.93,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.000733333333333334,
+       "desviacion": 0.0012701705922171778,
+       "minimo": 0.0,
+       "maximo": 0.002200000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 4096.0,
+       "desviacion": 0.0,
+       "minimo": 4096.0,
+       "maximo": 4096.0
+      }
+     }
+    }
+   },
+   "sin_limpias|vecindario_doble": {
+    "uniforme": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.04358898943540673,
+       "minimo": 0.0,
+       "maximo": 0.08
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.2660666666666667,
+       "desviacion": 0.07794416805209567,
+       "minimo": 0.1804,
+       "maximo": 0.3328
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.11666666666666668,
+       "desviacion": 0.13316656236958788,
+       "minimo": 0.03,
+       "maximo": 0.27
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.18973333333333334,
+       "desviacion": 0.04025572423063998,
+       "minimo": 0.1541,
+       "maximo": 0.23340000000000002
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.25666666666666665,
+       "desviacion": 0.29022979401386984,
+       "minimo": 0.06,
+       "maximo": 0.59
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.11750000000000001,
+       "desviacion": 0.03568585153810964,
+       "minimo": 0.0911,
+       "maximo": 0.15810000000000005
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.4033333333333333,
+       "desviacion": 0.33724372986511303,
+       "minimo": 0.17,
+       "maximo": 0.79
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.06813333333333334,
+       "desviacion": 0.04363649084577419,
+       "minimo": 0.029200000000000004,
+       "maximo": 0.11530000000000003
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.6766666666666667,
+       "desviacion": 0.26764404221527766,
+       "minimo": 0.39,
+       "maximo": 0.92
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.02283333333333333,
+       "desviacion": 0.01400583211856166,
+       "minimo": 0.008600000000000002,
+       "maximo": 0.03660000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "ucb1": {
+     "2": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.03,
+       "desviacion": 0.04358898943540673,
+       "minimo": 0.0,
+       "maximo": 0.08
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.2660666666666667,
+       "desviacion": 0.07794416805209567,
+       "minimo": 0.1804,
+       "maximo": 0.3328
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 980.0,
+       "desviacion": 0.0,
+       "minimo": 980.0,
+       "maximo": 980.0
+      }
+     },
+     "4": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.17333333333333334,
+       "desviacion": 0.17039170558842742,
+       "minimo": 0.07,
+       "maximo": 0.37
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.1666,
+       "desviacion": 0.03008005984036604,
+       "minimo": 0.14309999999999998,
+       "maximo": 0.20050000000000004
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 1960.0,
+       "desviacion": 0.0,
+       "minimo": 1960.0,
+       "maximo": 1960.0
+      }
+     },
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.3833333333333333,
+       "desviacion": 0.2939954648176283,
+       "minimo": 0.14,
+       "maximo": 0.71
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.08146666666666667,
+       "desviacion": 0.030606589704397558,
+       "minimo": 0.053399999999999996,
+       "maximo": 0.11410000000000003
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3920.0,
+       "desviacion": 0.0,
+       "minimo": 3920.0,
+       "maximo": 3920.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.6566666666666666,
+       "desviacion": 0.3043572462310259,
+       "minimo": 0.31,
+       "maximo": 0.88
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.02493333333333333,
+       "desviacion": 0.010584107583227469,
+       "minimo": 0.012900000000000002,
+       "maximo": 0.03279999999999998
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7840.0,
+       "desviacion": 0.0,
+       "minimo": 7840.0,
+       "maximo": 7840.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.86,
+       "desviacion": 0.23388031127053002,
+       "minimo": 0.59,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0034999999999999944,
+       "desviacion": 0.005301886456724615,
+       "minimo": 0.0,
+       "maximo": 0.009599999999999984
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 15680.0,
+       "desviacion": 0.0,
+       "minimo": 15680.0,
+       "maximo": 15680.0
+      }
+     }
+    },
+    "successive_halving": {
+     "8": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.7466666666666667,
+       "desviacion": 0.2302896726588783,
+       "minimo": 0.55,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.01663333333333333,
+       "desviacion": 0.016037560080427865,
+       "minimo": 0.0,
+       "maximo": 0.03200000000000001
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 3754.0,
+       "desviacion": 0.0,
+       "minimo": 3754.0,
+       "maximo": 3754.0
+      }
+     },
+     "16": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 0.9466666666666667,
+       "desviacion": 0.09237604307034014,
+       "minimo": 0.84,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0006333333333333309,
+       "desviacion": 0.0010969655114602848,
+       "minimo": 0.0,
+       "maximo": 0.0018999999999999928
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 7705.0,
+       "desviacion": 0.0,
+       "minimo": 7705.0,
+       "maximo": 7705.0
+      }
+     },
+     "32": {
+      "casos": 3,
+      "prob_elegir_mejor": {
+       "n": 3,
+       "media": 1.0,
+       "desviacion": 0.0,
+       "minimo": 1.0,
+       "maximo": 1.0
+      },
+      "regret_medio": {
+       "n": 3,
+       "media": 0.0,
+       "desviacion": 0.0,
+       "minimo": 0.0,
+       "maximo": 0.0
+      },
+      "consultas_medias": {
+       "n": 3,
+       "media": 14872.0,
+       "desviacion": 0.0,
+       "minimo": 14872.0,
+       "maximo": 14872.0
+      }
+     }
+    }
+   }
+  },
+  "filas": 360
+ }
+}
