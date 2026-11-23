@@ -1,0 +1,96 @@
+{
+ "descripcion": "Plan de la Fase 7 (experimentos con el modelo real en Colab T4), escrito antes de correr",
+ "hardware": "Google Colab, NVIDIA T4 (regla 14); se verifica el nombre de la GPU antes de cada paso con GPU",
+ "verificadores": "open-instruct a4cd966 (regla 13)",
+ "modelo": {
+  "alias": "qwen17b",
+  "lote": 16,
+  "presupuesto": 32000000,
+  "semilla_consulta": 1
+ },
+ "cache": "caché de la T4 de la primera entrega recalificado con a4cd966 en una carpeta nueva de Drive; el original no se modifica. preparar comprueba que la recalificación cambie los 31 veredictos de la Fase 0",
+ "orden": [
+  "preparar (sin GPU)",
+  "a) tiempo",
+  "b) pendiente",
+  "c) estrategia",
+  "d) subespacio",
+  "entrega (solo si c mejora al menos 3 puntos)"
+ ],
+ "prioridad": "si el tiempo de Colab no alcanza, (c) va antes que (d)",
+ "pasos": {
+  "tiempo": {
+   "objetivo": "costo por consulta en la T4 (regla 15) y comprobación de que el tiempo real crece linealmente con n",
+   "configuraciones": "4 configuraciones al azar del espacio (temperatura 0,0), semilla 7101",
+   "instancias": "las primeras n de una permutación al azar de las 100 de búsqueda, semilla 7102",
+   "n": [
+    10,
+    25,
+    50,
+    100
+   ],
+   "sin_reutilizar": "cada medición usa un caché vacío propio (carpeta fase7_tiempo/), así que genera todas sus respuestas; no se mezcla con el caché principal",
+   "calentamiento": "una evaluación de 2 instancias antes de medir (se descarta)",
+   "consultas": 742,
+   "tope": 742,
+   "analisis": "ajuste tiempo = a + b·n por mínimos cuadrados (b = segundos por consulta marginal); pendiente log-log; efecto del lote de 16 (el tiempo sube por escalones: ⌈n/16⌉ lotes nominales)"
+  },
+  "pendiente": {
+   "objetivo": "completar el camino del Algoritmo 3 con a4cd966: la única configuración que falta es (0,0,0,6,1) (resultados/fase2_coordenadas_reproduccion.json)",
+   "consultas": 100,
+   "tope": 100,
+   "si_supera": "si (0,0,0,6,1) supera a la mejor (13 %), el camino cambia y puede necesitar hasta 4.400 consultas; el paso se detiene en el tope y se pide autorización"
+  },
+  "estrategia": {
+   "objetivo": "aplicar la estrategia elegida en la Fase 5 (resultados/fase5_estrategias.json)",
+   "estrategia": "dos ranuras + Successive Halving, n0 = 2, hasta 2 rondas, desde el resultado del Algoritmo 3 (orden de ranuras por la hipótesis de la primera entrega)",
+   "semilla_instancias": "7300 (en cada ronda, '7300|ronda')",
+   "consultas_por_ronda_de_filtro": 3754,
+   "consultas_estimadas": "media ≈ 7.600, percentil 90 ≈ 11.200 (Fase 5, casos calibrados)",
+   "tope": 15000,
+   "si_se_agota": "se reporta la mejor configuración evaluada sobre las 100 instancias hasta ese momento"
+  },
+  "subespacio": {
+   "objetivo": "óptimo exacto en un subespacio real y comparación de los algoritmos con datos reales",
+   "opciones": "2 opciones por ranura elegidas al azar con semilla 7400, sin ningún otro criterio (2^5 = 32 configuraciones, temperatura 0,0)",
+   "consultas": 3200,
+   "tope": 3200,
+   "algoritmos": {
+    "exacto": "fuerza bruta (el backtracking no aplica: con el modelo real no hay cota admisible)",
+    "coordenadas": "Algoritmo 3 dentro del subespacio (desde la primera opción de cada ranura)",
+    "successive_halving": "n0 ∈ {1, 2, 4}, permutaciones 1 a 100",
+    "reparto": "uniforme y UCB1 con B = b·32, b ∈ {2, 4, 8, 16, 32}, permutaciones 1 a 100"
+   },
+   "costo_extra": "0: después de la fuerza bruta todo sale del caché"
+  },
+  "entrega": {
+   "regla": "entrega.json cambia solo si la mejor configuración nueva supera a la actual por al menos 3 puntos en búsqueda (regla 16), con los verificadores a4cd966 y las mismas 100 instancias",
+   "si_cambia": "validar(n=None) sobre las 87 de validación (87 consultas), escribir entrega_propuesta.json en los resultados de Drive, copiarlo al repositorio y comprobar el notebook de evaluación en Colab",
+   "consultas": 87,
+   "tope": 87
+  }
+ },
+ "estimacion": {
+  "segundos_por_consulta": "2,1 (primera entrega, sin respaldo) hasta que (a) lo mida",
+  "horas_efectivas_por_sesion": 3
+ },
+ "fecha": "2026-11-22 23:51:01",
+ "metadatos": {
+  "fecha": "2026-11-22 23:51:01",
+  "git_hash": "79c5d3cb11f5db4630f97be955041eeba3b05c68",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ }
+}
