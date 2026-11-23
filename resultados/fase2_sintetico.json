@@ -1,0 +1,319 @@
+{
+ "descripcion": "Fase 2: fuerza bruta (peor caso, consultas que cobraría el oráculo real) y Algoritmo 3 en casos sintéticos. Métrica principal: consultas. segundos_cpu no es tiempo de GPU.",
+ "parametros": {
+  "max_pasadas": 3,
+  "umbral_traza": 3,
+  "semilla_consulta": 1,
+  "inicial": "primera opción de cada ranura"
+ },
+ "semilla": {
+  "calibrado": 7,
+  "independiente": 7
+ },
+ "metadatos": {
+  "fecha": "2026-11-22 21:32:42",
+  "git_hash": "ddebd39c6468d6d70ee5b49607c044aee0c99e36",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": [
+  {
+   "caso": "calibrado",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 14,
+    "ruido": 0.0,
+    "semilla_ruido": 7,
+    "generador": "generar_calibrado",
+    "semilla": 7,
+    "familias": 14,
+    "limpias_por_ranura": 1,
+    "prob_rompe": 0.25,
+    "prob_rompe_opcion0": 0.06,
+    "familias_por_instancia": [
+     2,
+     3
+    ],
+    "familias_por_interaccion": 1,
+    "pares_acoplados": [
+     {
+      "ranuras": [
+       0,
+       4
+      ],
+      "opciones": [
+       5,
+       2
+      ]
+     }
+    ],
+    "fraccion_insoluble": 0.76,
+    "instancias_insolubles": 76
+   },
+   "fuerza_bruta": {
+    "mejor_config": {
+     "rol": 5,
+     "estrategia": 3,
+     "formato": 7,
+     "estilo": 1,
+     "cierre": 2,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 0.24,
+    "num_optimas": 1,
+    "configuraciones_evaluadas": 32768,
+    "instancias": 100,
+    "consultas_oraculo_real": 3276800,
+    "consultas_cobradas": 0,
+    "consultas_solicitadas": 0,
+    "segundos_cpu": 0.6041582999996535
+   },
+   "coordenadas": {
+    "mejor_config": {
+     "rol": 7,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 1,
+     "cierre": 7,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 0.14,
+    "es_optimo": false,
+    "brecha_con_el_optimo": 0.1,
+    "evaluaciones": 44,
+    "configuraciones_distintas": 42,
+    "consultas_cobradas": 4200,
+    "consultas_solicitadas": 4400,
+    "cota_consultas": 10600,
+    "pasadas": 2,
+    "convergio": true,
+    "movimientos": [
+     {
+      "fase": "pasada 1",
+      "ranura": "rol",
+      "de": 0,
+      "a": 7,
+      "precision_antes": 0.09,
+      "precision_despues": 0.1
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "estilo",
+      "de": 0,
+      "a": 1,
+      "precision_antes": 0.1,
+      "precision_despues": 0.11
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "cierre",
+      "de": 0,
+      "a": 7,
+      "precision_antes": 0.11,
+      "precision_despues": 0.14
+     }
+    ],
+    "opciones_descartadas": 33,
+    "segundos_cpu": 0.0020571000013660523
+   },
+   "fraccion_de_consultas_frente_a_fuerza_bruta": 0.00128173828125
+  },
+  {
+   "caso": "control",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 0,
+    "ruido": 0.0,
+    "semilla_ruido": 7,
+    "generador": "generar_conjuntivo",
+    "semilla": 7,
+    "familias": 14,
+    "limpias_por_ranura": 1,
+    "prob_rompe": 0.25,
+    "prob_rompe_opcion0": 0.06,
+    "familias_por_instancia": [
+     2,
+     3
+    ],
+    "familias_por_interaccion": 1,
+    "pares_acoplados": [],
+    "fraccion_insoluble": 0.76,
+    "instancias_insolubles": 76
+   },
+   "fuerza_bruta": {
+    "mejor_config": {
+     "rol": 5,
+     "estrategia": 3,
+     "formato": 7,
+     "estilo": 1,
+     "cierre": 2,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 0.24,
+    "num_optimas": 1,
+    "configuraciones_evaluadas": 32768,
+    "instancias": 100,
+    "consultas_oraculo_real": 3276800,
+    "consultas_cobradas": 0,
+    "consultas_solicitadas": 0,
+    "segundos_cpu": 0.5985269000002518
+   },
+   "coordenadas": {
+    "mejor_config": {
+     "rol": 5,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 1,
+     "cierre": 2,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 0.19,
+    "es_optimo": false,
+    "brecha_con_el_optimo": 0.05,
+    "evaluaciones": 44,
+    "configuraciones_distintas": 42,
+    "consultas_cobradas": 4200,
+    "consultas_solicitadas": 4400,
+    "cota_consultas": 10600,
+    "pasadas": 2,
+    "convergio": true,
+    "movimientos": [
+     {
+      "fase": "pasada 1",
+      "ranura": "rol",
+      "de": 0,
+      "a": 5,
+      "precision_antes": 0.11,
+      "precision_despues": 0.13
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "estilo",
+      "de": 0,
+      "a": 1,
+      "precision_antes": 0.13,
+      "precision_despues": 0.15
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "cierre",
+      "de": 0,
+      "a": 2,
+      "precision_antes": 0.15,
+      "precision_despues": 0.19
+     }
+    ],
+    "opciones_descartadas": 33,
+    "segundos_cpu": 0.0018396000004941016
+   },
+   "fraccion_de_consultas_frente_a_fuerza_bruta": 0.00128173828125
+  },
+  {
+   "caso": "independiente",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 0,
+    "ruido": 0.0,
+    "semilla_ruido": 0,
+    "generador": "independiente",
+    "semilla": 7
+   },
+   "fuerza_bruta": {
+    "mejor_config": {
+     "rol": 5,
+     "estrategia": 2,
+     "formato": 6,
+     "estilo": 0,
+     "cierre": 1,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 1.0,
+    "num_optimas": 1,
+    "configuraciones_evaluadas": 32768,
+    "instancias": 100,
+    "consultas_oraculo_real": 3276800,
+    "consultas_cobradas": 0,
+    "consultas_solicitadas": 0,
+    "segundos_cpu": 0.5682335000001331
+   },
+   "coordenadas": {
+    "mejor_config": {
+     "rol": 5,
+     "estrategia": 2,
+     "formato": 6,
+     "estilo": 0,
+     "cierre": 1,
+     "temperatura": 0.0
+    },
+    "mejor_precision": 1.0,
+    "es_optimo": true,
+    "brecha_con_el_optimo": 0.0,
+    "evaluaciones": 64,
+    "configuraciones_distintas": 57,
+    "consultas_cobradas": 5700,
+    "consultas_solicitadas": 6400,
+    "cota_consultas": 10600,
+    "pasadas": 2,
+    "convergio": true,
+    "movimientos": [
+     {
+      "fase": "pasada 1",
+      "ranura": "rol",
+      "de": 0,
+      "a": 5,
+      "precision_antes": 0.08,
+      "precision_despues": 0.18
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "estrategia",
+      "de": 0,
+      "a": 2,
+      "precision_antes": 0.18,
+      "precision_despues": 0.33
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "formato",
+      "de": 0,
+      "a": 6,
+      "precision_antes": 0.33,
+      "precision_despues": 0.55
+     },
+     {
+      "fase": "pasada 1",
+      "ranura": "cierre",
+      "de": 0,
+      "a": 1,
+      "precision_antes": 0.55,
+      "precision_despues": 1.0
+     }
+    ],
+    "opciones_descartadas": 35,
+    "segundos_cpu": 0.0029058999971312005
+   },
+   "fraccion_de_consultas_frente_a_fuerza_bruta": 0.001739501953125
+  }
+ ]
+}

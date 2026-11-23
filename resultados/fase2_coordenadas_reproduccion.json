@@ -1,0 +1,378 @@
+{
+ "descripcion": "Fase 2: Algoritmo 3 extraído frente al registro de la primera entrega, con veredictos originales y recalificados con open-instruct a4cd966 (desde el caché de la T4, sin GPU)",
+ "parametros": {
+  "semilla": 1,
+  "max_pasadas": 3,
+  "umbral_traza": 3,
+  "probar_temperaturas": true,
+  "hipotesis": {
+   "rol": [
+    "first_word",
+    "copy",
+    "new"
+   ],
+   "estrategia": [
+    "length_constraints"
+   ],
+   "formato": [
+    "detectable_format",
+    "paragraphs",
+    "combination"
+   ],
+   "estilo": [
+    "change_case",
+    "letters",
+    "punctuation",
+    "keywords",
+    "language"
+   ],
+   "cierre": [
+    "last_word",
+    "startend",
+    "detectable_content"
+   ]
+  },
+  "caches": {
+   "original": "cache_oraculo.json",
+   "a4cd966": "cache_oraculo_recalificado_a4cd966.json"
+  },
+  "instancias": 100
+ },
+ "semilla": 1,
+ "metadatos": {
+  "fecha": "2026-11-22 21:32:14",
+  "git_hash": "ddebd39c6468d6d70ee5b49607c044aee0c99e36",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "veredictos_originales": {
+   "evaluaciones": 68,
+   "evaluaciones_registro": 68,
+   "filas_con_diferencias": [],
+   "reproduce_exactamente": true,
+   "configuraciones_distintas": 60,
+   "consultas_cobradas": 6000,
+   "consultas_solicitadas": 6800,
+   "pasadas": 3,
+   "convergio": true,
+   "orden": [
+    "estilo",
+    "rol",
+    "formato",
+    "cierre",
+    "estrategia"
+   ],
+   "decisiones": [
+    "Pasada 1: estilo 0 → 1 (9.0% → 11.0%)",
+    "Pasada 1: cierre 0 → 1 (11.0% → 12.0%)",
+    "Pasada 2: estilo 1 → 5 (12.0% → 14.0%)"
+   ],
+   "mejor_config": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0
+   },
+   "mejor_precision": 0.14,
+   "descartadas": {
+    "rol": {
+     "3": "change_case +3",
+     "7": "startend +3",
+     "1": "paragraphs +3",
+     "2": "paragraphs +3",
+     "4": "detectable_format +3",
+     "5": "detectable_format +3"
+    },
+    "estrategia": {
+     "4": "detectable_format +3",
+     "1": "paragraphs +4",
+     "2": "detectable_format +3",
+     "3": "detectable_format +5, startend +4",
+     "5": "detectable_format +5",
+     "6": "detectable_format +7"
+    },
+    "formato": {
+     "1": "startend +4, change_case +3",
+     "4": "detectable_format +3",
+     "5": "punctuation +3",
+     "3": "paragraphs +3",
+     "7": "startend +3"
+    },
+    "estilo": {
+     "4": "detectable_format +6",
+     "6": "paragraphs +3",
+     "7": "paragraphs +3",
+     "2": "change_case +3",
+     "3": "change_case +3",
+     "1": "detectable_format +3"
+    },
+    "cierre": {
+     "2": "change_case +4, startend +3",
+     "6": "startend +3",
+     "7": "startend +3",
+     "0": "startend +3",
+     "3": "detectable_format +6",
+     "4": "last_word +3"
+    }
+   },
+   "opciones_descartadas": 29,
+   "validacion": {
+    "aciertos": 9,
+    "instancias": 87,
+    "precision": 0.10344827586206896
+   },
+   "cota_consultas": 10800
+  },
+  "veredictos_a4cd966": {
+   "evaluaciones_hechas": 40,
+   "camino_igual_al_registro": false,
+   "primera_evaluacion_distinta": {
+    "paso": 41,
+    "registro": {
+     "paso": 41,
+     "fase": "pasada 2",
+     "ranura_probada": "rol",
+     "config": {
+      "rol": 1,
+      "estrategia": 0,
+      "formato": 0,
+      "estilo": 5,
+      "cierre": 1,
+      "temperatura": 0.0
+     },
+     "precision": 0.08,
+     "fallos_por_familia": "{\"keywords\": 15, \"detectable_format\": 12, \"copy\": 11, \"last_word\": 9, \"change_case\": 8, \"punctuation\": 7, \"first_word\": 7, \"paragraphs\": 5, \"new\": 5, \"length_constraints\": 3, \"startend\": 3, \"letters\": 2, \"combination\": 2, \"language\": 2, \"detectable_content\": 1}",
+     "nota": "descartada por trazas: paragraphs +3"
+    },
+    "a4cd966": null
+   },
+   "consulta_fuera_de_cache": {
+    "paso": 41,
+    "config": {
+     "rol": 0,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 6,
+     "cierre": 1,
+     "temperatura": 0.0
+    }
+   },
+   "precisiones_distintas_en_el_mismo_camino": [
+    {
+     "paso": 1,
+     "registro": 0.09,
+     "a4cd966": 0.08
+    },
+    {
+     "paso": 2,
+     "registro": 0.11,
+     "a4cd966": 0.1
+    },
+    {
+     "paso": 3,
+     "registro": 0.1,
+     "a4cd966": 0.09
+    },
+    {
+     "paso": 8,
+     "registro": 0.08,
+     "a4cd966": 0.07
+    },
+    {
+     "paso": 9,
+     "registro": 0.11,
+     "a4cd966": 0.1
+    },
+    {
+     "paso": 10,
+     "registro": 0.07,
+     "a4cd966": 0.06
+    },
+    {
+     "paso": 12,
+     "registro": 0.07,
+     "a4cd966": 0.06
+    },
+    {
+     "paso": 13,
+     "registro": 0.08,
+     "a4cd966": 0.07
+    },
+    {
+     "paso": 14,
+     "registro": 0.08,
+     "a4cd966": 0.07
+    },
+    {
+     "paso": 17,
+     "registro": 0.08,
+     "a4cd966": 0.07
+    },
+    {
+     "paso": 23,
+     "registro": 0.12,
+     "a4cd966": 0.11
+    },
+    {
+     "paso": 26,
+     "registro": 0.05,
+     "a4cd966": 0.04
+    },
+    {
+     "paso": 27,
+     "registro": 0.1,
+     "a4cd966": 0.09
+    },
+    {
+     "paso": 28,
+     "registro": 0.08,
+     "a4cd966": 0.07
+    },
+    {
+     "paso": 29,
+     "registro": 0.06,
+     "a4cd966": 0.05
+    },
+    {
+     "paso": 30,
+     "registro": 0.09,
+     "a4cd966": 0.08
+    },
+    {
+     "paso": 31,
+     "registro": 0.1,
+     "a4cd966": 0.09
+    },
+    {
+     "paso": 34,
+     "registro": 0.06,
+     "a4cd966": 0.05
+    },
+    {
+     "paso": 36,
+     "registro": 0.09,
+     "a4cd966": 0.08
+    },
+    {
+     "paso": 37,
+     "registro": 0.11,
+     "a4cd966": 0.1
+    },
+    {
+     "paso": 38,
+     "registro": 0.12,
+     "a4cd966": 0.11
+    },
+    {
+     "paso": 40,
+     "registro": 0.14,
+     "a4cd966": 0.13
+    }
+   ],
+   "escenarios_sin_gpu": {
+    "configuracion_faltante": {
+     "rol": 0,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 6,
+     "cierre": 1,
+     "temperatura": 0.0
+    },
+    "paso": 41,
+    "fase": "pasada 2",
+    "mejor_precision_en_ese_momento": 0.13,
+    "casos": {
+     "no_mejora_y_la_poda_la_descarta": {
+      "completa_desde_cache": true,
+      "otra_consulta_fuera_de_cache": null,
+      "evaluaciones": 69,
+      "evaluaciones_nuevas_en_gpu": 1,
+      "consultas_nuevas_en_gpu": 100,
+      "mejor_config": {
+       "rol": 0,
+       "estrategia": 0,
+       "formato": 0,
+       "estilo": 5,
+       "cierre": 1,
+       "temperatura": 0.0
+      },
+      "mejor_precision": 0.13,
+      "decisiones": [
+       "Pasada 1: estilo 0 → 1 (8.0% → 10.0%)",
+       "Pasada 1: cierre 0 → 1 (10.0% → 11.0%)",
+       "Pasada 2: estilo 1 → 5 (11.0% → 13.0%)"
+      ],
+      "movimientos_iguales_a_la_primera_entrega": true
+     },
+     "no_mejora_y_la_poda_no_la_descarta": {
+      "completa_desde_cache": true,
+      "otra_consulta_fuera_de_cache": null,
+      "evaluaciones": 70,
+      "evaluaciones_nuevas_en_gpu": 1,
+      "consultas_nuevas_en_gpu": 100,
+      "mejor_config": {
+       "rol": 0,
+       "estrategia": 0,
+       "formato": 0,
+       "estilo": 5,
+       "cierre": 1,
+       "temperatura": 0.0
+      },
+      "mejor_precision": 0.13,
+      "decisiones": [
+       "Pasada 1: estilo 0 → 1 (8.0% → 10.0%)",
+       "Pasada 1: cierre 0 → 1 (10.0% → 11.0%)",
+       "Pasada 2: estilo 1 → 5 (11.0% → 13.0%)"
+      ],
+      "movimientos_iguales_a_la_primera_entrega": true
+     }
+    },
+    "si_mejora": {
+     "descripcion": "El camino cambia desde ese paso; cota superior de evaluaciones nuevas en GPU: la faltante + las opciones no descartadas del resto de la pasada + las pasadas siguientes + 2 temperaturas (la poda solo puede reducirla)",
+     "descartadas_en_ese_momento": {
+      "estilo": [
+       2,
+       3,
+       4,
+       7
+      ],
+      "rol": [
+       3,
+       7
+      ],
+      "formato": [
+       1,
+       4,
+       5
+      ],
+      "cierre": [
+       2,
+       6,
+       7
+      ],
+      "estrategia": [
+       4
+      ]
+     },
+     "cota_evaluaciones_nuevas": 44,
+     "cota_consultas_nuevas": 4400
+    }
+   }
+  }
+ }
+}
