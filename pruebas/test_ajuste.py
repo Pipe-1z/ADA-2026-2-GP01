@@ -33,3 +33,15 @@ def test_errores():
         pendiente_loglog([1, 2], [0, 1])
     with pytest.raises(ValueError):
         ajustar_constante([1], [0])
+
+
+def test_combinacion_de_dos_bases():
+    from oraculo_ada.analisis.ajuste import ajustar_combinacion
+
+    x = [1, 2, 4, 8, 16]
+    obs = [3 + 0.5 * v for v in x]
+    a, b = ajustar_combinacion(obs, [[1] * 5, x])
+    assert a == pytest.approx(3) and b == pytest.approx(0.5)
+    # si la mejor combinación tendría un coeficiente negativo, se queda con una base sola
+    a, b = ajustar_combinacion([v for v in x], [[1] * 5, [2 * v for v in x]])
+    assert a == 0 and b == pytest.approx(0.5)

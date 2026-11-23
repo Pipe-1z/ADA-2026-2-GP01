@@ -68,8 +68,9 @@ def guardar_csv(nombre, filas, directorio=None):
     ruta = directorio / f"{nombre}.csv"
     if not filas:
         raise ValueError("no hay filas para guardar")
+    campos = list(dict.fromkeys(k for fila in filas for k in fila))   # unión de columnas, en orden de aparición
     with open(ruta, "w", newline="", encoding="utf-8") as f:
-        escritor = csv.DictWriter(f, fieldnames=list(filas[0]))
+        escritor = csv.DictWriter(f, fieldnames=campos, restval="")
         escritor.writeheader()
         escritor.writerows(filas)
     return ruta
