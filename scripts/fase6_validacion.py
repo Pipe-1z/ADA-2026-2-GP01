@@ -37,6 +37,7 @@ from oraculo_ada.registro import guardar_csv, guardar_resultado
 
 REPETICIONES = [1, 2, 3, 4, 5]
 NS = [25, 50, 100, 200, 400, 800]
+SIN_AJUSTE = {"backtracking_3sat"}     # se compara con el peor caso sin escalar
 
 
 def cronometrar(funcion):
@@ -198,7 +199,9 @@ def main():
             obs = [statistics.fmean(medidas[medida][x]) for x in tamanos]
             des = [statistics.stdev(medidas[medida][x]) for x in tamanos]
             valores_bases = [[g(x) for x in tamanos] for g in bases]
-            coef = ajustar_combinacion(obs, valores_bases)
+            # En 3-SAT la curva teórica es el peor caso: se muestra sin escalar (coeficiente 1),
+            # porque no es un modelo de los casos típicos; el cociente da la fracción explorada.
+            coef = [1.0] if algoritmo in SIN_AJUSTE else ajustar_combinacion(obs, valores_bases)
             ajuste = [sum(c * v[i] for c, v in zip(coef, valores_bases)) for i in range(len(tamanos))]
             dominante = valores_bases[-1]
             pend_ajuste = pendiente_loglog(xs, ajuste) if len(set(ajuste)) > 1 and min(ajuste) > 0 else 0.0
@@ -206,7 +209,10 @@ def main():
             r = {
                 "algoritmo": algoritmo, "dimension": dimension, "etiqueta_tamano": etiqueta, "medida": medida,
                 "teoria": descripcion, "tamanos": tamanos, "eje_x": xs, "observado_medio": obs,
-                "observado_desviacion": des, "bases": valores_bases, "coeficientes": coef, "teorico_ajustado": ajuste,
+                "observado_desviacion": des,
+                "observado_minimo": [min(medidas[medida][x]) for x in tamanos],
+                "observado_maximo": [max(medidas[medida][x]) for x in tamanos],
+                "curva_sin_ajuste": algoritmo in SIN_AJUSTE, "bases": valores_bases, "coeficientes": coef, "teorico_ajustado": ajuste,
                 "pendiente_loglog_observada": pendiente_loglog(xs, obs),
                 "pendiente_loglog_ajuste": pend_ajuste, "pendiente_loglog_termino_dominante": pend_dom,
                 "cocientes_frente_al_ajuste": tabla_cocientes(xs, obs, ajuste),
