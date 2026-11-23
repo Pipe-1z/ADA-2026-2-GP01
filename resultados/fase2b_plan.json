@@ -1,0 +1,127 @@
+{
+ "descripcion": "Plan de la Fase 2b, escrito antes de correr: estrategias para escapar de óptimos locales del Algoritmo 3, comparadas en el oráculo sintético",
+ "fecha": "2026-11-22 21:58:59",
+ "variantes": {
+  "calibrado_24": {
+   "generador": "generar_calibrado",
+   "techo": 24,
+   "casos": "los primeros 30 candidatos válidos de resultados/calibracion_sintetico.json (lista_validos, en orden de la rejilla)",
+   "num_casos": 30
+  },
+  "calibrado_28": {
+   "generador": "generar_calibrado",
+   "techo": 28,
+   "casos": "todos los candidatos válidos de resultados/calibracion_sintetico_28.json (25; la rejilla de calibración no se amplió)",
+   "num_casos": 25
+  },
+  "disyuntivo": {
+   "generador": "generar_disyuntivo",
+   "m": 5,
+   "k": 8,
+   "n": 100,
+   "interacciones": 10,
+   "casos": "semillas 1 a 30",
+   "num_casos": 30
+  },
+  "sin_limpias": {
+   "generador": "generar_conjuntivo",
+   "m": 5,
+   "k": 8,
+   "n": 100,
+   "familias": 14,
+   "limpias_por_ranura": 0,
+   "interacciones": 10,
+   "casos": "semillas 1 a 30",
+   "num_casos": 30
+  }
+ },
+ "configuracion_inicial": "primera opción de cada ranura (como en el problema real)",
+ "parametros_comunes": {
+  "max_pasadas": 3,
+  "umbral_traza": 3,
+  "semilla_consulta": 1,
+  "probar_temperaturas": true
+ },
+ "estrategias": {
+  "original": {},
+  "sin_poda": {
+   "poda": "ninguna"
+  },
+  "poda_por_pasada": {
+   "poda": "por_pasada"
+  },
+  "umbral_6": {
+   "umbral_traza": 6
+  },
+  "poda_por_instancias": {
+   "criterio_poda": "instancias"
+  },
+  "desempate_trazas": {
+   "desempate": "trazas"
+  },
+  "dos_ranuras": {
+   "movimientos_dobles": {
+    "pares_muestra": 100,
+    "n_preliminar": 20,
+    "top": 5,
+    "rondas": 2
+   }
+  },
+  "reinicios_5": {
+   "reinicios": 5
+  },
+  "combinada": {
+   "desempate": "trazas",
+   "criterio_poda": "instancias"
+  },
+  "combinada_reinicios_5": {
+   "desempate": "trazas",
+   "criterio_poda": "instancias",
+   "reinicios": 5
+  },
+  "combinada_dos_ranuras": {
+   "desempate": "trazas",
+   "criterio_poda": "instancias",
+   "movimientos_dobles": {
+    "pares_muestra": 100,
+    "n_preliminar": 20,
+    "top": 5,
+    "rondas": 2
+   }
+  }
+ },
+ "semillas": {
+  "reinicios": "random.Random(1000 + i), i = número del caso (1, 2, ...); el primer inicio es la configuración inicial y los otros 4 se sortean",
+  "movimientos_dobles": "semilla 2000 + i para el sorteo de pares y de la submuestra"
+ },
+ "metricas": [
+  "precision final",
+  "brecha con el óptimo exacto (fuerza bruta con verdad conocida)",
+  "encontró el óptimo",
+  "consultas cobradas (métrica principal de costo)",
+  "consultas solicitadas",
+  "evaluaciones",
+  "segundos de CPU (no es tiempo de GPU)"
+ ],
+ "resumen": "por variante y estrategia: media, desviación estándar, mínimo y máximo; comparación pareada con la original en el mismo caso (diferencia media y desviación; casos que mejoran, empatan o empeoran)",
+ "diagnostico": "solo en las variantes calibradas, con la estrategia original: qué pasó con la opción limpia de cada ranura (verdad del sintético, que los algoritmos no ven): mejoró, empató o empeoró al evaluarla; si la poda la descartó y si el descarte se debió solo a instancias que ya fallaban y cambiaron de familia",
+ "criterio": "La Fase 2b es descriptiva: no elige estrategia. Una estrategia se considera prometedora si su precisión media supera a la original en las dos variantes calibradas; la elección final se hace en la Fase 5 con el mismo presupuesto de consultas.",
+ "metadatos": {
+  "fecha": "2026-11-22 21:58:59",
+  "git_hash": "6a274a5f520d50f59333fd8957516fe1797e15be",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ }
+}
