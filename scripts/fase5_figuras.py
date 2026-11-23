@@ -63,10 +63,11 @@ def figura_reparto(conjunto):
             if fila == 1:
                 ax.set_xlabel("Presupuesto B / |S|", fontsize=9, color=TEXTO)
     manejadores, etiquetas = ejes[0][0].get_legend_handles_labels()
-    fig.legend(manejadores, etiquetas, loc="upper center", ncol=3, frameon=False, fontsize=9)
+    fig.legend(manejadores, etiquetas, loc="upper center", ncol=3, frameon=False, fontsize=9,
+               bbox_to_anchor=(0.5, 0.945))
     tamano = "128 configuraciones al azar" if conjunto == "muestra_128" else "vecindario doble (490 configuraciones)"
     fig.suptitle(f"Algoritmo 4: reparto del presupuesto sobre {tamano}", fontsize=11, color=TEXTO, y=0.995)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.tight_layout(rect=(0, 0, 1, 0.90))
     ruta = rutas.dir_figuras() / f"fase5_reparto_{conjunto}.png"
     fig.savefig(ruta, dpi=160, facecolor=SUPERFICIE)
     plt.close(fig)
@@ -76,11 +77,13 @@ def figura_reparto(conjunto):
 def figura_estrategias():
     datos = cargar_resultado("fase5_estrategias")["datos"]
     resumen = datos["resumen"]
-    nombres = ["original", "dos_ranuras", "reinicios", "dos_ranuras_sh_n2_r1", "dos_ranuras_sh_n4_r1",
-               "dos_ranuras_sh_n8_r1", "dos_ranuras_sh_n8_r2"]
+    eleccion = datos["eleccion"]["elegida"]
+    nombres = ["original", "dos_ranuras", "reinicios", "dos_ranuras_sh_n2_r1", "dos_ranuras_sh_n2_r2",
+               "dos_ranuras_sh_n4_r1", "dos_ranuras_sh_n8_r2"]
     rotulos = {"original": "Original", "dos_ranuras": "Dos ranuras (2b)", "reinicios": "Reinicios (hasta 20)",
                "dos_ranuras_sh_n2_r1": "Dos ranuras + SH, n₀=2, 1 ronda",
                "dos_ranuras_sh_n4_r1": "Dos ranuras + SH, n₀=4, 1 ronda",
+               "dos_ranuras_sh_n2_r2": "Dos ranuras + SH, n₀=2, 2 rondas",
                "dos_ranuras_sh_n8_r1": "Dos ranuras + SH, n₀=8, 1 ronda",
                "dos_ranuras_sh_n8_r2": "Dos ranuras + SH, n₀=8, 2 rondas"}
     fig, ejes = plt.subplots(1, 4, figsize=(14, 4.2), facecolor=SUPERFICIE)
@@ -92,15 +95,16 @@ def figura_estrategias():
             bs = sorted(int(b) for b in por_b)
             ys = [por_b[str(b)]["precision"]["media"] for b in bs]
             ax.plot([b / 1000 for b in bs], ys, color=CATEGORICA[j], marker=MARCADORES[j], markersize=5,
-                    linewidth=2, label=rotulos[nombre])
+                    linewidth=2, label=rotulos[nombre] + (" (elegida)" if nombre == eleccion else ""))
         ax.set_title(titulo, fontsize=10, color=TEXTO)
         ax.set_xlabel("Presupuesto (miles de consultas)", fontsize=9, color=TEXTO)
         if col == 0:
             ax.set_ylabel("Precisión media alcanzada", fontsize=9, color=TEXTO)
     manejadores, etiquetas = ejes[0].get_legend_handles_labels()
-    fig.legend(manejadores, etiquetas, loc="upper center", ncol=4, frameon=False, fontsize=8.5)
+    fig.legend(manejadores, etiquetas, loc="upper center", ncol=4, frameon=False, fontsize=8.5,
+               bbox_to_anchor=(0.5, 0.93))
     fig.suptitle("Estrategias de mejora con el mismo presupuesto", fontsize=11, color=TEXTO, y=0.995)
-    fig.tight_layout(rect=(0, 0, 1, 0.84))
+    fig.tight_layout(rect=(0, 0, 1, 0.80))
     ruta = rutas.dir_figuras() / "fase5_estrategias.png"
     fig.savefig(ruta, dpi=160, facecolor=SUPERFICIE)
     plt.close(fig)
