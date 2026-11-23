@@ -1,0 +1,156 @@
+{
+ "descripcion": "Plan de la Fase 4, escrito antes de correr: Successive Halving como estrategia de búsqueda, dos ranuras con filtro por SH y probabilidad de eliminar a la mejor configuración",
+ "estrategias": {
+  "variantes": {
+   "calibrado_24": {
+    "generador": "generar_calibrado",
+    "techo": 24,
+    "num_casos": 30,
+    "casos": "los primeros 30 candidatos válidos de resultados/calibracion_sintetico.json"
+   },
+   "calibrado_28": {
+    "generador": "generar_calibrado",
+    "techo": 28,
+    "num_casos": 25,
+    "casos": "los 25 candidatos válidos de resultados/calibracion_sintetico_28.json"
+   },
+   "disyuntivo": {
+    "generador": "generar_disyuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 10,
+    "num_casos": 30,
+    "casos": "semillas 1 a 30"
+   },
+   "sin_limpias": {
+    "generador": "generar_conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "familias": 14,
+    "limpias_por_ranura": 0,
+    "interacciones": 10,
+    "num_casos": 30,
+    "casos": "semillas 1 a 30"
+   }
+  },
+  "parametros_comunes": {
+   "max_pasadas": 3,
+   "umbral_traza": 3,
+   "semilla_consulta": 1,
+   "n": 100
+  },
+  "configuracion_inicial": "primera opción de cada ranura",
+  "estrategias": {
+   "original": {
+    "tipo": "coordenadas"
+   },
+   "dos_ranuras": {
+    "tipo": "coordenadas",
+    "movimientos_dobles": {
+     "pares_muestra": 100,
+     "n_preliminar": 20,
+     "top": 5,
+     "rondas": 2
+    }
+   },
+   "sh_512_n1": {
+    "tipo": "sh_muestra",
+    "M": 512,
+    "n0": 1
+   },
+   "sh_4096_n1": {
+    "tipo": "sh_muestra",
+    "M": 4096,
+    "n0": 1
+   },
+   "sh_4096_n4": {
+    "tipo": "sh_muestra",
+    "M": 4096,
+    "n0": 4
+   },
+   "sh_todo_n1": {
+    "tipo": "sh_muestra",
+    "M": 32768,
+    "n0": 1
+   },
+   "dos_ranuras_sh_n2": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 2,
+    "rondas": 2
+   },
+   "dos_ranuras_sh_n8": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 8,
+    "rondas": 2
+   }
+  },
+  "semillas": {
+   "muestra_de_configuraciones": "3000 + i",
+   "permutacion_de_instancias": "4000 + i (en dos_ranuras_sh, '4000 + i|ronda')",
+   "movimientos_dobles": "2000 + i (como en la Fase 2b)",
+   "i": "número del caso"
+  },
+  "metricas": [
+   "precision final (verdad: sin ruido)",
+   "brecha con el óptimo",
+   "encontró el óptimo",
+   "consultas cobradas (métrica principal)",
+   "consultas solicitadas (sin reutilizar)",
+   "segundos de CPU (no es tiempo de GPU)"
+  ],
+  "resumen": "por variante y estrategia: media, desviación, mínimo y máximo; comparación pareada con la original (mejoran / empatan / empeoran)",
+  "criterio": "Descriptiva: la elección con el mismo presupuesto es de la Fase 5."
+ },
+ "probabilidad": {
+  "casos": {
+   "calibrado_24": "generar_calibrado(24) (el elegido de la calibración)",
+   "calibrado_28": "generar_calibrado(28)",
+   "disyuntivo": "generar_disyuntivo(5, 8, 100, 1, interacciones=10)",
+   "sin_limpias": "generar_conjuntivo(5, 8, 100, 1, familias=14, limpias_por_ranura=0, interacciones=10)"
+  },
+  "conjuntos": {
+   "muestra_512": {
+    "descripcion": "512 configuraciones al azar (semilla 5000)",
+    "n0": [
+     1,
+     4
+    ]
+   },
+   "vecindario_doble": {
+    "descripcion": "los 490 movimientos dobles desde el resultado del Algoritmo 3 original",
+    "n0": [
+     2,
+     8
+    ]
+   }
+  },
+  "repeticiones": "semillas de permutación de instancias 1 a 200",
+  "evento": "el ganador no es óptimo dentro del conjunto (pérdida > 0, con la verdad del sintético)",
+  "metricas": [
+   "frecuencia del evento y su error estándar",
+   "pérdida media",
+   "cota (Karnin, Koren y Somekh, 2013, con Hoeffding, 1963)"
+  ]
+ },
+ "fecha": "2026-11-22 22:40:10",
+ "metadatos": {
+  "fecha": "2026-11-22 22:40:10",
+  "git_hash": "d0b523c45d9b4b84ced3b9c8adac2936e099fa40",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ }
+}
