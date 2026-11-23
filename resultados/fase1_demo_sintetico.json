@@ -1,0 +1,257 @@
+{
+ "descripcion": "Fase 1: óptimo exacto por fuerza bruta y contador de consultas en casos sintéticos de los dos modelos",
+ "parametros": {
+  "m": 5,
+  "k": 8,
+  "n": 100,
+  "ranuras": [
+   "rol",
+   "estrategia",
+   "formato",
+   "estilo",
+   "cierre"
+  ]
+ },
+ "semilla": 1,
+ "metadatos": {
+  "fecha": "2026-11-22 21:11:44",
+  "git_hash": "be719f122724746ba6235815dd91ed5bd677455e",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": [
+  {
+   "caso": "conjuntivo, 1 limpia por ranura, sin interacciones",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 0,
+    "ruido": 0.0,
+    "semilla_ruido": 1,
+    "generador": "generar_conjuntivo",
+    "semilla": 1,
+    "familias": 10,
+    "limpias_por_ranura": 1,
+    "prob_rompe": 0.2,
+    "familias_por_instancia": [
+     2,
+     3
+    ],
+    "familias_por_interaccion": 1
+   },
+   "tamano_espacio": 32768,
+   "precision_optima": 1.0,
+   "configuraciones_optimas": 1,
+   "primera_optima": {
+    "rol": 2,
+    "estrategia": 7,
+    "formato": 6,
+    "estilo": 5,
+    "cierre": 5
+   },
+   "segundos_fuerza_bruta": 0.477,
+   "contador": {
+    "primera_evaluacion_nuevas": 100,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 100,
+    "consultas_solicitadas": 200
+   }
+  },
+  {
+   "caso": "conjuntivo, 1 limpia por ranura, 10 interacciones",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 10,
+    "ruido": 0.0,
+    "semilla_ruido": 1,
+    "generador": "generar_conjuntivo",
+    "semilla": 1,
+    "familias": 10,
+    "limpias_por_ranura": 1,
+    "prob_rompe": 0.2,
+    "familias_por_instancia": [
+     2,
+     3
+    ],
+    "familias_por_interaccion": 1
+   },
+   "tamano_espacio": 32768,
+   "precision_optima": 1.0,
+   "configuraciones_optimas": 1,
+   "primera_optima": {
+    "rol": 2,
+    "estrategia": 7,
+    "formato": 6,
+    "estilo": 5,
+    "cierre": 5
+   },
+   "segundos_fuerza_bruta": 0.474,
+   "contador": {
+    "primera_evaluacion_nuevas": 100,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 100,
+    "consultas_solicitadas": 200
+   }
+  },
+  {
+   "caso": "conjuntivo, sin limpias, 10 interacciones",
+   "oraculo": {
+    "modelo": "conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 10,
+    "ruido": 0.0,
+    "semilla_ruido": 1,
+    "generador": "generar_conjuntivo",
+    "semilla": 1,
+    "familias": 10,
+    "limpias_por_ranura": 0,
+    "prob_rompe": 0.2,
+    "familias_por_instancia": [
+     2,
+     3
+    ],
+    "familias_por_interaccion": 1
+   },
+   "tamano_espacio": 32768,
+   "precision_optima": 0.52,
+   "configuraciones_optimas": 2,
+   "primera_optima": {
+    "rol": 5,
+    "estrategia": 2,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 7
+   },
+   "segundos_fuerza_bruta": 0.47,
+   "contador": {
+    "primera_evaluacion_nuevas": 100,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 100,
+    "consultas_solicitadas": 200
+   }
+  },
+  {
+   "caso": "disyuntivo, 3 pares por instancia, 10 interacciones",
+   "oraculo": {
+    "modelo": "disyuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 10,
+    "ruido": 0.0,
+    "semilla_ruido": 1,
+    "generador": "generar_disyuntivo",
+    "semilla": 1,
+    "literales_por_instancia": 3,
+    "instancias_por_interaccion": 10
+   },
+   "tamano_espacio": 32768,
+   "precision_optima": 0.48,
+   "configuraciones_optimas": 1,
+   "primera_optima": {
+    "rol": 1,
+    "estrategia": 6,
+    "formato": 4,
+    "estilo": 0,
+    "cierre": 3
+   },
+   "segundos_fuerza_bruta": 1.343,
+   "contador": {
+    "primera_evaluacion_nuevas": 100,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 100,
+    "consultas_solicitadas": 200
+   }
+  },
+  {
+   "caso": "3-SAT del informe (Tabla 5)",
+   "oraculo": {
+    "modelo": "disyuntivo",
+    "m": 3,
+    "k": 2,
+    "n": 2,
+    "interacciones": 0,
+    "ruido": 0.0,
+    "semilla_ruido": 0,
+    "generador": "desde_3sat",
+    "num_variables": 3,
+    "clausulas": 2
+   },
+   "tamano_espacio": 8,
+   "precision_optima": 1.0,
+   "configuraciones_optimas": 6,
+   "primera_optima": {
+    "r0": 0,
+    "r1": 0,
+    "r2": 0
+   },
+   "segundos_fuerza_bruta": 0.0,
+   "contador": {
+    "primera_evaluacion_nuevas": 2,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 2,
+    "consultas_solicitadas": 4
+   }
+  },
+  {
+   "caso": "3-SAT aleatorio, 12 variables, razón 4,26",
+   "oraculo": {
+    "modelo": "disyuntivo",
+    "m": 12,
+    "k": 2,
+    "n": 51,
+    "interacciones": 0,
+    "ruido": 0.0,
+    "semilla_ruido": 1,
+    "generador": "generar_3sat",
+    "num_variables": 12,
+    "clausulas": 51,
+    "semilla": 1,
+    "razon": 4.26
+   },
+   "tamano_espacio": 4096,
+   "precision_optima": 1.0,
+   "configuraciones_optimas": 1,
+   "primera_optima": {
+    "r0": 1,
+    "r1": 1,
+    "r2": 0,
+    "r3": 0,
+    "r4": 0,
+    "r5": 1,
+    "r6": 0,
+    "r7": 0,
+    "r8": 0,
+    "r9": 0,
+    "r10": 0,
+    "r11": 1
+   },
+   "segundos_fuerza_bruta": 0.1,
+   "contador": {
+    "primera_evaluacion_nuevas": 51,
+    "segunda_evaluacion_nuevas": 0,
+    "consultas": 51,
+    "consultas_solicitadas": 102
+   }
+  }
+ ]
+}
