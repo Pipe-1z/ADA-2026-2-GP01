@@ -87,11 +87,22 @@ Sea V el conjunto de configuraciones ya **resueltas**: hojas evaluadas, hojas de
 
 **Terminación.** Cada nodo del árbol entra a la pila a lo sumo una vez (solo lo mete su padre, una vez), y en cada iteración sale uno; el árbol es finito (N nodos), así que el ciclo termina después de a lo sumo N iteraciones. Al terminar, la pila está vacía y, por (I1), V = C. Por (I3), Acc(c) ≤ mejor para toda c ∈ C, y por (I2) mejor = Acc(mejor_c). Luego mejor_c es una configuración de precisión máxima: **el algoritmo es correcto** (y la poda no descarta el óptimo).
 
-## 6. Función de eficiencia T
+## 6. Función de eficiencia: consultas Q y cómputo de cotas
 
-**Peor caso (ninguna poda).** Se visitan todos los nodos. Cada uno de los (k^m − 1)/(k − 1) nodos internos calcula una cota (costo ≤ c·n) y cada una de las k^m hojas cuesta n consultas. Contando operaciones:
+El algoritmo hace dos tipos de operaciones de **costo muy distinto**, y se cuentan por separado:
 
-  T(m, k, n) = n · k^m + c · n · (k^m − 1)/(k − 1).
+- **Q(|C|, n): consultas al oráculo** (el recurso caro: tiempo de GPU con el modelo real). Solo las hojas evaluadas consultan, n consultas cada una.
+- **K(|C|, n): cómputo de cotas en CPU** (operaciones elementales; no consulta al modelo). Cada nodo interno que se procesa calcula una cota, de costo ≤ c·n.
+
+**Peor caso (ninguna poda).** Se visitan todos los nodos: las k^m = |C| hojas y los (k^m − 1)/(k − 1) nodos internos. Contando cada recurso:
+
+  Q_peor(|C|, n) = n · |C|  (exactamente: |C| hojas × n consultas),
+
+  K_peor(|C|, n) = c · n · (|C| − 1)/(k − 1)  (una cota por nodo interno).
+
+La función total suma operaciones de distinto costo, una consulta (segundos de GPU) y una operación elemental de la cota (nanosegundos de CPU), por lo que solo tiene sentido como cota de orden; las comparaciones de costo del proyecto usan Q, y K se reporta aparte:
+
+  T(m, k, n) = Q + K = n · k^m + c · n · (k^m − 1)/(k − 1).
 
 **Por recurrencia.** Sea T_d el costo de recorrer completo un subárbol cuya raíz está en el nivel d. Una hoja cuesta n; un nodo interno cuesta su cota más el de sus k hijos:
 
@@ -105,16 +116,22 @@ Desplegando: T_0 = c·n·(1 + k + … + k^{m−1}) + k^m · n = n · k^m + c · 
 - Cota superior: (k^m − 1)/(k − 1) ≤ k^m, luego T ≤ n·|C| + c·n·|C| = (1 + c)·n·|C|, así que c_2 = 1 + c.
 - Las dos valen para todo m ≥ 1 y n ≥ 1 (m_0 = n_0 = 1).
 
-Por lo tanto, en el peor caso **T(|C|, n) = Θ(|C| · n) = Θ(n · k^m)**: exponencial en el número de ranuras m. El número de **consultas** del peor caso es exactamente n·|C|, igual que la fuerza bruta.
+Por lo tanto, en el peor caso **T(|C|, n) = Θ(|C| · n) = Θ(n · k^m)**: exponencial en el número de ranuras m. Lo mismo vale para cada recurso por separado: **Q_peor = n·|C| = Θ(|C|·n)** (exactamente igual que la fuerza bruta) y **K_peor = Θ(|C|·n/k)**, que con k ≥ 2 es a lo sumo c·n·|C|. La validación experimental (Fase 6) mide Q y K por separado: Q como conteo de consultas y K como número de cotas calculadas (y su tiempo de CPU, que no es tiempo de GPU).
 
 **El peor caso ocurre.** `generar_peor_caso_backtracking(m, k, n)` construye un caso con un solo par por instancia, siempre en la última ranura (la instancia i pasa si la última ranura vale i mod k). En todo nodo interno la última ranura está sin fijar, así que todas las instancias están vivas y UB = 1; pero ninguna configuración resuelve más de ⌈n/k⌉ instancias, y con k ≥ 2 y n ≥ 2 la mejor precisión es menor que 1. Luego UB > mejor en todos los nodos internos y no se poda nada (lo comprueba `test_peor_caso_construido_no_poda_nada`).
 
-**Mejor caso.** Si la primera hoja visitada tiene precisión igual a la cota de la raíz (por ejemplo, Acc = 1 cuando UB(raíz) = 1), todos los demás nodos se descartan al sacarlos de la pila: se exploran 1 + m·k nodos, se calculan 1 + (m − 1)·k cotas y se evalúa una sola hoja (n consultas). Así T_mejor = n + c·n·(1 + (m − 1)·k) = Θ(n · m · k) (lo comprueba `test_mejor_caso_la_primera_hoja_es_optima`).
+**Mejor caso.** Si la primera hoja visitada tiene precisión igual a la cota de la raíz (por ejemplo, Acc = 1 cuando UB(raíz) = 1), todos los demás nodos se descartan al sacarlos de la pila: se exploran 1 + m·k nodos, se calculan 1 + (m − 1)·k cotas y se evalúa una sola hoja. Así Q_mejor = n, K_mejor = c·n·(1 + (m − 1)·k) y T_mejor = Θ(n · m · k) (lo comprueba `test_mejor_caso_la_primera_hoja_es_optima`).
 
 Como el mejor caso es Θ(n·m·k) y el peor Θ(n·|C|), y no son del mismo orden, el tiempo del algoritmo es **O(|C| · n)** y **Ω(n · m · k)**; no existe una única función f con T = Θ(f) para todas las entradas (diapositivas: el tiempo es Θ(f) si y solo si el peor caso es O(f) y el mejor es Ω(f)).
 
 **Relación con la NP-dureza.** CONFIG-EXACTA es NP-completa (reducción desde 3-SAT). Salvo que P = NP, ningún algoritmo exacto resuelve todos los casos en tiempo polinomial en m. Por eso el backtracking conserva un peor caso exponencial: la poda ayuda en la práctica (Sección 7), pero no cambia la cota del peor caso.
 
-## 7. Medición empírica de la poda
+## 7. Modelo de información: si la cota sabe qué rompe cada opción, ¿para qué consulta en las hojas?
+
+- **El backtracking es el algoritmo exacto de referencia cuando el modelo de rupturas es conocido** (Parte 1: oráculo exacto). La cota usa la estructura del caso (qué familias rompe cada opción, o qué pares satisfacen cada instancia), y esa es exactamente la información que da la reducción desde 3-SAT: el algoritmo resuelve CONFIG-EXACTA y su análisis (Q, K, correctitud) es el del algoritmo exacto que pide el enunciado. Las consultas en las hojas modelan la evaluación de la configuración en las n instancias, que es la operación que el enunciado cuenta (O(|C|·n)); en el sintético la verdad de la hoja coincide con la cota (Lema 2), y el algoritmo la consulta de todos modos para que su costo en consultas sea el del problema real y comparable con los demás algoritmos.
+- **En el problema real el modelo de rupturas no se conoce.** El oráculo del curso solo devuelve, para cada instancia fallida, la primera restricción violada. Un modelo de rupturas podría **estimarse** a partir de las trazas, pero: (a) estimarlo cuesta consultas (habría que evaluar opciones en varios contextos); (b) la traza solo muestra la primera restricción violada, así que una familia rota puede quedar oculta detrás de otra; y (c) las ranuras reales interactúan (`docs/notas_informe_final.md`, punto 1). Con un modelo estimado la cota **no tiene garantía de admisibilidad**: podría subestimar y descartar la rama del óptimo, y el algoritmo dejaría de ser exacto.
+- **Por eso, en la Fase 7 el exacto con el modelo real se hace por fuerza bruta** en un subespacio pequeño (por ejemplo, 2 opciones por ranura elegidas al azar con semilla fija), donde evaluar todo es asequible y el resultado sí es el óptimo exacto de ese subespacio.
+
+## 8. Medición empírica de la poda
 
 `scripts/fase3_backtracking.py` mide, para cada caso y cada orden de hijos, los nodos explorados por nivel, las hojas evaluadas y las consultas, y su fracción frente al peor caso (N nodos, |C| hojas, n·|C| consultas). Cada resultado se compara con la fuerza bruta. Casos: el peor caso construido, las variantes calibradas (24 y 28 %), el disyuntivo y el sin opciones limpias (los de la Fase 2b) y fórmulas 3-SAT aleatorias con 10 a 16 variables y razones cláusulas/variables de 2 a 6 (incluida 4,26). Resultados: `resultados/fase3_backtracking.json` (resumen) y `resultados/fase3_backtracking.csv` (por corrida).

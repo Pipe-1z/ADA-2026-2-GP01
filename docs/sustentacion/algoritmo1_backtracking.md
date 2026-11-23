@@ -32,12 +32,15 @@ Pienso en tres cosas que siempre son ciertas al empezar cada vuelta del ciclo:
 - **Mantenimiento:** si evalúo una hoja, actualizo "mejor" si mejora: se mantiene. Si descarto una rama, es porque su cota ≤ mejor, y la cota nunca subestima: ninguna hoja de esa rama supera a "mejor". Si expando un nodo, cambio un nodo por sus hijos, que cubren exactamente las mismas hojas.
 - **Terminación:** cada nodo entra a la pila una sola vez y el árbol es finito, así que termina. Al final la pila está vacía, todo C está resuelto y nada supera a "mejor": encontré el óptimo.
 
-## T(n): contar nodos nivel por nivel
+## T(n): contar nodos nivel por nivel, con dos "monedas"
 
+- Hay dos recursos que **no se pueden sumar como si costaran lo mismo**:
+  - **Q = consultas al modelo** (lo caro: segundos de GPU cada una). Solo en las hojas.
+  - **K = cómputo de cotas** (cuentas en CPU, baratísimas). En los nodos internos.
 - Peor caso (no poda nada): visito todo.
-  - Hojas: k^m, cada una n consultas → n·k^m.
-  - Nodos internos: 1 + k + k² + … + k^{m−1} = (k^m − 1)/(k − 1), cada uno una cota de costo ≈ c·n.
-  - T = n·k^m + c·n·(k^m − 1)/(k − 1).
+  - Hojas: k^m = |C|, cada una n consultas → **Q = n·|C|** (igual que la fuerza bruta).
+  - Nodos internos: 1 + k + k² + … + k^{m−1} = (k^m − 1)/(k − 1), cada uno una cota de costo ≈ c·n → **K = c·n·(|C| − 1)/(k − 1)**.
+  - T = Q + K = n·k^m + c·n·(k^m − 1)/(k − 1). La suma solo sirve para el orden de crecimiento; para comparar algoritmos uso Q, y K lo reporto aparte.
 - La misma cuenta como recurrencia: el costo de un subárbol en el nivel d es "mi cota + k veces el subárbol de abajo": T_d = c·n + k·T_{d+1}, con T_m = n. Al desplegar sale la misma suma.
 - Asintótica: como (k^m − 1)/(k − 1) ≤ k^m, queda n·|C| ≤ T ≤ (1 + c)·n·|C|. Con c₁ = 1, c₂ = 1 + c y m₀ = n₀ = 1: **T = Θ(n·|C|)** en el peor caso. Es exponencial en m (|C| = k^m).
 - Mejor caso: si la primera hoja ya alcanza la cota de la raíz, descarto todo lo demás: recorro una rama y miro los hermanos de cada nivel: 1 + m·k nodos, una sola hoja: Θ(n·m·k).
@@ -47,6 +50,19 @@ Pienso en tres cosas que siempre son ciertas al empezar cada vuelta del ciclo:
 
 - Todas las instancias dependen solo de la **última** ranura. Mientras la última ranura no esté fijada, todas están vivas y la cota vale 1.
 - Pero cada configuración solo resuelve las instancias que coinciden con su última opción: a lo sumo una de cada k. La mejor es menor que 1, así que nunca cota ≤ mejor: no poda nada y recorre los N nodos.
+
+## "Si la cota ya sabe qué rompe cada opción, ¿para qué consulta en las hojas?"
+
+- Porque el backtracking es el **exacto de referencia para cuando el modelo de rupturas se conoce**: es la Parte 1 (oráculo exacto) y la situación de la reducción desde 3-SAT. Su análisis es el del algoritmo exacto que pide el enunciado.
+- La consulta en las hojas es la operación que el enunciado cuenta (evaluar la configuración en las n instancias). La mantengo para que su costo en consultas sea comparable con el de los demás algoritmos y con el problema real.
+- En el problema real **no conozco qué rompe cada opción**: solo veo la primera restricción violada de cada instancia que falla. Podría estimar un modelo de rupturas con las trazas, pero eso cuesta consultas, una familia rota puede quedar escondida detrás de otra, y las ranuras interactúan. Con un modelo estimado la cota **podría subestimar** y descartar la rama del óptimo: perdería la garantía de exactitud.
+- Por eso, con el modelo real el exacto lo hago por **fuerza bruta en un subespacio pequeño** (Fase 7), donde evaluar todo sí es posible.
+
+## ¿Dónde poda poco? (y la NP-dureza)
+
+- En los casos disyuntivos genéricos (k = 8, tres pares por instancia), la cota casi no poda: una instancia sigue "viva" mientras cualquiera de sus pares esté en una ranura sin fijar, y eso dura hasta casi el final del árbol (ver `resultados/fase3_backtracking.json`).
+- Ese es el modelo de la reducción desde 3-SAT. Es coherente con la NP-dureza: en el modelo que contiene a 3-SAT ninguna cota sencilla puede garantizar poda, porque si siempre podara lo suficiente tendríamos un algoritmo polinomial para un problema NP-completo.
+- Cuidado con exagerar: en las fórmulas 3-SAT aleatorias que medí (k = 2) la cota sí podó bastante, aunque los nodos explorados siguen creciendo de forma exponencial con el número de variables. La NP-dureza habla del **peor caso**, no de cada caso.
 
 ## Preguntas de práctica
 

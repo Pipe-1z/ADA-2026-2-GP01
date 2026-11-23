@@ -18,6 +18,13 @@ Puntos que deben entrar en el informe final, anotados durante el desarrollo. Nin
 
 - Citar en el texto, en formato APA 7 de comunicación personal: "(JuManoel, comunicación personal, noviembre de 2026)", sin entrada en la lista de referencias (CLAUDE.md §1).
 
-## 4. Correcciones de la primera entrega
+## 4. Algoritmo 1: dónde poda poco la cota, y la NP-dureza
+
+- Destacar que en los casos **disyuntivos** (el modelo de la reducción desde 3-SAT) la cota casi no poda: en el disyuntivo genérico con k = 8 y tres pares por instancia, el backtracking evalúa prácticamente todas las hojas (`resultados/fase3_backtracking.json`, familia `disyuntivo`), mientras que en los casos conjuntivos (los del curso) evalúa una fracción mínima.
+- Relacionarlo con la NP-dureza demostrada: en el modelo que contiene a 3-SAT ninguna cota sencilla puede garantizar poda (si siempre podara a un número polinomial de nodos, se resolvería 3-SAT en tiempo polinomial).
+- **Matiz obligatorio para no exagerar:** en las fórmulas 3-SAT aleatorias medidas (k = 2) la cota sí poda una fracción grande del árbol, aunque los nodos explorados crecen de forma exponencial con el número de variables (familias `3sat_v*` del mismo archivo). La NP-dureza es una afirmación de peor caso.
+- Presentar Q (consultas) y K (cómputo de cotas) por separado (`docs/derivaciones/algoritmo1_backtracking.md`, Sección 6), y la respuesta sobre el modelo de información de la cota (Sección 7).
+
+## 5. Correcciones de la primera entrega
 
 - Ver `docs/correcciones_primera_entrega.md` (Fases 8 y 9).
