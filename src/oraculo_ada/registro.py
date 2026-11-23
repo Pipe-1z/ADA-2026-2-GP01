@@ -25,7 +25,10 @@ def _git(args, cwd):
 def metadatos():
     """Fecha, versión del código, versión de los verificadores y hardware."""
     oi = rutas.ruta_open_instruct()
-    estado = _git(["status", "--porcelain", "--untracked-files=no"], rutas.RAIZ)
+    # "Sucio" se refiere al código: los cambios en resultados/ y figuras/ (lo que generan
+    # los propios experimentos) no cuentan.
+    estado = _git(["status", "--porcelain", "--untracked-files=no", "--", ".",
+                   ":(exclude)resultados", ":(exclude)figuras"], rutas.RAIZ)
     return {
         "fecha": time.strftime("%Y-%m-%d %H:%M:%S"),
         "git_hash": _git(["rev-parse", "HEAD"], rutas.RAIZ),
