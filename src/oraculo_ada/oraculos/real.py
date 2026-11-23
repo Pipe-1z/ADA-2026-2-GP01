@@ -20,6 +20,7 @@ los libros (``libro_consultas_<etiqueta>.json``).
 
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 from .. import rutas
 from ..hardware import ETIQUETA_T4, etiqueta_hardware, verificar_hardware
@@ -145,6 +146,37 @@ class OraculoReal(OraculoBase):
         return {"evaluaciones": len(puras), "consultas": consultas,
                 "segundos": sum(h["segundos"] for h in puras),
                 "segundos_por_consulta": (sum(h["segundos"] for h in puras) / consultas) if consultas else None}
+
+
+class ConsultaFueraDeCache(RuntimeError):
+    """El oráculo del curso necesitó generar una respuesta que no está en el caché."""
+
+
+class _TokenizadorSinModelo:
+    """Tokenizador de relleno para reproducir desde el caché: si el oráculo intenta
+    preparar una generación, se detiene con ``ConsultaFueraDeCache`` (sin GPU)."""
+
+    pad_token = "<pad>"
+    eos_token = "<eos>"
+    chat_template = ""
+    padding_side = "left"
+
+    def _sin_cache(self, *args, **kwargs):
+        raise ConsultaFueraDeCache("la consulta no está en el caché y se está reproduciendo sin modelo")
+
+    apply_chat_template = __call__ = batch_decode = _sin_cache
+
+
+def oraculo_curso_desde_cache(ruta_cache, busqueda, validacion=None, nombre_modelo="Qwen/Qwen3-1.7B"):
+    """``oraculo.Oraculo`` sin modelo que solo responde lo que ya está en ``ruta_cache``.
+
+    ``nombre_modelo`` debe ser el nombre con que se generó el caché (entra en su
+    clave). Una consulta ausente lanza ``ConsultaFueraDeCache``.
+    """
+    from oraculo import Oraculo
+
+    sin_modelo = SimpleNamespace(red=None, tok=_TokenizadorSinModelo(), nombre=nombre_modelo)
+    return Oraculo(sin_modelo, busqueda, validacion, cache=str(ruta_cache))
 
 
 def crear_oraculo_real(hardware=None, *, modelo="qwen17b", directorio_cache=None, lote=16,

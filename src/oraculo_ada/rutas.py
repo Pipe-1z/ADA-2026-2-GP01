@@ -35,6 +35,18 @@ def dir_figuras():
     return _carpeta("ORACULO_DIR_FIGURAS", RAIZ / "figuras")
 
 
+def preparar_modulos_del_curso():
+    """Pone en ``sys.path`` la raíz del repositorio (``oraculo.py``, ``ayudas.py``) y
+    open-instruct (verificadores), para importar el oráculo del curso sin modificarlo."""
+    import sys
+
+    oi = ruta_open_instruct()
+    for ruta in (oi, RAIZ):
+        if ruta and str(ruta) not in sys.path:
+            sys.path.insert(0, str(ruta))
+    return oi
+
+
 def ruta_open_instruct():
     """Clon de open-instruct: variable de entorno, ``../open-instruct`` o ``/content/open-instruct``."""
     if os.environ.get("ORACULO_OPEN_INSTRUCT"):

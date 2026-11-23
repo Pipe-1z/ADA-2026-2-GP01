@@ -5,6 +5,7 @@ from .sintetico import (
     OraculoSintetico,
     desde_3sat,
     generar_3sat,
+    generar_calibrado,
     generar_conjuntivo,
     generar_disyuntivo,
 )
@@ -17,6 +18,7 @@ __all__ = [
     "fallos_por_familia",
     "familia",
     "generar_3sat",
+    "generar_calibrado",
     "generar_conjuntivo",
     "generar_disyuntivo",
 ]

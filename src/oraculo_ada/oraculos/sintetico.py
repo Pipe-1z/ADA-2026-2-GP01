@@ -62,8 +62,8 @@ class OraculoSintetico(OraculoBase):
     """
 
     def __init__(self, modelo, m, k, *, rompe=None, familias_instancia=None, literales=None,
-                 interacciones=(), ruido=0.0, semilla_ruido=0, cache=True, ranuras=None,
-                 temperaturas=(0.0,), parametros=None):
+                 interacciones=(), familias_siempre_rotas=(), ruido=0.0, semilla_ruido=0, cache=True,
+                 ranuras=None, temperaturas=(0.0,), parametros=None):
         if modelo not in MODELOS:
             raise ValueError(f"modelo debe ser uno de {MODELOS}")
         if m < 1 or k < 1:
@@ -86,6 +86,8 @@ class OraculoSintetico(OraculoBase):
                 raise ValueError(f"faltan opciones en rompe: {faltan[:5]}")
             self.rompe = {pa: frozenset(f) for pa, f in rompe.items()}
             self.familias_instancia = [tuple(f) for f in familias_instancia]
+            # Familias que ninguna configuración satisface: modelan instancias insolubles.
+            self.familias_siempre_rotas = frozenset(familias_siempre_rotas)
             n = len(self.familias_instancia)
         else:
             if literales is None:
@@ -125,7 +127,7 @@ class OraculoSintetico(OraculoBase):
         """Lo que depende solo de la configuración: familias rotas o instancias anuladas."""
         activas = self._interacciones_activas(idx)
         if self.modelo == "conjuntivo":
-            rotas = set()
+            rotas = set(self.familias_siempre_rotas)
             for p, a in enumerate(idx):
                 rotas |= self.rompe[(p, a)]
             for conj in activas:
@@ -224,47 +226,109 @@ def _interacciones_aleatorias(rng, m, k, cantidad, universo, tamano):
     return salida
 
 
+def _acoplar(rng, m, k, cantidad, opcion_de, universo):
+    """Interacciones dirigidas: ``cantidad`` pares de ranuras disjuntos cuyas opciones elegidas
+    **solo funcionan juntas**.
+
+    Para el par de ranuras (p, q) con opciones elegidas g_p y g_q, cada combinación
+    "mixta" ((p, a ≠ g_p), (q, g_q)) y ((p, g_p), (q, b ≠ g_q)) hace fallar todo
+    ``universo``. Una configuración que tiene g_p sin g_q (o g_q sin g_p) no
+    resuelve ninguna instancia, mientras que (g_p, g_q) juntas no se penalizan.
+    Así, el ascenso por coordenadas que parte de una configuración sin g_p ni g_q
+    nunca las adopta: cambiar una sola de las dos ranuras lleva a precisión 0.
+    """
+    if 2 * cantidad > m:
+        raise ValueError("no caben tantos pares de ranuras disjuntos")
+    ranuras = list(range(m))
+    rng.shuffle(ranuras)
+    pares, inter = [], []
+    for j in range(cantidad):
+        p, q = sorted(ranuras[2 * j: 2 * j + 2])
+        gp, gq = opcion_de(p), opcion_de(q)
+        pares.append({"ranuras": [p, q], "opciones": [gp, gq]})
+        todo = frozenset(universo)
+        inter += [((p, a), (q, gq), todo) for a in range(k) if a != gp]
+        inter += [((p, gp), (q, b), todo) for b in range(k) if b != gq]
+    return pares, inter
+
+
 def generar_conjuntivo(m, k, n, semilla, *, familias=10, limpias_por_ranura=1, prob_rompe=0.2,
-                       familias_por_instancia=(2, 3), interacciones=0, familias_por_interaccion=1,
+                       prob_rompe_opcion0=None, familias_por_instancia=(2, 3), interacciones=0,
+                       familias_por_interaccion=1, pares_acoplados=0, fraccion_insoluble=0.0,
                        ruido=0.0, cache=True, ranuras=None, temperaturas=(0.0,)):
     """Oráculo conjuntivo aleatorio.
 
     Cada ranura tiene ``limpias_por_ranura`` opciones que no rompen nada; cada
     opción no limpia rompe cada familia con probabilidad ``prob_rompe`` (al
-    menos una). Cada instancia trae entre 2 y 3 familias distintas. Las
-    interacciones se generan al final, así que con la misma semilla la estructura
-    base es la misma con o sin interacciones.
+    menos una). Si se da ``prob_rompe_opcion0``, la opción 0 de cada ranura (si
+    no es limpia) usa esa probabilidad en vez de ``prob_rompe``. Cada instancia
+    trae entre 2 y 3 familias distintas.
+
+    Opciones adicionales, que se generan al final y en este orden (con la misma
+    semilla, la estructura base es la misma con o sin ellas):
+
+    - ``interacciones``: pares de opciones al azar que rompen familias adicionales.
+    - ``pares_acoplados``: interacciones dirigidas (ver ``_acoplar``) sobre las
+      opciones limpias; crean óptimos locales controlados para el Algoritmo 3.
+    - ``fraccion_insoluble``: fracción de instancias que reciben la familia
+      ``imposible``, que ninguna configuración satisface.
     """
     if not 0 <= limpias_por_ranura <= k:
         raise ValueError("limpias_por_ranura debe estar entre 0 y k")
     if max(familias_por_instancia) > familias:
         raise ValueError("una instancia no puede traer más familias de las que existen")
+    if pares_acoplados and limpias_por_ranura < 1:
+        raise ValueError("los pares acoplados se construyen sobre las opciones limpias")
+    if not 0.0 <= fraccion_insoluble <= 1.0:
+        raise ValueError("fraccion_insoluble debe estar en [0, 1]")
     rng = random.Random(semilla)
     nombres = [f"f{j}" for j in range(familias)]
-    rompe = {}
+    rompe, limpia_de = {}, {}
     for p in range(m):
         limpias = set(rng.sample(range(k), limpias_por_ranura))
+        limpia_de[p] = min(limpias) if limpias else None
         for a in range(k):
             if a in limpias:
                 rompe[(p, a)] = frozenset()
             else:
-                rotas = {f for f in nombres if rng.random() < prob_rompe} or {rng.choice(nombres)}
+                q = prob_rompe_opcion0 if (a == 0 and prob_rompe_opcion0 is not None) else prob_rompe
+                rotas = {f for f in nombres if rng.random() < q} or {rng.choice(nombres)}
                 rompe[(p, a)] = frozenset(rotas)
-    familias_instancia = [tuple(rng.sample(nombres, rng.choice(familias_por_instancia))) for _ in range(n)]
+    familias_instancia = [list(rng.sample(nombres, rng.choice(familias_por_instancia))) for _ in range(n)]
     inter = _interacciones_aleatorias(rng, m, k, interacciones, nombres, familias_por_interaccion)
+
+    pares = []
+    if pares_acoplados:
+        pares, dirigidas = _acoplar(rng, m, k, pares_acoplados, limpia_de.get, nombres)
+        inter += dirigidas
+    siempre_rotas, insolubles = (), []
+    if fraccion_insoluble:
+        insolubles = sorted(rng.sample(range(n), math.floor(fraccion_insoluble * n + 0.5)))
+        for i in insolubles:
+            familias_instancia[i].insert(rng.randrange(len(familias_instancia[i]) + 1), "imposible")
+        siempre_rotas = ("imposible",)
+
     parametros = {"generador": "generar_conjuntivo", "semilla": semilla, "familias": familias,
                   "limpias_por_ranura": limpias_por_ranura, "prob_rompe": prob_rompe,
+                  "prob_rompe_opcion0": prob_rompe_opcion0,
                   "familias_por_instancia": list(familias_por_instancia),
-                  "familias_por_interaccion": familias_por_interaccion}
+                  "familias_por_interaccion": familias_por_interaccion,
+                  "pares_acoplados": pares, "fraccion_insoluble": fraccion_insoluble,
+                  "instancias_insolubles": len(insolubles)}
     return OraculoSintetico("conjuntivo", m, k, rompe=rompe, familias_instancia=familias_instancia,
-                            interacciones=inter, ruido=ruido, semilla_ruido=semilla, cache=cache,
-                            ranuras=ranuras, temperaturas=temperaturas, parametros=parametros)
+                            interacciones=inter, familias_siempre_rotas=siempre_rotas, ruido=ruido,
+                            semilla_ruido=semilla, cache=cache, ranuras=ranuras, temperaturas=temperaturas,
+                            parametros=parametros)
 
 
 def generar_disyuntivo(m, k, n, semilla, *, literales_por_instancia=3, interacciones=0,
-                       instancias_por_interaccion=None, ruido=0.0, cache=True, ranuras=None,
-                       temperaturas=(0.0,)):
-    """Oráculo disyuntivo aleatorio: cada instancia trae pares (p, a) sobre ranuras distintas."""
+                       instancias_por_interaccion=None, pares_acoplados=0, ruido=0.0, cache=True,
+                       ranuras=None, temperaturas=(0.0,)):
+    """Oráculo disyuntivo aleatorio: cada instancia trae pares (p, a) sobre ranuras distintas.
+
+    ``pares_acoplados`` agrega interacciones dirigidas (ver ``_acoplar``) sobre
+    opciones elegidas al azar: esas dos opciones solo funcionan juntas.
+    """
     if not 1 <= literales_por_instancia <= m:
         raise ValueError("literales_por_instancia debe estar entre 1 y m")
     rng = random.Random(semilla)
@@ -272,11 +336,43 @@ def generar_disyuntivo(m, k, n, semilla, *, literales_por_instancia=3, interacci
                  for _ in range(n)]
     tamano = instancias_por_interaccion or max(1, n // 10)
     inter = _interacciones_aleatorias(rng, m, k, interacciones, range(n), tamano)
+    pares = []
+    if pares_acoplados:
+        elegidas = {p: rng.randrange(k) for p in range(m)}
+        pares, dirigidas = _acoplar(rng, m, k, pares_acoplados, elegidas.get, range(n))
+        inter += dirigidas
     parametros = {"generador": "generar_disyuntivo", "semilla": semilla,
-                  "literales_por_instancia": literales_por_instancia, "instancias_por_interaccion": tamano}
+                  "literales_por_instancia": literales_por_instancia, "instancias_por_interaccion": tamano,
+                  "pares_acoplados": pares}
     return OraculoSintetico("disyuntivo", m, k, literales=literales, interacciones=inter, ruido=ruido,
                             semilla_ruido=semilla, cache=cache, ranuras=ranuras, temperaturas=temperaturas,
                             parametros=parametros)
+
+
+# Caso calibrado con las estadísticas del problema real. Los valores salen de
+# scripts/fase2_calibracion_sintetico.py y están documentados, con sus objetivos y
+# fuentes, en resultados/calibracion_sintetico.json. No se editan a mano: si se
+# recalibra, se copian desde ese archivo (una prueba verifica que coincidan).
+CALIBRADO = {
+    "m": 5, "k": 8, "n": 100, "familias": 14, "familias_por_instancia": (2, 3), "limpias_por_ranura": 1,
+    "fraccion_insoluble": 0.76, "prob_rompe_opcion0": 0.06, "prob_rompe": 0.25, "pares_acoplados": 1,
+    "semilla": 7,
+}
+
+
+def generar_calibrado(*, ruido=0.0, cache=True, temperaturas=(0.0,)):
+    """Caso sintético calibrado con el problema real (precisión inicial 9 %, óptimo 24 %,
+    configuraciones al azar con promedio menor que 5 %, 76 instancias insolubles; ver
+    ``resultados/calibracion_sintetico.json``). Usa los nombres de ranura del proyecto."""
+    c = CALIBRADO
+    o = generar_conjuntivo(c["m"], c["k"], c["n"], c["semilla"], familias=c["familias"],
+                           familias_por_instancia=c["familias_por_instancia"],
+                           limpias_por_ranura=c["limpias_por_ranura"], fraccion_insoluble=c["fraccion_insoluble"],
+                           prob_rompe=c["prob_rompe"], prob_rompe_opcion0=c["prob_rompe_opcion0"],
+                           pares_acoplados=c["pares_acoplados"], ruido=ruido, cache=cache,
+                           ranuras=["rol", "estrategia", "formato", "estilo", "cierre"], temperaturas=temperaturas)
+    o.parametros["generador"] = "generar_calibrado"
+    return o
 
 
 def desde_3sat(clausulas, num_variables, *, interacciones=(), ruido=0.0, semilla_ruido=0, cache=True):
