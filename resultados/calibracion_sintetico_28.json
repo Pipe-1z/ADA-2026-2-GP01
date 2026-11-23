@@ -76,9 +76,9 @@
   "semilla_muestra": 2026
  },
  "metadatos": {
-  "fecha": "2026-11-22 21:55:46",
-  "git_hash": "9806479c794737c58de208bc98d639534fede480",
-  "git_sucio": true,
+  "fecha": "2026-11-22 21:58:03",
+  "git_hash": "5b7d36bd24fc786bfd2a1386bfaffe3f197088c5",
+  "git_sucio": false,
   "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
   "hardware": {
    "python": "3.12.10",
@@ -327,9 +327,9 @@
      ]
     }
    ],
-   "segundos_cpu_fuerza_bruta": 0.6367728999994142
+   "segundos_cpu_fuerza_bruta": 0.6665440999995553
   },
-  "segundos_cpu_rejilla": 28.153297300000304,
+  "segundos_cpu_rejilla": 83.93472600000041,
   "fuentes": {
    "precision_inicial": "resultados/registro_busqueda.csv (9 %) y resultados/registro_busqueda_recalificado_a4cd966.csv (8 %)",
    "precision_optima": "README_curso.md (DanielMelo404, 2026): techo cercano al 24 %",
