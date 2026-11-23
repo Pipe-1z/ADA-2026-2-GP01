@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oraculo-ada"
+version = "0.1.0"
+description = "Proyecto Oráculo (ADAG1): algoritmos de búsqueda de configuraciones de prompt y su análisis"
+authors = [{ name = "Juan Felipe Henao" }]
+requires-python = ">=3.10"
+# El paquete solo usa la biblioteca estándar. El oráculo real necesita además
+# torch, transformers y los verificadores de open-instruct (ver CLAUDE.md §5).
+dependencies = []
+
+[project.optional-dependencies]
+pruebas = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["pruebas", "src"]
+python_files = ["test_*.py"]
+addopts = "--doctest-modules"
+pythonpath = ["src"]
