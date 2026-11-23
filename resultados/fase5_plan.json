@@ -1,0 +1,169 @@
+{
+ "descripcion": "Plan de la Fase 5, escrito antes de correr",
+ "reparto": {
+  "objetivo": "Algoritmo 4: comparar reparto uniforme, Successive Halving con presupuesto y UCB1 con el mismo presupuesto B (consultas nuevas), para varios B",
+  "casos": "los 3 primeros casos de cada variante de oraculo_ada.experimentos.casos.VARIANTES (calibrado_24, calibrado_28, disyuntivo, sin_limpias)",
+  "num_casos_por_variante": 3,
+  "conjuntos": {
+   "muestra_128": "128 configuraciones al azar (semilla 6000 + i)",
+   "vecindario_doble": "los 490 movimientos dobles desde el resultado del Algoritmo 3 original"
+  },
+  "presupuestos": "B = b · |S| con b ∈ {2, 4, 8, 16, 32}",
+  "multiplicadores": [
+   2,
+   4,
+   8,
+   16,
+   32
+  ],
+  "repeticiones": "semillas de permutación de instancias 1 a 100",
+  "esquemas": {
+   "uniforme": "m = min(⌊B/|S|⌋, n) instancias por configuración",
+   "successive_halving": "mayor n0 con Q_con(|S|, n0, n) <= B; no factible si n0 = 1 no alcanza",
+   "ucb1": "Auer, Cesa-Bianchi y Fischer (2002), Figura 1; recomienda el brazo más jugado"
+  },
+  "metricas": [
+   "probabilidad de elegir una configuración óptima dentro de S (verdad del sintético)",
+   "simple regret = Acc*(S) − Acc(elegida)",
+   "consultas usadas",
+   "factibilidad"
+  ]
+ },
+ "estrategias": {
+  "objetivo": "elegir la estrategia de mejora que se aplicará con el modelo real en la Fase 7, comparando con el mismo presupuesto",
+  "variantes": {
+   "calibrado_24": {
+    "generador": "generar_calibrado",
+    "techo": 24,
+    "num_casos": 30,
+    "casos": "los primeros 30 candidatos válidos de resultados/calibracion_sintetico.json"
+   },
+   "calibrado_28": {
+    "generador": "generar_calibrado",
+    "techo": 28,
+    "num_casos": 25,
+    "casos": "los 25 candidatos válidos de resultados/calibracion_sintetico_28.json"
+   },
+   "disyuntivo": {
+    "generador": "generar_disyuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "interacciones": 10,
+    "num_casos": 30,
+    "casos": "semillas 1 a 30"
+   },
+   "sin_limpias": {
+    "generador": "generar_conjuntivo",
+    "m": 5,
+    "k": 8,
+    "n": 100,
+    "familias": 14,
+    "limpias_por_ranura": 0,
+    "interacciones": 10,
+    "num_casos": 30,
+    "casos": "semillas 1 a 30"
+   }
+  },
+  "parametros_comunes": {
+   "max_pasadas": 3,
+   "umbral_traza": 3,
+   "semilla_consulta": 1,
+   "n": 100
+  },
+  "estrategias": {
+   "original": {
+    "tipo": "coordenadas"
+   },
+   "dos_ranuras": {
+    "tipo": "coordenadas",
+    "movimientos_dobles": {
+     "pares_muestra": 100,
+     "n_preliminar": 20,
+     "top": 5,
+     "rondas": 2
+    }
+   },
+   "reinicios": {
+    "tipo": "reinicios",
+    "num_inicios": 20
+   },
+   "dos_ranuras_sh_n2_r1": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 2,
+    "rondas": 1
+   },
+   "dos_ranuras_sh_n4_r1": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 4,
+    "rondas": 1
+   },
+   "dos_ranuras_sh_n8_r1": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 8,
+    "rondas": 1
+   },
+   "dos_ranuras_sh_n2_r2": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 2,
+    "rondas": 2
+   },
+   "dos_ranuras_sh_n4_r2": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 4,
+    "rondas": 2
+   },
+   "dos_ranuras_sh_n8_r2": {
+    "tipo": "dos_ranuras_sh",
+    "n0": 8,
+    "rondas": 2
+   }
+  },
+  "semillas": {
+   "reinicios": "1000 + i (el primer inicio es la configuración inicial)",
+   "movimientos_dobles": "2000 + i",
+   "permutacion_de_instancias": "'4000 + i|ronda'",
+   "i": "número del caso"
+  },
+  "mismo_presupuesto": "cada estrategia corre completa; se registra la trayectoria (consultas nuevas acumuladas, mejor precisión entre las configuraciones evaluadas sobre las n instancias) y se corta en cada presupuesto B",
+  "presupuestos": [
+   5000,
+   7500,
+   10000,
+   15000,
+   20000,
+   30000
+  ],
+  "presupuesto_de_eleccion": 15000,
+  "criterio_de_eleccion": "Con B* = 15.000 consultas: (1) elegibles las estrategias cuya mejora media pareada frente a la original es >= 0 en las cuatro variantes; (2) entre ellas, la de mayor promedio, sobre las cuatro variantes con igual peso (dos calibradas y dos teóricas), de la mejora media pareada; (3) si dos quedan a menos de 0,001, la que usa menos consultas en promedio.",
+  "estimacion_fase7": {
+   "consultas": "consultas de la estrategia elegida por encima de las del Algoritmo 3 original (que en el caso real ya están en el caché de la primera entrega), cortadas en B*, más 100 de la evaluación pendiente (0,0,0,6,1); media, percentil 90 y máximo sobre los casos calibrados",
+   "segundos_por_consulta": {
+    "t4_primera_entrega": 2.1,
+    "gpu_local_medida": 4.5,
+    "nota": "2,1 s/consulta no tiene archivo de respaldo (regla 15); se reemplaza por la medición de la Fase 7"
+   },
+   "horas_efectivas_por_sesion_colab": 3,
+   "nota_sesiones": "supuesto conservador para Colab gratuito (la duración real varía y no está documentada); el usuario puede ajustarlo"
+  }
+ },
+ "fecha": "2026-11-22 22:59:23",
+ "metadatos": {
+  "fecha": "2026-11-22 22:59:23",
+  "git_hash": "6c1f789d34aa0ceadb89b8fba40a90e040624c65",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ }
+}
