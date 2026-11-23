@@ -1,8 +1,8 @@
 {
  "descripcion": "Fase 0, resumen: efecto de los verificadores y del hardware en (0,0,0,0,0) y (0,0,0,5,1)",
  "metadatos": {
-  "fecha": "2026-11-21 16:51:20",
-  "git_hash": "0a4c61dd62300ffad491ea69a8a42666d482defd",
+  "fecha": "2026-11-22 21:04:26",
+  "git_hash": "5cc03c75326fecf381fb119c42746b0839fbcfd0",
   "git_sucio": false,
   "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
   "open_instruct_importado_desde": null,
@@ -18,6 +18,7 @@
  },
  "verificadores_referencia": "a4cd966a9e202843baba653115045e6fd6f473db",
  "hardware_local": "NVIDIA GeForce RTX 5050 Laptop GPU",
+ "hardware_referencia": "Google Colab, NVIDIA T4 (decisión del autor, Fase 0)",
  "configuraciones": [
   {
    "config": {
@@ -45,7 +46,9 @@
     "pasan_solo_en_t4_recalificada": [],
     "salidas_texto_identicas": 78
    },
-   "segundos_por_consulta_local": 3.499
+   "segundos_por_consulta_local": 3.499,
+   "diferencia_hardware_instancias": 1,
+   "diferencia_hardware_aciertos": 1
   },
   {
    "config": {
@@ -73,9 +76,43 @@
     ],
     "salidas_texto_identicas": 85
    },
-   "segundos_por_consulta_local": 5.538
+   "segundos_por_consulta_local": 5.538,
+   "diferencia_hardware_instancias": 1,
+   "diferencia_hardware_aciertos": -1
   }
  ],
+ "ruido_de_medicion_por_hardware": {
+  "descripcion": "Instancias de búsqueda cuyo veredicto cambia entre la GPU local y la T4 con los mismos verificadores, misma configuración y misma semilla (evidencia del ruido de medición)",
+  "por_configuracion": [
+   {
+    "config": {
+     "rol": 0,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 0,
+     "cierre": 0,
+     "temperatura": 0.0
+    },
+    "instancias_distintas": 1,
+    "diferencia_aciertos_local_menos_t4": 1,
+    "instancias": 100
+   },
+   {
+    "config": {
+     "rol": 0,
+     "estrategia": 0,
+     "formato": 0,
+     "estilo": 5,
+     "cierre": 1,
+     "temperatura": 0.0
+    },
+    "instancias_distintas": 1,
+    "diferencia_aciertos_local_menos_t4": -1,
+    "instancias": 100
+   }
+  ],
+  "maximo_instancias_distintas": 1
+ },
  "costo_local": {
   "consultas": 200,
   "segundos": 903.7,
