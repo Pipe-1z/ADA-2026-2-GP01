@@ -183,6 +183,7 @@ EXPERIMENTOS = [
 
 def main():
     filas, resumen = [], []
+    constantes_cpu_peor_caso = []
     for algoritmo, dimension, etiqueta, tamanos, funcion, eje, teoria in EXPERIMENTOS:
         funcion(tamanos[0], REPETICIONES[0])           # calentamiento (importaciones, cachés de Python): se descarta
         medidas = {}
@@ -201,7 +202,14 @@ def main():
             valores_bases = [[g(x) for x in tamanos] for g in bases]
             # En 3-SAT la curva teórica es el peor caso: se muestra sin escalar (coeficiente 1),
             # porque no es un modelo de los casos típicos; el cociente da la fracción explorada.
-            coef = [1.0] if algoritmo in SIN_AJUSTE else ajustar_combinacion(obs, valores_bases)
+            if algoritmo in SIN_AJUSTE:
+                # Q y K: el peor caso tal cual. CPU: el peor caso con la constante (segundos por unidad de
+                # |C|·n) medida en el peor caso construido, para que las unidades sean segundos.
+                coef = [constantes_cpu_peor_caso[0]] if medida == "CPU" else [1.0]
+            else:
+                coef = ajustar_combinacion(obs, valores_bases)
+            if (algoritmo, dimension, medida) == ("backtracking_peor_caso", "C", "CPU"):
+                constantes_cpu_peor_caso[:] = coef
             ajuste = [sum(c * v[i] for c, v in zip(coef, valores_bases)) for i in range(len(tamanos))]
             dominante = valores_bases[-1]
             pend_ajuste = pendiente_loglog(xs, ajuste) if len(set(ajuste)) > 1 and min(ajuste) > 0 else 0.0

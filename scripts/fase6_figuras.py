@@ -22,7 +22,7 @@ SUPERFICIE, TEXTO, TEXTO2, REJILLA = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
 OBSERVADO, TEORICO = "#2a78d6", "#eb6834"
 TITULOS = {
     "fuerza_bruta": "Fuerza bruta", "backtracking_peor_caso": "Algoritmo 1: backtracking (peor caso construido)",
-    "backtracking_3sat": "Algoritmo 1: backtracking en 3-SAT aleatorio (razón 4,26) frente al peor caso sin escalar",
+    "backtracking_3sat": "Algoritmo 1: backtracking en 3-SAT aleatorio (razón 4,26) frente al peor caso",
     "successive_halving": "Algoritmo 2: Successive Halving (n₀ = 1)",
     "coordenadas": "Algoritmo 3: ascenso por coordenadas (cota teórica)",
     "uniforme": "Algoritmo 4: reparto uniforme", "ucb1": "Algoritmo 4: UCB1",
@@ -65,7 +65,11 @@ def figura(algoritmo, filas):
             xs, obs = f["eje_x"], f["observado_medio"]
             bajo = [o - mn for o, mn in zip(obs, f["observado_minimo"])]
             alto = [mx - o for o, mx in zip(obs, f["observado_maximo"])]
-            etiqueta_teo = "peor caso (sin escalar)" if f["curva_sin_ajuste"] else "teórica ajustada"
+            if f["curva_sin_ajuste"]:
+                etiqueta_teo = ("peor caso (constante de CPU del peor caso construido)" if med == "CPU"
+                                else "peor caso (sin escalar)")
+            else:
+                etiqueta_teo = "teórica ajustada"
             ax.plot(xs, f["teorico_ajustado"], color=TEORICO, linestyle="--", linewidth=2, label=etiqueta_teo)
             ax.errorbar(xs, obs, yerr=[bajo, alto], color=OBSERVADO, marker="o", markersize=5, linewidth=0,
                         elinewidth=1.2, capsize=3, label="observado (media; barras mín–máx)")
