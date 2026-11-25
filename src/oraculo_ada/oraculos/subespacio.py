@@ -24,6 +24,9 @@ class OraculoSubespacio(OraculoBase):
         super().__init__(base.ranuras, opciones, base.instancias, base.temperaturas)
         self.base = base
 
+    def costo_evaluacion(self, config, instancias=None, semilla=1):
+        return self.base.costo_evaluacion(config, self.instancias if instancias is None else instancias, semilla)
+
     def _evaluar(self, config, instancias, semilla):
         r = self.base.evaluar(config, instancias, semilla=semilla)
         return r.aciertos, r.trazas, r.consultas_nuevas

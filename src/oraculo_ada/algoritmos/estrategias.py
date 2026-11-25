@@ -14,6 +14,7 @@ import itertools
 import math
 import random
 
+from ..oraculos.base import PresupuestoAgotado, mejor_evaluacion_completa
 from .coordenadas import ascenso_coordenadas
 from .successive_halving import successive_halving
 
@@ -49,32 +50,54 @@ def vecindario_doble(oraculo, config):
     return vecinos
 
 
-def sh_muestra(oraculo, M, *, n0, semilla_muestra, semilla_instancias, semilla=1):
-    """Successive Halving sobre una muestra al azar de M configuraciones."""
+def sh_muestra(oraculo, M, *, n0, semilla_muestra, semilla_instancias, semilla=1, presupuesto=None,
+               modo_presupuesto="nuevas"):
+    """Successive Halving sobre una muestra al azar de M configuraciones (con presupuesto B opcional)."""
     candidatos = muestra_configuraciones(oraculo, M, semilla_muestra)
-    return successive_halving(oraculo, candidatos, n0=n0, semilla_instancias=semilla_instancias, semilla=semilla)
+    return successive_halving(oraculo, candidatos, n0=n0, semilla_instancias=semilla_instancias, semilla=semilla,
+                              presupuesto=presupuesto, modo_presupuesto=modo_presupuesto)
 
 
-def dos_ranuras_sh(oraculo, *, n0, rondas, semilla_instancias, inicial=None, **opciones_coordenadas):
-    """Algoritmo 3 seguido de rondas de "dos ranuras con filtro por Successive Halving"."""
+def dos_ranuras_sh(oraculo, *, n0, rondas, semilla_instancias, inicial=None, presupuesto=None,
+                   modo_presupuesto="nuevas", **opciones_coordenadas):
+    """Algoritmo 3 seguido de rondas de "dos ranuras con filtro por Successive Halving".
+
+    ``presupuesto`` (B) vale para toda la estrategia: si una evaluación lo superaría, se
+    detiene antes de hacerla y devuelve la mejor configuración evaluada sobre todas las
+    instancias hasta ese momento (``None`` si no alcanzó para ninguna).
+    """
     consultas_antes, solicitadas_antes = oraculo.consultas, oraculo.consultas_solicitadas
-    base = ascenso_coordenadas(oraculo, inicial, **opciones_coordenadas)
-    actual, p = base.mejor_config, base.mejor_precision
-    historia = [{"etapa": "coordenadas", "config": actual, "precision": p, "consultas_acumuladas": oraculo.consultas - consultas_antes}]
-    for ronda in range(1, rondas + 1):
-        vecinos = vecindario_doble(oraculo, actual)
-        sh = successive_halving(oraculo, vecinos, n0=n0, semilla_instancias=f"{semilla_instancias}|{ronda}",
-                                semilla=opciones_coordenadas.get("semilla", 1))
-        mejora = sh.precision_ganador > p
-        historia.append({"etapa": f"filtro SH {ronda}", "vecinos": len(vecinos), "ganador": sh.ganador,
-                         "precision_ganador": sh.precision_ganador, "adoptado": mejora,
-                         "rondas_sh": len(sh.rondas), "consultas_acumuladas": oraculo.consultas - consultas_antes})
-        if not mejora:
-            break
-        siguiente = ascenso_coordenadas(oraculo, sh.ganador, **opciones_coordenadas)
-        actual, p = siguiente.mejor_config, siguiente.mejor_precision
-        historia.append({"etapa": f"coordenadas {ronda + 1}", "config": actual, "precision": p,
-                         "consultas_acumuladas": oraculo.consultas - consultas_antes})
+    inicio_historial = len(oraculo.historial)
+    n = len(opciones_coordenadas.get("instancias") or oraculo.instancias)
+    historia, actual, p, agotado = [], None, None, False
+    with oraculo.presupuesto(presupuesto, modo_presupuesto) as tope:
+        try:
+            base = ascenso_coordenadas(oraculo, inicial, **opciones_coordenadas)
+            actual, p = base.mejor_config, base.mejor_precision
+            historia.append({"etapa": "coordenadas", "config": actual, "precision": p,
+                             "consultas_acumuladas": oraculo.consultas - consultas_antes})
+            for ronda in range(1, rondas + 1):
+                vecinos = vecindario_doble(oraculo, actual)
+                sh = successive_halving(oraculo, vecinos, n0=n0, semilla_instancias=f"{semilla_instancias}|{ronda}",
+                                        semilla=opciones_coordenadas.get("semilla", 1))
+                mejora = sh.precision_ganador > p
+                historia.append({"etapa": f"filtro SH {ronda}", "vecinos": len(vecinos), "ganador": sh.ganador,
+                                 "precision_ganador": sh.precision_ganador, "adoptado": mejora,
+                                 "rondas_sh": len(sh.rondas), "consultas_acumuladas": oraculo.consultas - consultas_antes})
+                if not mejora:
+                    break
+                siguiente = ascenso_coordenadas(oraculo, sh.ganador, **opciones_coordenadas)
+                actual, p = siguiente.mejor_config, siguiente.mejor_precision
+                historia.append({"etapa": f"coordenadas {ronda + 1}", "config": actual, "precision": p,
+                                 "consultas_acumuladas": oraculo.consultas - consultas_antes})
+        except PresupuestoAgotado as e:
+            if tope is None or e.tope_id != tope:
+                raise
+            agotado = True
+            actual, p = mejor_evaluacion_completa(oraculo, inicio_historial, n)
+            historia.append({"etapa": "presupuesto agotado", "config": actual, "precision": p,
+                             "consultas_acumuladas": oraculo.consultas - consultas_antes})
     return {"mejor_config": actual, "mejor_precision": p, "historia": historia,
             "consultas_cobradas": oraculo.consultas - consultas_antes,
-            "consultas_solicitadas": oraculo.consultas_solicitadas - solicitadas_antes}
+            "consultas_solicitadas": oraculo.consultas_solicitadas - solicitadas_antes,
+            "presupuesto": presupuesto, "presupuesto_agotado": agotado}

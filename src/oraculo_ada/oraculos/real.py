@@ -25,7 +25,7 @@ from types import SimpleNamespace
 from .. import rutas
 from ..hardware import ETIQUETA_T4, etiqueta_hardware, verificar_hardware
 from ..medicion import Cronometro
-from .base import OraculoBase, Resultado
+from .base import OraculoBase, PresupuestoAgotado, Resultado  # noqa: F401 (PresupuestoAgotado se reexporta)
 
 
 def ruta_cache_oraculo(etiqueta, directorio=None):
@@ -38,10 +38,6 @@ def ruta_cache_oraculo(etiqueta, directorio=None):
 def ruta_libro_consultas(etiqueta, directorio=None):
     directorio = Path(directorio) if directorio else rutas.dir_cache()
     return directorio / f"libro_consultas_{etiqueta}.json"
-
-
-class PresupuestoAgotado(RuntimeError):
-    """Una evaluación superaría el tope de consultas nuevas autorizado."""
 
 
 def registrar_primera_entrega(oraculo_real, ruta_registro, busqueda, config_validada=None, n_validacion=None):
@@ -93,9 +89,17 @@ class OraculoReal(OraculoBase):
         self._oficiales = {self.clave(c): c for c in espacio_fn(tuple(self.temperaturas))}
         self.ruta_libro = Path(ruta_libro)
         self._libro = self._cargar_libro()
-        # Tope de consultas nuevas para esta instancia del oráculo (None = sin tope). Si una
-        # evaluación lo superaría, se lanza PresupuestoAgotado ANTES de consultar al modelo.
+        # Tope permanente de consultas nuevas para esta instancia del oráculo (None = sin tope):
+        # usa el mismo control de presupuesto de OraculoBase (PresupuestoAgotado antes de consultar).
         self.limite_consultas_nuevas = limite_consultas_nuevas
+
+    @property
+    def limite_consultas_nuevas(self):
+        return next((lim for i, lim in self._topes if i == 0), None)
+
+    @limite_consultas_nuevas.setter
+    def limite_consultas_nuevas(self, valor):
+        self.fijar_tope_absoluto(valor)
 
     # ---- libro de consultas ----------------------------------------------
 
@@ -135,6 +139,12 @@ class OraculoReal(OraculoBase):
 
     # ---- consulta -----------------------------------------------------
 
+    def costo_evaluacion(self, config, instancias=None, semilla=1):
+        """Consultas nuevas que cobraría la evaluación, según el libro de consultas."""
+        instancias = self.instancias if instancias is None else instancias
+        vistas = self._libro.get(self._clave_libro(config, semilla), set())
+        return sum(1 for x in instancias if str(x["id"]) not in vistas)
+
     def oficial(self, config):
         """La configuración tal como la arma ``espacio()`` del curso."""
         self.validar_config(config)
@@ -145,10 +155,6 @@ class OraculoReal(OraculoBase):
         clave = self._clave_libro(config, semilla)
         vistas = self._libro.setdefault(clave, set())
         nuevas = sum(1 for i in ids if i not in vistas)
-        if self.limite_consultas_nuevas is not None and self.consultas + nuevas > self.limite_consultas_nuevas:
-            raise PresupuestoAgotado(
-                f"la evaluación necesita {nuevas} consultas nuevas y ya se usaron {self.consultas} "
-                f"de {self.limite_consultas_nuevas}")
         r = self.oraculo.evaluar(self.oficial(config), instancias, semilla=semilla)
         vistas.update(ids)
         self._guardar_libro()

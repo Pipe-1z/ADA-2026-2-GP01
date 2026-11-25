@@ -1,6 +1,13 @@
 """Oráculos con interfaz común: sintético (``sintetico``) y envoltura del oráculo del curso (``real``)."""
 
-from .base import OraculoBase, Resultado, fallos_por_familia, familia
+from .base import (
+    OraculoBase,
+    PresupuestoAgotado,
+    Resultado,
+    fallos_por_familia,
+    familia,
+    mejor_evaluacion_completa,
+)
 from .sintetico import (
     OraculoSintetico,
     desde_3sat,
@@ -14,6 +21,7 @@ from .sintetico import (
 __all__ = [
     "OraculoBase",
     "OraculoSintetico",
+    "PresupuestoAgotado",
     "Resultado",
     "desde_3sat",
     "fallos_por_familia",
@@ -23,4 +31,5 @@ __all__ = [
     "generar_conjuntivo",
     "generar_disyuntivo",
     "generar_peor_caso_backtracking",
+    "mejor_evaluacion_completa",
 ]

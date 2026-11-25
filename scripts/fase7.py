@@ -289,42 +289,38 @@ def paso_tiempo(args):
 
 
 def paso_pendiente(args):
-    from oraculo_ada.oraculos.real import PresupuestoAgotado
 
     mostrar_estimacion("pendiente", PLAN["pasos"]["pendiente"]["tope"])
     if not args.confirmar:
         return
     o, busqueda, _ = oraculo_t4(None)
-    o.limite_consultas_nuevas, gastadas = limite_restante("pendiente", o, PLAN["pasos"]["pendiente"]["tope"])
-    try:
-        r = ascenso_coordenadas(o, hipotesis=HIPOTESIS_PRIMERA_ENTREGA)
-        completo, datos_r = True, {"mejor_config": r.mejor_config, "mejor_precision": r.mejor_precision,
-                                   "movimientos": r.movimientos, "evaluaciones": r.evaluaciones,
-                                   "pasadas": r.pasadas, "convergio": r.convergio, "registro": r.registro}
-    except PresupuestoAgotado as e:
-        completo, datos_r = False, {"detenido": str(e)}
-    datos_r.update({"completo": completo, "consultas_nuevas_sesion": o.consultas,
-                    "consultas_nuevas_sesiones_previas": gastadas})
+    restante, gastadas = limite_restante("pendiente", o, PLAN["pasos"]["pendiente"]["tope"])
+    o.limite_consultas_nuevas = restante                       # protección adicional del oráculo
+    r = ascenso_coordenadas(o, hipotesis=HIPOTESIS_PRIMERA_ENTREGA, presupuesto=restante)
+    completo = not r.presupuesto_agotado
+    datos_r = {"mejor_config": r.mejor_config, "mejor_precision": r.mejor_precision,
+               "movimientos": r.movimientos, "evaluaciones": r.evaluaciones, "pasadas": r.pasadas,
+               "convergio": r.convergio, "registro": r.registro, "presupuesto": restante,
+               "completo": completo, "consultas_nuevas_sesion": o.consultas,
+               "consultas_nuevas_sesiones_previas": gastadas}
     guardar_resultado("fase7_pendiente", descripcion="Fase 7 (b): camino completo del Algoritmo 3 con a4cd966",
                       parametros=PLAN["pasos"]["pendiente"], semilla=1, datos=datos_r)
     print("completo" if completo else "DETENIDO EN EL TOPE: pedir autorización", datos_r.get("mejor_precision"))
 
 
 def paso_estrategia(args):
-    from oraculo_ada.oraculos.real import PresupuestoAgotado
 
     tope = PLAN["pasos"]["estrategia"]["tope"]
     mostrar_estimacion("estrategia", tope)
     if not args.confirmar:
         return
     o, _, _ = oraculo_t4(None)
-    o.limite_consultas_nuevas, gastadas = limite_restante("estrategia", o, tope)
+    restante, gastadas = limite_restante("estrategia", o, tope)
+    o.limite_consultas_nuevas = restante                       # protección adicional del oráculo
     t0 = time.perf_counter()
-    try:
-        r = dos_ranuras_sh(o, n0=2, rondas=2, semilla_instancias=SEMILLA_SH, hipotesis=HIPOTESIS_PRIMERA_ENTREGA)
-        completo, historia = True, r["historia"]
-    except PresupuestoAgotado as e:
-        completo, historia = False, [{"detenido": str(e)}]
+    r = dos_ranuras_sh(o, n0=2, rondas=2, semilla_instancias=SEMILLA_SH, hipotesis=HIPOTESIS_PRIMERA_ENTREGA,
+                       presupuesto=restante)
+    completo, historia = not r["presupuesto_agotado"], r["historia"]
     config, p = mejor_evaluada(o)
     guardar_resultado("fase7_estrategia", descripcion="Fase 7 (c): dos ranuras + SH (n0 = 2, 2 rondas) con el modelo "
                       "real", parametros=PLAN["pasos"]["estrategia"], semilla={"instancias": SEMILLA_SH},
@@ -335,7 +331,6 @@ def paso_estrategia(args):
 
 
 def paso_subespacio(args):
-    from oraculo_ada.oraculos.real import PresupuestoAgotado
     from oraculo_ada.oraculos.subespacio import OraculoSubespacio, sortear_subespacio
 
     tope = PLAN["pasos"]["subespacio"]["tope"]
@@ -349,32 +344,39 @@ def paso_subespacio(args):
     if not args.confirmar:
         return
     o, _, _ = oraculo_t4(None)
-    o.limite_consultas_nuevas, gastadas = limite_restante("subespacio", o, tope)
+    restante, gastadas = limite_restante("subespacio", o, tope)
+    o.limite_consultas_nuevas = restante                       # protección adicional del oráculo
     opciones = sortear_subespacio(o, 2, SEMILLA_SUBESPACIO)
     sub = OraculoSubespacio(o, opciones)
-    try:
-        fb = fuerza_bruta(sub)
-    except PresupuestoAgotado as e:
+    fb = fuerza_bruta(sub, presupuesto=restante)
+    if fb.presupuesto_agotado:
         guardar_resultado("fase7_subespacio", descripcion="Fase 7 (d): detenido en el tope", parametros={},
-                          semilla=SEMILLA_SUBESPACIO, datos={"completo": False, "detenido": str(e)})
+                          semilla=SEMILLA_SUBESPACIO, datos={"completo": False,
+                                                             "configuraciones_evaluadas": fb.configuraciones_evaluadas})
         print("DETENIDO EN EL TOPE")
         return
     verdad = {sub.clave(c): sub.evaluar(c).precision for c in sub.espacio()}       # todo en caché
     mejor = max(verdad.values())
+    # Comparaciones sobre configuraciones ya evaluadas: el presupuesto de cada algoritmo cuenta
+    # sus consultas propias (como si empezara con el caché vacío), no las nuevas para el caché.
     coord = ascenso_coordenadas(sub, hipotesis=HIPOTESIS_PRIMERA_ENTREGA)
     comparacion = {"coordenadas": {"config": coord.mejor_config, "precision": coord.mejor_precision,
                                    "regret": mejor - coord.mejor_precision,
                                    "consultas_si_fuera_nuevo": coord.configuraciones_distintas() * sub.n}}
     candidatos = list(sub.espacio())
     for n0 in (1, 2, 4):
+        B_sh = costo_sh(32, n0, sub.n)["con_reutilizar"]
         regrets = [mejor - verdad[sub.clave(successive_halving(sub, candidatos, n0=n0, semilla_instancias=s,
-                                                                evaluar_ganador=False).ganador)] for s in range(1, 101)]
+                                                                evaluar_ganador=False, presupuesto=B_sh,
+                                                                modo_presupuesto="propias").ganador)]
+                   for s in range(1, 101)]
         comparacion[f"successive_halving_n0_{n0}"] = {"prob_elegir_mejor": sum(r <= 1e-12 for r in regrets) / 100,
                                                       "regret_medio": statistics.fmean(regrets),
                                                       "consultas": costo_sh(32, n0, sub.n)["con_reutilizar"]}
     for nombre, funcion in (("uniforme", reparto_uniforme), ("ucb1", reparto_ucb1)):
         for b in (2, 4, 8, 16, 32):
-            regrets = [mejor - verdad[sub.clave(funcion(sub, candidatos, 32 * b, semilla_instancias=s).elegido)]
+            regrets = [mejor - verdad[sub.clave(funcion(sub, candidatos, 32 * b, semilla_instancias=s,
+                                                        modo_presupuesto="propias").elegido)]
                        for s in range(1, 101)]
             comparacion[f"{nombre}_B{32 * b}"] = {"prob_elegir_mejor": sum(r <= 1e-12 for r in regrets) / 100,
                                                   "regret_medio": statistics.fmean(regrets), "presupuesto": 32 * b}
@@ -403,7 +405,7 @@ def paso_entrega(args):
         return
     if args.semana is None:
         raise SystemExit("indique --semana para entrega.json")
-    o, _, validacion = oraculo_t4(PLAN["pasos"]["entrega"]["tope"])
+    o, _, validacion = oraculo_t4(PLAN["pasos"]["entrega"]["tope"])    # tope de 87 consultas nuevas
     val = o.validar(o.config([nueva[r] for r in o.ranuras], temperatura=nueva["temperatura"]), n=None)
     propuesta = {"grupo": "G01", "config": {r: nueva[r] for r in o.ranuras} | {"temperatura": nueva["temperatura"]},
                  "semana": args.semana}

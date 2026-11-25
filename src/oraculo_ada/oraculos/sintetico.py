@@ -159,6 +159,14 @@ class OraculoSintetico(OraculoBase):
         rng = random.Random(f"{self.semilla_ruido}|{idx}|{temperatura}|{i}|{semilla}")
         return rng.random() < self.ruido
 
+    def costo_evaluacion(self, config, instancias=None, semilla=1):
+        """Consultas nuevas que cobraría la evaluación (las que no están en el caché)."""
+        instancias = self.instancias if instancias is None else instancias
+        if not self.usa_cache:
+            return len(instancias)
+        idx, t = self._indices(config), float(config.get("temperatura", 0.0))
+        return sum(1 for x in instancias if (idx, t, x["id"], semilla) not in self._vistas)
+
     def _evaluar(self, config, instancias, semilla):
         idx = self._indices(config)
         temperatura = float(config.get("temperatura", 0.0))

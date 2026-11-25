@@ -19,6 +19,7 @@ sobre una instancia. Cada oráculo lleva dos contadores:
 import itertools
 import math
 from collections import Counter
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 
 from ..medicion import Cronometro
@@ -49,16 +50,62 @@ def familia(violo):
     return str(violo).split(":")[0]
 
 
+def mejor_evaluacion_completa(oraculo, desde=0, n=None):
+    """(config, precisión) de la mejor evaluación sobre ``n`` instancias en ``oraculo.historial[desde:]``.
+
+    Es la "mejor configuración encontrada" que devuelve un algoritmo cuando se le agota el
+    presupuesto. (None, None) si no hubo ninguna evaluación completa.
+    """
+    n = oraculo.n if n is None else n
+    completas = [h for h in oraculo.historial[desde:] if h["instancias"] == n and not h.get("validacion")]
+    if not completas:
+        return None, None
+    h = max(completas, key=lambda x: x["aciertos"])          # en empate, la primera
+    return dict(h["config"]), h["aciertos"] / n
+
+
 def fallos_por_familia(resultado):
     """``Counter`` familia → número de instancias cuya primera restricción violada es de esa familia."""
     return Counter(familia(t["violo"]) for t in resultado.trazas)
 
 
+class PresupuestoAgotado(RuntimeError):
+    """Una evaluación superaría el presupuesto B: se lanza ANTES de consultar.
+
+    ``tope_id`` identifica el presupuesto que se habría superado, para que cada
+    algoritmo atrape solo el suyo (los presupuestos se pueden anidar).
+    """
+
+    def __init__(self, mensaje, tope_id=None, costo=0, restante=0):
+        super().__init__(mensaje)
+        self.tope_id, self.costo, self.restante = tope_id, costo, restante
+
+
+class _Tope:
+    """Un presupuesto abierto: B consultas en modo "nuevas" (desde ``inicio``) o "propias" (``vistas``)."""
+
+    def __init__(self, id_, modo, B, inicio):
+        self.id, self.modo, self.B, self.inicio, self.vistas = id_, modo, B, inicio, set()
+
+    def usadas(self, oraculo):
+        return oraculo.consultas - self.inicio if self.modo == "nuevas" else len(self.vistas)
+
+    def restante(self, oraculo):
+        return self.B - self.usadas(oraculo)
+
+
 class OraculoBase:
-    """Base de los oráculos: valida configuraciones, cuenta consultas y mide tiempo.
+    """Base de los oráculos: valida configuraciones, cuenta consultas, mide tiempo y controla presupuestos.
 
     Las subclases implementan ``_evaluar(config, instancias, semilla)``, que
-    devuelve ``(aciertos, trazas, consultas_nuevas)``.
+    devuelve ``(aciertos, trazas, consultas_nuevas)``, y ``costo_evaluacion``,
+    que dice cuántas consultas nuevas cobraría una evaluación **sin hacerla**.
+
+    **Presupuesto B** (CLAUDE.md, ítem 7 de la retroalimentación): ``with
+    oraculo.presupuesto(B) as tope:`` limita a B las consultas nuevas desde ese
+    momento. Antes de cada evaluación se calcula su costo; si superaría el
+    presupuesto restante (el más estricto de los abiertos), se lanza
+    ``PresupuestoAgotado`` y no se consulta.
     """
 
     def __init__(self, ranuras, opciones, instancias, temperaturas=(0.0,)):
@@ -66,7 +113,82 @@ class OraculoBase:
         self.opciones = {r: list(opciones[r]) for r in self.ranuras}
         self.instancias = list(instancias)
         self.temperaturas = tuple(float(t) for t in temperaturas)
+        self._topes = []                       # pila de presupuestos abiertos (_Tope)
+        self._siguiente_tope = 0
         self.reiniciar_contadores()
+
+    # ---- presupuesto ---------------------------------------------------
+
+    def costo_evaluacion(self, config, instancias=None, semilla=1):
+        """Consultas nuevas que cobraría ``evaluar(config, instancias, semilla)``. Por defecto, todas."""
+        return len(self.instancias if instancias is None else instancias)
+
+    @contextmanager
+    def presupuesto(self, B, modo="nuevas"):
+        """Abre un presupuesto de B consultas. ``B = None``: sin presupuesto propio.
+
+        ``modo``:
+        - ``"nuevas"``: cuenta las consultas nuevas para el oráculo (las que no están en su
+          caché). Es el costo real en GPU; se usa con el modelo real.
+        - ``"propias"``: cuenta las consultas que la corrida pide por primera vez dentro de este
+          presupuesto, como si empezara con el caché vacío (una consulta repetida dentro de la
+          corrida no se vuelve a contar). Sirve para comparar algoritmos sobre configuraciones
+          que ya están en el caché (por ejemplo, el subespacio de la Fase 7).
+        """
+        if B is None:
+            yield None
+            return
+        if B < 0:
+            raise ValueError("el presupuesto no puede ser negativo")
+        if modo not in ("nuevas", "propias"):
+            raise ValueError("modo debe ser 'nuevas' o 'propias'")
+        self._siguiente_tope += 1
+        tope = _Tope(self._siguiente_tope, modo, B, self.consultas)
+        self._topes.append(tope)
+        try:
+            yield tope.id
+        finally:
+            self._topes.remove(tope)
+
+    def fijar_tope_absoluto(self, limite):
+        """Tope permanente de consultas nuevas para toda la vida del oráculo (None lo quita)."""
+        self._topes = [t for t in self._topes if t.id != 0]
+        if limite is not None:
+            self._topes.insert(0, _Tope(0, "nuevas", limite, 0))
+
+    def restante(self):
+        """Consultas que quedan según el presupuesto más estricto abierto (None si no hay)."""
+        return min((t.restante(self) for t in self._topes), default=None)
+
+    def _claves_consulta(self, config, instancias, semilla):
+        clave = self.clave(config)
+        return [(clave, x["id"], semilla) for x in instancias]
+
+    def _verificar_presupuesto(self, config, instancias, semilla):
+        if not self._topes:
+            return
+        costo_nuevas = None
+        claves = None
+        # El más interno que se superaría es el que corta (cada algoritmo atrapa el suyo).
+        for tope in reversed(self._topes):
+            if tope.modo == "nuevas":
+                if costo_nuevas is None:
+                    costo_nuevas = self.costo_evaluacion(config, instancias, semilla)
+                costo = costo_nuevas
+            else:
+                claves = claves or self._claves_consulta(config, instancias, semilla)
+                costo = sum(1 for k in claves if k not in tope.vistas)
+            if costo > tope.restante(self):
+                raise PresupuestoAgotado(
+                    f"la evaluación cuesta {costo} consultas ({tope.modo}) y quedan {tope.restante(self)}",
+                    tope_id=tope.id, costo=costo, restante=tope.restante(self))
+
+    def _anotar_presupuesto(self, config, instancias, semilla):
+        propias = [t for t in self._topes if t.modo == "propias"]
+        if propias:
+            claves = self._claves_consulta(config, instancias, semilla)
+            for t in propias:
+                t.vistas.update(claves)
 
     # ---- espacio de configuraciones -----------------------------------
 
@@ -131,8 +253,10 @@ class OraculoBase:
         instancias = self.instancias if instancias is None else list(instancias)
         if not instancias:
             raise ValueError("no hay instancias que evaluar")
+        self._verificar_presupuesto(config, instancias, semilla)
         with Cronometro() as reloj:
             aciertos, trazas, nuevas = self._evaluar(config, instancias, semilla)
+        self._anotar_presupuesto(config, instancias, semilla)
         self.consultas += nuevas
         self.consultas_solicitadas += len(instancias)
         self.evaluaciones += 1

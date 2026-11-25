@@ -24,6 +24,7 @@ import math
 import random
 from dataclasses import dataclass, field
 
+from ..oraculos.base import PresupuestoAgotado
 from .successive_halving import costo_sh, successive_halving
 
 
@@ -34,6 +35,7 @@ class ResultadoReparto:
     factible: bool = True
     consultas_cobradas: int = 0
     parametro: dict = field(default_factory=dict)   # m (uniforme), n0 (SH) o jugadas por brazo (UCB1)
+    presupuesto_agotado: bool = False
 
 
 def _orden(oraculo, semilla_instancias, n):
@@ -42,15 +44,25 @@ def _orden(oraculo, semilla_instancias, n):
     return random.Random(semilla_instancias).sample(instancias, len(instancias))[:n]
 
 
-def reparto_uniforme(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1):
+def reparto_uniforme(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1, modo_presupuesto="nuevas"):
     orden = _orden(oraculo, semilla_instancias, n)
     m = min(B // len(candidatos), len(orden))
     if m < 1:
         return ResultadoReparto("uniforme", factible=False, parametro={"m": 0})
     antes = oraculo.consultas
-    puntajes = [oraculo.evaluar(c, orden[:m], semilla=semilla).precision for c in candidatos]
-    j = max(range(len(candidatos)), key=lambda i: (puntajes[i], -i))
-    return ResultadoReparto("uniforme", candidatos[j], True, oraculo.consultas - antes, {"m": m})
+    puntajes, agotado = [], False
+    with oraculo.presupuesto(B, modo_presupuesto) as tope:
+        try:
+            for c in candidatos:
+                puntajes.append(oraculo.evaluar(c, orden[:m], semilla=semilla).precision)
+        except PresupuestoAgotado as e:
+            if e.tope_id != tope:
+                raise
+            agotado = True
+    if not puntajes:
+        return ResultadoReparto("uniforme", None, True, oraculo.consultas - antes, {"m": m}, True)
+    j = max(range(len(puntajes)), key=lambda i: (puntajes[i], -i))
+    return ResultadoReparto("uniforme", candidatos[j], True, oraculo.consultas - antes, {"m": m}, agotado)
 
 
 def n0_para_presupuesto(num_candidatos, B, n):
@@ -64,18 +76,19 @@ def n0_para_presupuesto(num_candidatos, B, n):
     return mejor
 
 
-def reparto_sh(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1):
+def reparto_sh(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1, modo_presupuesto="nuevas"):
     n = len(oraculo.instancias) if n is None else n
     n0 = n0_para_presupuesto(len(candidatos), B, n)
     if n0 is None:
         return ResultadoReparto("successive_halving", factible=False, parametro={"n0": None})
     antes = oraculo.consultas
     sh = successive_halving(oraculo, candidatos, n0=n0, n=n, semilla_instancias=semilla_instancias,
-                            semilla=semilla, evaluar_ganador=False)
-    return ResultadoReparto("successive_halving", sh.ganador, True, oraculo.consultas - antes, {"n0": n0})
+                            semilla=semilla, evaluar_ganador=False, presupuesto=B, modo_presupuesto=modo_presupuesto)
+    return ResultadoReparto("successive_halving", sh.ganador, True, oraculo.consultas - antes, {"n0": n0},
+                            sh.presupuesto_agotado)
 
 
-def reparto_ucb1(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1):
+def reparto_ucb1(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=1, modo_presupuesto="nuevas"):
     orden = _orden(oraculo, semilla_instancias, n)
     K = len(candidatos)
     if B < K:
@@ -90,21 +103,32 @@ def reparto_ucb1(oraculo, candidatos, B, *, semilla_instancias, n=None, semilla=
         sumas[j] += oraculo.evaluar(candidatos[j], [x], semilla=semilla).aciertos
         jugadas[j] += 1
 
-    for j in range(K):                                   # inicialización: cada brazo una vez
-        jugar(j)
-    t = K
-    while t < B:
-        indice = sumas / jugadas + np.sqrt(2 * math.log(t) / jugadas)
-        indice[jugadas >= len(orden)] = -np.inf          # brazo agotado: ya se conoce con exactitud
-        j = int(np.argmax(indice))                       # en empate, el primero en S
-        if indice[j] == -np.inf:
-            break
-        jugar(j)
-        t += 1
+    t, agotado = 0, False
+    with oraculo.presupuesto(B, modo_presupuesto) as tope:
+        try:
+            for j in range(K):                                   # inicialización: cada brazo una vez
+                jugar(j)
+                t += 1
+            while t < B:
+                indice = sumas / jugadas + np.sqrt(2 * math.log(t) / jugadas)
+                indice[jugadas >= len(orden)] = -np.inf          # brazo agotado: ya se conoce con exactitud
+                j = int(np.argmax(indice))                       # en empate, el primero en S
+                if indice[j] == -np.inf:
+                    break
+                jugar(j)
+                t += 1
+        except PresupuestoAgotado as e:
+            if e.tope_id != tope:
+                raise
+            agotado = True
     jugadas, sumas = jugadas.astype(int).tolist(), sumas.astype(int).tolist()
-    elegido = max(range(K), key=lambda i: (jugadas[i], sumas[i] / jugadas[i], -i))
+    jugados = [i for i in range(K) if jugadas[i] > 0]
+    if not jugados:
+        return ResultadoReparto("ucb1", None, True, oraculo.consultas - antes, {}, True)
+    elegido = max(jugados, key=lambda i: (jugadas[i], sumas[i] / jugadas[i], -i))
     return ResultadoReparto("ucb1", candidatos[elegido], True, oraculo.consultas - antes,
-                            {"jugadas_max": max(jugadas), "jugadas_min": min(jugadas), "jugadas_totales": t})
+                            {"jugadas_max": max(jugadas), "jugadas_min": min(jugadas), "jugadas_totales": t},
+                            agotado)
 
 
 ESQUEMAS = {"uniforme": reparto_uniforme, "successive_halving": reparto_sh, "ucb1": reparto_ucb1}

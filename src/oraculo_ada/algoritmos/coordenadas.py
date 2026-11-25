@@ -62,7 +62,7 @@ import random
 from collections import Counter
 from dataclasses import dataclass, field
 
-from ..oraculos.base import familia
+from ..oraculos.base import PresupuestoAgotado, familia, mejor_evaluacion_completa
 
 # Hipótesis ranura → familias de la primera entrega (celda 14 del notebook de búsqueda).
 HIPOTESIS_PRIMERA_ENTREGA = {
@@ -96,6 +96,8 @@ class ResultadoCoordenadas:
     consultas_cobradas: int = 0
     consultas_solicitadas: int = 0
     segundos: float = 0.0
+    presupuesto: int = None
+    presupuesto_agotado: bool = False
 
     @property
     def evaluaciones(self):
@@ -120,10 +122,16 @@ def _fallos(trazas):
 def ascenso_coordenadas(oraculo, inicial=None, *, instancias=None, semilla=1, max_pasadas=3,
                         umbral_traza=3, hipotesis=None, orden=None, probar_temperaturas=True,
                         al_evaluar=None, poda="permanente", criterio_poda="familias", desempate="actual",
-                        movimientos_dobles=None):
+                        movimientos_dobles=None, presupuesto=None, modo_presupuesto="nuevas"):
     """Ejecuta el Algoritmo 3 (o una variante) y devuelve un ``ResultadoCoordenadas``.
 
     ``al_evaluar(fila)``, si se da, se llama después de cada evaluación.
+
+    ``presupuesto`` (B): antes de cada evaluación se comprueba que su costo no supere lo que
+    queda de B (``modo_presupuesto``: ``"nuevas"`` o ``"propias"``, ver
+    ``OraculoBase.presupuesto``). Si no alcanza, el algoritmo se detiene sin hacer esa
+    evaluación y devuelve la mejor configuración evaluada sobre todas las instancias hasta ese
+    momento (``None`` si B no alcanzó ni para la primera), con ``presupuesto_agotado = True``.
     """
     if poda not in PODAS or criterio_poda not in CRITERIOS_PODA or desempate not in DESEMPATES:
         raise ValueError("variante desconocida")
@@ -151,15 +159,9 @@ def ascenso_coordenadas(oraculo, inicial=None, *, instancias=None, semilla=1, ma
         inicial = oraculo.config([oraculo.opciones[r][0] for r in oraculo.ranuras],
                                  temperatura=oraculo.temperaturas[0])
     actual = dict(inicial)
-    ev_actual = evaluar_registrar(actual, "inicial", nota="configuración inicial")
-
-    if orden is None:
-        if hipotesis:
-            hip = {r: hipotesis.get(r, []) for r in oraculo.ranuras}
-            peso = {r: sum(ev_actual.fallos.get(f, 0) for f in hip[r]) for r in oraculo.ranuras}
-            orden = sorted(oraculo.ranuras, key=lambda r: -peso[r])
-        else:
-            orden = list(oraculo.ranuras)
+    ev_actual = None
+    estado = {"pasada": 0}
+    inicio_historial = len(oraculo.historial)
 
     descartadas = {r: {} for r in oraculo.ranuras}
     historial_descartes = {r: {} for r in oraculo.ranuras}
@@ -226,6 +228,7 @@ def ascenso_coordenadas(oraculo, inicial=None, *, instancias=None, semilla=1, ma
         """Corre hasta ``max_pasadas`` pasadas; devuelve (última pasada, convergió)."""
         pasada = primera - 1
         for pasada in range(primera, primera + max_pasadas):
+            estado["pasada"] = pasada
             if poda == "por_pasada":
                 for r in descartadas:
                     descartadas[r].clear()
@@ -261,62 +264,84 @@ def ascenso_coordenadas(oraculo, inicial=None, *, instancias=None, semilla=1, ma
             return True
         return False
 
-    pasadas, convergio = bloque_de_pasadas(1)
-    rondas = movimientos_dobles["rondas"] if movimientos_dobles else 0
-    for numero in range(1, rondas + 1):
-        if not ronda_doble(numero):
-            break
-        pasadas, convergio = bloque_de_pasadas(pasadas + 1)
+    pasadas, convergio, agotado = 0, False, False
+    with oraculo.presupuesto(presupuesto, modo_presupuesto) as tope:
+        try:
+            ev_actual = evaluar_registrar(actual, "inicial", nota="configuración inicial")
+            if orden is None:
+                if hipotesis:
+                    hip = {r: hipotesis.get(r, []) for r in oraculo.ranuras}
+                    peso = {r: sum(ev_actual.fallos.get(f, 0) for f in hip[r]) for r in oraculo.ranuras}
+                    orden = sorted(oraculo.ranuras, key=lambda r: -peso[r])
+                else:
+                    orden = list(oraculo.ranuras)
 
-    if probar_temperaturas:
-        for temp in oraculo.temperaturas:
-            if temp == actual.get("temperatura", 0.0):
-                continue
-            cand = dict(actual, temperatura=temp)
-            ev = evaluar_registrar(cand, "temperatura", "temperatura")
-            if ev.precision > ev_actual.precision:
-                decisiones.append(f"Temperatura {actual.get('temperatura', 0.0)} → {temp} "
-                                  f"({ev_actual.precision:.1%} → {ev.precision:.1%})")
-                movimientos.append({"fase": "temperatura", "ranura": "temperatura",
-                                    "de": actual.get("temperatura", 0.0), "a": temp,
-                                    "precision_antes": ev_actual.precision, "precision_despues": ev.precision,
-                                    "motivo": "mejora"})
-                actual, ev_actual = cand, ev
+            pasadas, convergio = bloque_de_pasadas(1)
+            rondas = movimientos_dobles["rondas"] if movimientos_dobles else 0
+            for numero in range(1, rondas + 1):
+                if not ronda_doble(numero):
+                    break
+                pasadas, convergio = bloque_de_pasadas(pasadas + 1)
 
+            if probar_temperaturas:
+                for temp in oraculo.temperaturas:
+                    if temp == actual.get("temperatura", 0.0):
+                        continue
+                    cand = dict(actual, temperatura=temp)
+                    ev = evaluar_registrar(cand, "temperatura", "temperatura")
+                    if ev.precision > ev_actual.precision:
+                        decisiones.append(f"Temperatura {actual.get('temperatura', 0.0)} → {temp} "
+                                          f"({ev_actual.precision:.1%} → {ev.precision:.1%})")
+                        movimientos.append({"fase": "temperatura", "ranura": "temperatura",
+                                            "de": actual.get("temperatura", 0.0), "a": temp,
+                                            "precision_antes": ev_actual.precision, "precision_despues": ev.precision,
+                                            "motivo": "mejora"})
+                        actual, ev_actual = cand, ev
+        except PresupuestoAgotado as e:
+            if tope is None or e.tope_id != tope:
+                raise
+            agotado, pasadas, convergio = True, estado["pasada"], False
+
+    if agotado:
+        # Mejor configuración encontrada: la mejor evaluación completa hecha antes de agotar B.
+        mejor_config, mejor_precision = mejor_evaluacion_completa(oraculo, inicio_historial, len(instancias))
+    else:
+        mejor_config, mejor_precision = actual, ev_actual.precision
     return ResultadoCoordenadas(
-        mejor_config=actual, mejor_precision=ev_actual.precision, pasadas=pasadas, convergio=convergio,
-        orden=list(orden), decisiones=decisiones, movimientos=movimientos,
+        mejor_config=mejor_config, mejor_precision=mejor_precision, pasadas=pasadas, convergio=convergio,
+        orden=list(orden or oraculo.ranuras), decisiones=decisiones, movimientos=movimientos,
         descartadas=historial_descartes if poda == "por_pasada" else descartadas, registro=registro,
         consultas_cobradas=oraculo.consultas - consultas_antes,
         consultas_solicitadas=oraculo.consultas_solicitadas - solicitadas_antes,
         segundos=oraculo.segundos - segundos_antes,
+        presupuesto=presupuesto, presupuesto_agotado=agotado,
     )
 
 
 @dataclass
 class ResultadoReinicios:
-    mejor: ResultadoCoordenadas
+    mejor: ResultadoCoordenadas            # mejor corrida terminada (None si ninguna terminó)
     corridas: list
     inicios: list
     consultas_cobradas: int
     consultas_solicitadas: int
-
-    @property
-    def mejor_config(self):
-        return self.mejor.mejor_config
-
-    @property
-    def mejor_precision(self):
-        return self.mejor.mejor_precision
+    mejor_config: dict = None              # mejor configuración encontrada en todas las corridas
+    mejor_precision: float = None
+    presupuesto: int = None
+    presupuesto_agotado: bool = False
 
 
-def reinicios(oraculo, num_inicios, semilla_inicios, *, incluir_inicial=True, **opciones):
+def reinicios(oraculo, num_inicios, semilla_inicios, *, incluir_inicial=True, presupuesto=None,
+              modo_presupuesto="nuevas", **opciones):
     """Reinicios múltiples: ``num_inicios`` corridas del Algoritmo 3 (o una variante).
 
     La primera parte de la configuración inicial por defecto (si ``incluir_inicial``)
     y las demás de configuraciones al azar sorteadas con ``random.Random(semilla_inicios)``.
     El caché del oráculo es compartido: una configuración que dos corridas evalúan
     se cobra una sola vez. Gana la corrida con mayor precisión (en empate, la primera).
+
+    ``presupuesto`` (B) vale para todas las corridas juntas: si una evaluación lo superaría,
+    se detiene y devuelve la mejor configuración evaluada sobre todas las instancias.
     """
     rng = random.Random(semilla_inicios)
     t0 = oraculo.temperaturas[0]
@@ -325,8 +350,24 @@ def reinicios(oraculo, num_inicios, semilla_inicios, *, incluir_inicial=True, **
     while len(inicios) < num_inicios:
         inicios.append(oraculo.config([rng.choice(oraculo.opciones[r]) for r in oraculo.ranuras], temperatura=t0))
     consultas_antes, solicitadas_antes = oraculo.consultas, oraculo.consultas_solicitadas
-    corridas = [ascenso_coordenadas(oraculo, x, **opciones) for x in inicios]
-    mejor = max(corridas, key=lambda r: r.mejor_precision)
+    inicio_historial = len(oraculo.historial)
+    n = len(opciones.get("instancias") or oraculo.instancias)
+    corridas, agotado = [], False
+    with oraculo.presupuesto(presupuesto, modo_presupuesto) as tope:
+        try:
+            for x in inicios:
+                corridas.append(ascenso_coordenadas(oraculo, x, **opciones))
+        except PresupuestoAgotado as e:
+            if tope is None or e.tope_id != tope:
+                raise
+            agotado = True
+    mejor = max(corridas, key=lambda r: r.mejor_precision) if corridas else None
+    if agotado:
+        config, precision = mejor_evaluacion_completa(oraculo, inicio_historial, n)
+    else:
+        config, precision = mejor.mejor_config, mejor.mejor_precision
     return ResultadoReinicios(mejor=mejor, corridas=corridas, inicios=inicios,
                               consultas_cobradas=oraculo.consultas - consultas_antes,
-                              consultas_solicitadas=oraculo.consultas_solicitadas - solicitadas_antes)
+                              consultas_solicitadas=oraculo.consultas_solicitadas - solicitadas_antes,
+                              mejor_config=config, mejor_precision=precision,
+                              presupuesto=presupuesto, presupuesto_agotado=agotado)

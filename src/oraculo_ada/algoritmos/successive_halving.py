@@ -36,6 +36,7 @@ import random
 from dataclasses import dataclass, field
 
 from ..medicion import Cronometro
+from ..oraculos.base import PresupuestoAgotado
 
 
 # ---------------------------------------------------------------- conteo
@@ -105,14 +106,20 @@ class ResultadoSH:
     consultas_solicitadas: int = 0      # sin reutilizar (incluye completar al ganador)
     segundos_cpu: float = 0.0
     orden_instancias: list = field(default_factory=list)
+    presupuesto: int = None
+    presupuesto_agotado: bool = False
 
 
 def successive_halving(oraculo, candidatos, *, n0, n=None, semilla_instancias, semilla=1,
-                       instancias=None, evaluar_ganador=True):
+                       instancias=None, evaluar_ganador=True, presupuesto=None, modo_presupuesto="nuevas"):
     """Algoritmo 2 sobre la lista ``candidatos``. Devuelve un ``ResultadoSH``.
 
     ``semilla_instancias`` fija la permutación de las instancias (muestras anidadas).
     Si ``evaluar_ganador``, el ganador se evalúa al final sobre las n instancias.
+
+    ``presupuesto`` (B): si una evaluación lo superaría, se detiene antes de hacerla y devuelve
+    como mejor encontrada al líder de la última ronda terminada (o, si la primera ronda no
+    terminó, a la de mejor puntaje entre las ya evaluadas; ``None`` si ninguna).
     """
     instancias = oraculo.instancias if instancias is None else list(instancias)
     n = len(instancias) if n is None else n
@@ -124,22 +131,36 @@ def successive_halving(oraculo, candidatos, *, n0, n=None, semilla_instancias, s
     orden = random.Random(semilla_instancias).sample(instancias, len(instancias))[:n]
     consultas_antes, solicitadas_antes = oraculo.consultas, oraculo.consultas_solicitadas
     vivos, rondas, r = candidatos, [], 0
-    with Cronometro() as reloj:
-        while len(vivos) > 1:
-            n_r = min(n0 * 2 ** r, n)
-            muestra = orden[:n_r]
-            antes = oraculo.consultas
-            puntajes = [oraculo.evaluar(c, muestra, semilla=semilla).precision for c in vivos]
-            orden_ronda = sorted(range(len(vivos)), key=lambda j: (-puntajes[j], j))
-            quedan = math.ceil(len(vivos) / 2)
-            rondas.append({"ronda": r, "candidatos": len(vivos), "n_r": n_r,
-                           "consultas_nuevas": oraculo.consultas - antes,
-                           "mejor_puntaje": puntajes[orden_ronda[0]], "corte": puntajes[orden_ronda[quedan - 1]]})
-            vivos = [vivos[j] for j in sorted(orden_ronda[:quedan])]       # conserva el orden relativo
-            r += 1
-        ganador = vivos[0]
-        p = oraculo.evaluar(ganador, orden, semilla=semilla).precision if evaluar_ganador else None
+    lider, mejor_parcial, agotado, p = None, -1.0, False, None
+    with Cronometro() as reloj, oraculo.presupuesto(presupuesto, modo_presupuesto) as tope:
+        try:
+            while len(vivos) > 1:
+                n_r = min(n0 * 2 ** r, n)
+                muestra = orden[:n_r]
+                antes = oraculo.consultas
+                puntajes = []
+                for c in vivos:
+                    puntajes.append(oraculo.evaluar(c, muestra, semilla=semilla).precision)
+                    if not rondas and puntajes[-1] > mejor_parcial:        # líder provisional de la ronda 0
+                        lider, mejor_parcial = c, puntajes[-1]
+                orden_ronda = sorted(range(len(vivos)), key=lambda j: (-puntajes[j], j))
+                quedan = math.ceil(len(vivos) / 2)
+                rondas.append({"ronda": r, "candidatos": len(vivos), "n_r": n_r,
+                               "consultas_nuevas": oraculo.consultas - antes,
+                               "mejor_puntaje": puntajes[orden_ronda[0]], "corte": puntajes[orden_ronda[quedan - 1]]})
+                lider = vivos[orden_ronda[0]]
+                vivos = [vivos[j] for j in sorted(orden_ronda[:quedan])]       # conserva el orden relativo
+                r += 1
+            lider = vivos[0]
+            if evaluar_ganador:
+                p = oraculo.evaluar(lider, orden, semilla=semilla).precision
+        except PresupuestoAgotado as e:
+            if tope is None or e.tope_id != tope:
+                raise
+            agotado = True
+    ganador = lider
     return ResultadoSH(ganador=ganador, precision_ganador=p, rondas=rondas,
+                       presupuesto=presupuesto, presupuesto_agotado=agotado,
                        consultas_cobradas=oraculo.consultas - consultas_antes,
                        consultas_solicitadas=oraculo.consultas_solicitadas - solicitadas_antes,
                        segundos_cpu=reloj.segundos, orden_instancias=[x["id"] for x in orden])

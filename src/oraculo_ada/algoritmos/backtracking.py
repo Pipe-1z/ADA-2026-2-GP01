@@ -32,6 +32,7 @@ internos que cuestan una cota cada uno, O(n) cada una:
 from dataclasses import dataclass, field
 
 from ..medicion import Cronometro
+from ..oraculos.base import PresupuestoAgotado
 
 
 def nodos_por_nivel_peor_caso(opciones_por_ranura):
@@ -55,6 +56,8 @@ class ResultadoBacktracking:
     consultas_cobradas: int = 0
     consultas_solicitadas: int = 0
     segundos_cpu: float = 0.0
+    presupuesto: int = None
+    presupuesto_agotado: bool = False
 
     @property
     def nodos_explorados(self):
@@ -85,11 +88,15 @@ class ResultadoBacktracking:
         }
 
 
-def backtracking(oraculo, *, instancias=None, semilla=1, orden_hijos="indice", podar=True, temperatura=None):
+def backtracking(oraculo, *, instancias=None, semilla=1, orden_hijos="indice", podar=True, temperatura=None,
+                 presupuesto=None, modo_presupuesto="nuevas"):
     """Algoritmo 1. Devuelve un ``ResultadoBacktracking``.
 
     ``podar=False`` desactiva la poda (recorre el árbol completo: sirve para
     comprobar el conteo del peor caso).
+
+    ``presupuesto`` (B): si evaluar una hoja lo superaría, se detiene antes de hacerlo y
+    devuelve la mejor hoja evaluada (``None`` si ninguna). Ya no garantiza el óptimo.
     """
     if orden_hijos not in ("indice", "cota"):
         raise ValueError("orden_hijos debe ser 'indice' o 'cota'")
@@ -109,43 +116,50 @@ def backtracking(oraculo, *, instancias=None, semilla=1, orden_hijos="indice", p
     mejor_p, mejor_c = -1.0, None
     consultas_antes, solicitadas_antes = oraculo.consultas, oraculo.consultas_solicitadas
 
-    with Cronometro() as reloj:
-        # Invariante del ciclo (ver la derivación): los nodos de la pila y los subárboles ya
-        # visitados o descartados particionan el espacio C; mejor_p es la mayor precisión entre
-        # las hojas visitadas, y ninguna hoja de un subárbol descartado la supera.
-        pila = [((), 1.0)]                       # (asignación parcial, cota del padre)
-        while pila:
-            parcial, cota_padre = pila.pop()
-            d = len(parcial)
-            nodos[d] += 1
-            if d == m:
-                # Una hoja no tiene cota propia: se usa la de su padre (la mejor pudo subir
-                # después de que el padre se expandió).
-                if podar and cota_padre <= mejor_p:
-                    podados[d] += 1
-                    continue
-                config = oraculo.config(parcial, temperatura=temperatura)
-                p = oraculo.evaluar(config, instancias, semilla=semilla).precision
-                hojas += 1
-                if p > mejor_p:
-                    mejor_p, mejor_c = p, config
-                continue
-            ub = 1.0
-            if podar:
-                ub = oraculo.cota_superior(parcial)
-                cotas += 1
-                if ub <= mejor_p:
-                    podados[d] += 1
-                    continue
-            hijos = [parcial + (a,) for a in opciones[d]]
-            if orden_hijos == "cota" and d + 1 < m:
-                valores = {h: oraculo.cota_superior(h) for h in hijos}
-                cotas += len(hijos)
-                hijos.sort(key=lambda h: -valores[h])          # estable: en empate, el índice menor
-            pila.extend((h, ub) for h in reversed(hijos))      # el primero de la lista sale primero
+    agotado = False
+    with Cronometro() as reloj, oraculo.presupuesto(presupuesto, modo_presupuesto) as tope:
+        try:
+                # Invariante del ciclo (ver la derivación): los nodos de la pila y los subárboles ya
+                # visitados o descartados particionan el espacio C; mejor_p es la mayor precisión entre
+                # las hojas visitadas, y ninguna hoja de un subárbol descartado la supera.
+                pila = [((), 1.0)]                       # (asignación parcial, cota del padre)
+                while pila:
+                    parcial, cota_padre = pila.pop()
+                    d = len(parcial)
+                    nodos[d] += 1
+                    if d == m:
+                        # Una hoja no tiene cota propia: se usa la de su padre (la mejor pudo subir
+                        # después de que el padre se expandió).
+                        if podar and cota_padre <= mejor_p:
+                            podados[d] += 1
+                            continue
+                        config = oraculo.config(parcial, temperatura=temperatura)
+                        p = oraculo.evaluar(config, instancias, semilla=semilla).precision
+                        hojas += 1
+                        if p > mejor_p:
+                            mejor_p, mejor_c = p, config
+                        continue
+                    ub = 1.0
+                    if podar:
+                        ub = oraculo.cota_superior(parcial)
+                        cotas += 1
+                        if ub <= mejor_p:
+                            podados[d] += 1
+                            continue
+                    hijos = [parcial + (a,) for a in opciones[d]]
+                    if orden_hijos == "cota" and d + 1 < m:
+                        valores = {h: oraculo.cota_superior(h) for h in hijos}
+                        cotas += len(hijos)
+                        hijos.sort(key=lambda h: -valores[h])          # estable: en empate, el índice menor
+                    pila.extend((h, ub) for h in reversed(hijos))      # el primero de la lista sale primero
+        except PresupuestoAgotado as e:
+            if tope is None or e.tope_id != tope:
+                raise
+            agotado = True
 
     return ResultadoBacktracking(
-        mejor_config=mejor_c, mejor_precision=mejor_p, nodos_por_nivel=nodos, podados_por_nivel=podados,
+        mejor_config=mejor_c, mejor_precision=mejor_p if mejor_c is not None else None,
+        presupuesto=presupuesto, presupuesto_agotado=agotado, nodos_por_nivel=nodos, podados_por_nivel=podados,
         nodos_por_nivel_peor_caso=nodos_por_nivel_peor_caso([len(o) for o in opciones]),
         hojas_evaluadas=hojas, cotas_calculadas=cotas, instancias=len(instancias),
         consultas_cobradas=oraculo.consultas - consultas_antes,
