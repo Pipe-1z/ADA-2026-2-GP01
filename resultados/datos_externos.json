@@ -3,8 +3,8 @@
  "parametros": {},
  "semilla": null,
  "metadatos": {
-  "fecha": "2026-11-24 21:12:25",
-  "git_hash": "12e34524eddfacb56d7f597503dd7673643dfcd7",
+  "fecha": "2026-11-24 21:21:48",
+  "git_hash": "d3190f20fb43a547ca5c626b5562048587d2095c",
   "git_sucio": false,
   "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
   "hardware": {
@@ -33,7 +33,7 @@
    },
    "puntaje": 0.1259,
    "maximo_teorico": 0.2007,
-   "fuente": "Retroalimentación de la docente a la primera entrega, transmitida por el autor el 24 de noviembre de 2026 (archivo previsto: docs/referencia/retroalimentacion_primera_entrega.txt, todavía no presente en el repositorio)",
+   "fuente": "Retroalimentación de la docente a la primera entrega (docs/referencia/retroalimentacion_primera_entrega.txt, archivo local que no se sube al repositorio porque contiene la calificación); valores redondeados a cuatro decimales",
    "tipo": "dato externo: no lo genera el código del repositorio y no se puede reproducir (test privado)",
    "uso": "evidencia de que la configuración entregada está lejos del máximo del test privado, lo que justifica la estrategia de mejora de la Fase 7"
   }
