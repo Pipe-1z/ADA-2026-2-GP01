@@ -1,0 +1,41 @@
+{
+ "descripcion": "Datos externos al repositorio, transcritos con su fuente",
+ "parametros": {},
+ "semilla": null,
+ "metadatos": {
+  "fecha": "2026-11-24 21:12:25",
+  "git_hash": "12e34524eddfacb56d7f597503dd7673643dfcd7",
+  "git_sucio": false,
+  "open_instruct_hash": "a4cd966a9e202843baba653115045e6fd6f473db",
+  "hardware": {
+   "python": "3.12.10",
+   "sistema": "Windows-11-10.0.26200-SP0",
+   "procesador": "Intel64 Family 6 Model 191 Stepping 2, GenuineIntel",
+   "colab": false,
+   "gpu": "NVIDIA GeForce RTX 5050 Laptop GPU",
+   "torch": "2.11.0+cu128",
+   "cuda_torch": "12.8",
+   "gpu_capacidad": "12.0",
+   "gpu_memoria_gb": 8.55,
+   "driver": "610.74"
+  }
+ },
+ "datos": {
+  "test_privado_primera_entrega": {
+   "descripcion": "Puntaje de la configuración de la primera entrega en el test privado de la docente",
+   "configuracion": {
+    "rol": 0,
+    "estrategia": 0,
+    "formato": 0,
+    "estilo": 5,
+    "cierre": 1,
+    "temperatura": 0.0
+   },
+   "puntaje": 0.1259,
+   "maximo_teorico": 0.2007,
+   "fuente": "Retroalimentación de la docente a la primera entrega, transmitida por el autor el 24 de noviembre de 2026 (archivo previsto: docs/referencia/retroalimentacion_primera_entrega.txt, todavía no presente en el repositorio)",
+   "tipo": "dato externo: no lo genera el código del repositorio y no se puede reproducir (test privado)",
+   "uso": "evidencia de que la configuración entregada está lejos del máximo del test privado, lo que justifica la estrategia de mejora de la Fase 7"
+  }
+ }
+}
