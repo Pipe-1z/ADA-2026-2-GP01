@@ -5,3 +5,6 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 build/
+
+# Retroalimentación con calificación: privada, no se sube (el repositorio es público)
+docs/referencia/retroalimentacion_primera_entrega.txt
