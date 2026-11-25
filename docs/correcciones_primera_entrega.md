@@ -41,6 +41,8 @@ Los números de la primera entrega se calificaron en Colab con una versión de `
 | M6 | Pruebas sin GPU | "Python 3.9 o superior, solo biblioteca estándar": las pruebas nuevas usarán pytest. | Actualizar la lista de pruebas y sus requisitos. |
 | M7 | Arquitectura | No incluye el paquete `src/oraculo_ada/`, `scripts/`, `resultados/` ni `figuras/` de la entrega final. | Actualizar cuando existan. |
 | M8 | Funcionamiento / Uso | **Retroalimentación de la docente, ítem 7.** Falta documentar el presupuesto B. | Explicar el parámetro presupuesto de cada algoritmo, los modos de conteo y qué devuelven cuando B no alcanza; incluir pruebas/test_presupuesto.py en la tabla de pruebas. |
+| M9 | Entorno | **Retroalimentación, ítem 9.** La docente no exige fijar versiones. | Explicar que igual se mantiene open-instruct fijado en a4cd966 por reproducibilidad: los verificadores cambiaron después de la primera entrega y cambian veredictos (resultados/fase0_verificacion_cache.json). |
+| M10 | Validación y límites | **Retroalimentación, ítem 12.** Mantener la distinción entre lo demostrado y lo observado con el material nuevo. | Garantías y límites de cada algoritmo (cota del backtracking admisible solo en el sintético, cota de SH no informativa en los tamaños medidos, alcance de la garantía de UCB1, límites del sintético calibrado). |
 
 ## 3. README y notebooks, Fase 9
 
@@ -52,7 +54,35 @@ Los números de la primera entrega se calificaron en Colab con una versión de `
 | N4 | Notebook de búsqueda, sección 9 | Imprime la fracción explorada como evaluaciones / 98.304 (0,069 %). | Usar la definición única de I2. |
 | N5 | `resultados/registro_busqueda.csv` | La columna `segundos` es 0,0 en todas las filas (salidas reproducidas desde el caché). | Documentar que el registro no trae tiempos; los tiempos medidos van en archivos nuevos de `resultados/`. |
 | N6 | README, tabla "Resultado" | 14,0 %, "0,18 %", "≈ 3,4 h de GPU T4". | Igual que I2, I5 e I6. |
+| N7 | notebooks/notebook_evaluacion.ipynb | **Retroalimentación, ítem 15.** Solo se revisó de forma estática. | Ejecutarlo de principio a fin en Colab T4 con la validación pública y guardarlo con sus salidas reales (Fase 9). |
+| N8 | Todos los notebooks | **Retroalimentación, ítem 18.** Una celda con print no cuenta como ejecutada. | Guardar todos los notebooks de la entrega final con las salidas reales de su ejecución; el informe cita solo resultados que estén en esas salidas o en resultados/. |
 
-## 4. Pendiente con el equipo docente
+## 4. Retroalimentación de la docente: implicaciones de los 19 ítems
+
+Fuente: `docs/referencia/retroalimentacion_primera_entrega.txt` (archivo local, ignorado por git porque contiene la calificación). Aquí solo se resume qué implica cada ítem para la entrega final; los ítems 1 y 7 piden cambios (I13, I14, M8); los demás confirman lo que ya está bien y piden **mantenerlo** con el material nuevo. La Fase 10 revisa la entrega final contra estos 19 criterios uno por uno.
+
+| Ítem | Tema | Implicación para la entrega final | Dónde |
+|---|---|---|---|
+| 1 | Formalización: entrada frente a espacio de búsqueda | **Cambio:** la entrada es el catálogo (m, k_p) más las n instancias y el oráculo; \|C\| es el espacio de búsqueda derivado; T en m, k y n; coherente con la generalización a m ranuras de la NP-dureza. | I13; Fase 8 |
+| 2 | Parte 2 separada de la Parte 1 | Mantener la separación: la complejidad de muestreo (Hoeffding, la cota de SH, la garantía de UCB1) no se deduce de la reducción. Los resultados nuevos de la Parte 2 (Algoritmos 2 y 4, Fase 7) se presentan con presupuesto, información disponible y configuración elegida. | Fase 8 |
+| 3 | Versión de decisión y transformación | Mantener; al pulir la reducción, describir la instancia construida con la nueva definición de entrada (m = v ranuras, k = 2, n = N instancias). | Fase 8 |
+| 4 | Las dos direcciones de la equivalencia | Mantener las dos direcciones por separado; el ejemplo (Tabla 5) sigue siendo solo ilustración (ahora también está como prueba automática en `pruebas/test_sintetico.py`). | Fase 8 |
+| 5 | Tamaño de la construcción y componente NP-difícil | Mantener; expresar el tamaño de la construcción como Θ(v + N) en función de la fórmula, y distinguir la familia general (m variable) de la instancia del proyecto (m = 5 fijo) y de la Parte 2. | Fase 8 |
+| 6 | Código de búsqueda conectado al oráculo | Mantener; documentar que el Algoritmo 3 ahora vive en `src/oraculo_ada/algoritmos/coordenadas.py` y reproduce exactamente el registro, y conservar la separación búsqueda/validación en la Fase 7. | Fases 8 y 9 |
+| 7 | Control del presupuesto B | **Cambio:** todos los algoritmos comprueban B antes de cada evaluación (hecho: regla 17, `pruebas/test_presupuesto.py`); la búsqueda de la Fase 7 debe mostrar ese control en sus resultados y el informe y el manual deben explicarlo. | I14, M8; Fases 7 a 9 |
+| 8 | README | Mantener; actualizarlo a la estructura nueva (paquete, scripts, resultados, lanzador) sin que haga falta editar lógica. | N6; Fase 9 |
+| 9 | Entorno y dependencias | No se exige fijar versiones, pero **se mantiene open-instruct fijado en a4cd966 por reproducibilidad** (los verificadores cambiaron después de la primera entrega y cambian veredictos: `resultados/fase0_verificacion_cache.json`). Explicarlo en el manual. | M9; Fase 9 |
+| 10 | Manual: módulos y flujo real de ambas partes | Mantener con el material nuevo: módulos del paquete, flujo de los cuatro algoritmos y de las estrategias, y su correspondencia con el código. | M7; Fase 9 |
+| 11 | Manual: entradas, salidas y pasos | Mantener: formato de los archivos de `resultados/`, de las trazas y de `entrega.json`, y pasos para correr scripts, pruebas y el lanzador. | Fase 9 |
+| 12 | Supuestos, límites y garantías | Mantener la distinción entre lo demostrado y lo observado: garantías del exacto (cota admisible solo en el sintético; Lemas 1 y 2), cota de SH no informativa en los tamaños medidos, alcance de la garantía de UCB1, límites del sintético calibrado. | M10; Fases 8 y 9 |
+| 13 | Coherencia entre informe y artefactos | Mantener; la auditoría de la Fase 10 compara cada número de los documentos con `resultados/` y con las salidas guardadas de los notebooks. | Fase 10 |
+| 14 | `entrega.json` | Mantener formato y coherencia; si la Fase 7 cambia la configuración (margen ≥ 3 puntos), actualizar el archivo, el informe y la validación. La semana (11) es provisional hasta confirmarla con el monitor. | Fases 7 y 9 |
+| 15 | Notebook de evaluación | Solo se revisó de forma estática. **Para la entrega final:** ejecutarlo de principio a fin en Colab T4 con la validación pública y guardarlo con sus salidas reales, como evidencia de que corre. | N7; Fase 9 |
+| 16 | Notebook de búsqueda | Mantener la evidencia propia; conectar en el notebook (o en el lanzador de la Fase 7) el método nuevo, sus parámetros y su historial con la exportación final. | Fase 9 |
+| 17 | Precisiones con tamaños de muestra; búsqueda frente a validación | Mantener: toda precisión nueva se reporta con su n y su partición, apoyada en `resultados/`. | Fases 8 y 10 |
+| 18 | Fallos interpretados; celdas ejecutadas de verdad | **Todos los notebooks de la entrega final se guardan con las salidas reales de su ejecución**, y el informe solo cita resultados que estén en esas salidas o en `resultados/`. Un `print` sin salida guardada no cuenta como evidencia. | N8; Fases 8 a 10 |
+| 19 | `oraculo.validar` documentado | Mantener; si la configuración cambia en la Fase 7, documentar la nueva validación (87 instancias) en sus artefactos y distinguirla del lote de búsqueda. | Fases 7 y 9 |
+
+## 5. Pendiente con el equipo docente
 
 - **P1. Familias nuevas en el test privado.** El informe indica que el test privado incluye familias de restricciones que no están en `datos_visibles.json`. El notebook de evaluación crea el `Oraculo` sin el parámetro `registros` (verificadores adicionales, por ejemplo IFBench, según la documentación del constructor), así que una instancia con una restricción que no conocen los verificadores de IFEvalG puede hacer fallar la evaluación (`KeyError`). **El autor lo va a consultar con el monitor.** Según la respuesta, se ajusta el notebook de evaluación en la Fase 9 (sin romper la regla 3 de CLAUDE.md).

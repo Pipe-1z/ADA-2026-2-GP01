@@ -16,9 +16,9 @@ DATOS = {
         "configuracion": ENTREGA_PRIMERA,
         "puntaje": 0.1259,
         "maximo_teorico": 0.2007,
-        "fuente": "Retroalimentación de la docente a la primera entrega, transmitida por el autor el 24 de "
-                  "noviembre de 2026 (archivo previsto: docs/referencia/retroalimentacion_primera_entrega.txt, "
-                  "todavía no presente en el repositorio)",
+        "fuente": "Retroalimentación de la docente a la primera entrega (docs/referencia/"
+                  "retroalimentacion_primera_entrega.txt, archivo local que no se sube al repositorio porque "
+                  "contiene la calificación); valores redondeados a cuatro decimales",
         "tipo": "dato externo: no lo genera el código del repositorio y no se puede reproducir (test privado)",
         "uso": "evidencia de que la configuración entregada está lejos del máximo del test privado, lo que "
                "justifica la estrategia de mejora de la Fase 7",
