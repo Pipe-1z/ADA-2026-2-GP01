@@ -45,6 +45,23 @@ Puntos que deben entrar en el informe final, anotados durante el desarrollo. Nin
 - **Efecto del lote de 16:** el oráculo genera las respuestas por lotes de hasta 16 prompts (`lote=16`, parámetro público del constructor, el mismo del notebook de búsqueda). Generar un lote de 1 o de 16 prompts cuesta parecido (la GPU los procesa en paralelo y el tiempo lo fija sobre todo el prompt y la respuesta más largos del lote), así que el tiempo crece por **escalones** de ⌈n/16⌉ lotes y no de forma perfectamente proporcional a n: n = 10 usa 1 lote nominal, n = 25 usa 2, n = 50 usa 4 y n = 100 usa 7. Explicar que el ajuste lineal T = a + b·n describe la tendencia y que las desviaciones respecto a la recta vienen de esos escalones (y de que el oráculo también parte lotes por largo de prompt).
 - Relacionarlo con la validación sintética (Fase 6): allí el costo por consulta es constante por construcción; en la T4 el costo marginal por consulta se mide con la pendiente b.
 
-## 8. Correcciones de la primera entrega
+## 8. Retroalimentación de la docente a la primera entrega (24 de noviembre de 2026)
+
+El archivo completo de la retroalimentación todavía no está en `docs/referencia/`; estos puntos son los que el autor transmitió.
+
+**Ítem 1: tamaño de la entrada frente a espacio de búsqueda.**
+- Redefinir en el informe: la entrada es el catálogo (m ranuras con k_p opciones), las n instancias y el oráculo; su tamaño es Θ(Σ_p k_p + n), es decir Θ(m·k + n) con k_p = k. |C| = Π_p k_p (= k^m) es el **espacio de búsqueda derivado**, exponencial en m.
+- Todas las funciones de eficiencia en esos términos: fuerza bruta y backtracking en el peor caso Q = Θ(k^m · n) (abreviado Θ(|C|·n)); Successive Halving sobre todo C, Θ(k^m · n₀ · min(m·log₂k, log₂(n/n₀))); Algoritmo 3, O(I·m·k·n), **polinomial** en el tamaño de la entrada; Algoritmo 4 recibe S como lista explícita, así que ahí |S| sí es parte de su entrada.
+- Explicar por qué el enunciado usa |C| (la Parte 2 reparte consultas entre configuraciones enumeradas, y con m = 5, k = 8 fijos |C| es constante) y por qué eso no es el tamaño de la entrada (si lo fuera, con m fijo la fuerza bruta sería O(n) y el problema no podría ser NP-difícil).
+- Coherencia con la NP-dureza: en la reducción desde 3-SAT, m = v (una ranura por variable), k = 2 y n = N (una instancia por cláusula): la entrada construida tiene tamaño Θ(v + N), polinomial, y el espacio de búsqueda 2^v. Redacción base en `docs/derivaciones/algoritmo1_backtracking.md`, Sección 1.
+
+**Ítem 7: control del presupuesto B.**
+- Todos los algoritmos de búsqueda (coordenadas y sus variantes, reinicios, Successive Halving, SH sobre muestra, dos ranuras + SH, uniforme, UCB1, fuerza bruta y backtracking) reciben B y comprueban, **antes de cada evaluación**, que su costo no supere el presupuesto restante; si no alcanza, se detienen y devuelven la mejor configuración encontrada (ninguna si B no alcanzó ni para una evaluación). Implementación: `OraculoBase.presupuesto`, `costo_evaluacion` y `PresupuestoAgotado` (`src/oraculo_ada/oraculos/base.py`).
+- Dos formas de contar B: consultas **nuevas** (las que no están en el caché; costo real en GPU, la de la Fase 7) y consultas **propias** de la corrida (como si el caché estuviera vacío; la de las comparaciones sobre configuraciones ya evaluadas).
+- Evidencia: `pruebas/test_presupuesto.py` (ningún algoritmo supera B para una serie de valores de B, incluido B menor que una evaluación; con B holgado el resultado es idéntico al de la corrida sin presupuesto; presupuestos anidados). Documentarlo en el informe y en el manual.
+
+**Test privado.** La configuración de la primera entrega obtuvo 0,1259 frente a un máximo teórico de 0,2007 en el test privado (`resultados/datos_externos.json`, dato externo). Usarlo como motivación de la estrategia de mejora de la Fase 7, aclarando que el test privado no se usa para elegir nada.
+
+## 9. Correcciones de la primera entrega
 
 - Ver `docs/correcciones_primera_entrega.md` (Fases 8 y 9).

@@ -11,6 +11,10 @@ Dado un conjunto S de configuraciones, n instancias y un presupuesto de B consul
 
 Los tres esquemas usan la misma permutación al azar de las instancias (muestras anidadas) y cuentan B en consultas nuevas.
 
+**Tamaño de la entrada.** En el Algoritmo 4 la entrada es la **lista explícita** S (de tamaño |S|), las n instancias, el oráculo y el presupuesto B (un número, O(log B) bits). A diferencia del problema completo, aquí |S| sí es parte de la entrada porque S se da enumerado; cuando S = C, |S| = k^m es exponencial en el número de ranuras m (ver `algoritmo1_backtracking.md`, Sección 1).
+
+**Control del presupuesto (retroalimentación de la primera entrega, ítem 7).** Los tres esquemas, igual que todos los algoritmos de búsqueda del proyecto, reciben B como parámetro y comprueban **antes de cada evaluación** que su costo no supere el presupuesto restante (`OraculoBase.presupuesto` y `costo_evaluacion`); si no alcanza, se detienen sin hacer esa evaluación y devuelven la mejor configuración encontrada (ninguna si B no alcanzó ni para una). El costo se cuenta de dos formas: en consultas **nuevas** (las que no están en el caché: el costo real en GPU) o en consultas **propias** de la corrida (como si el caché estuviera vacío), que es la que se usa para comparar algoritmos sobre configuraciones ya evaluadas. `pruebas/test_presupuesto.py` comprueba que ninguno supera B, incluido el caso en que B no alcanza ni para una evaluación completa.
+
 ## 2. Reparto uniforme
 
 m = min(⌊B/|S|⌋, n) instancias por configuración; se elige la de mayor precisión observada (en empate, la primera de S). **Costo:** |S|·m ≤ B, es decir T(|S|, m) = Θ(|S|·m) (enunciado).

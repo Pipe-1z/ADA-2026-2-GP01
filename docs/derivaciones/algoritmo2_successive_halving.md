@@ -4,6 +4,8 @@ Derivación formal para el informe final (Fase 8). Código: `src/oraculo_ada/alg
 
 ## 1. Entrada, parámetros y operación básica
 
+**Tamaño de la entrada.** Como en el Algoritmo 1 (`algoritmo1_backtracking.md`, Sección 1), la entrada del problema es el catálogo (m ranuras con k_p opciones), las n instancias y el oráculo, de tamaño Θ(m·k + n); |C| = k^m es el espacio de búsqueda derivado. Successive Halving recibe además una **lista explícita** de candidatos S: si S es una muestra o un vecindario, |S| sí es parte de su entrada (la lista se escribe); si S = C, |S| = k^m y todas las expresiones de abajo con |S| se leen con |S| = k^m (por ejemplo, Q_sin = Θ(k^m · n₀ · min(m·log₂k, log₂(n/n₀)))).
+
 - S: conjunto de configuraciones candidatas (todo C, una muestra de C o un vecindario); |S| su tamaño.
 - n: número de instancias disponibles (el **tope**; n = 100 en el repositorio, 150 en el enunciado).
 - n₀ ≥ 1: tamaño de la muestra de la primera ronda.

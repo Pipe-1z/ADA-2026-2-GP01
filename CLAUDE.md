@@ -15,7 +15,8 @@ Este archivo es el contexto permanente para Claude Code en este repositorio. Lé
 Se busca una configuración de prompt que maximice la precisión de un LLM sobre instancias con restricciones verificables, gastando el menor número de consultas al modelo (cada consulta cuesta tiempo de GPU).
 
 - **Ranuras (m = 5):** `rol`, `estrategia`, `formato`, `estilo`, `cierre`, cada una con **k = 8 opciones** (índices 0–7). Cada ranura actúa sobre una parte de la respuesta (inicio, largo, estructura, caracteres, final). Según el curso, en cada ranura solo una opción es "limpia".
-- **Espacio:** |C| = 8⁵ = **32.768** configuraciones con temperatura 0,0; con la variante de temperatura {0,0; 0,3; 0,7}, |C′| = **98.304**. 32.768 = 2¹⁵.
+- **Tamaño de la entrada (corregido según la retroalimentación de la primera entrega, ítem 1):** la entrada es el **catálogo** (m ranuras con k_p opciones), las **n instancias** y el oráculo; su tamaño es Θ(Σk_p + n) = Θ(m·k + n). **|C| = Πk_p no es el tamaño de la entrada**, sino el **espacio de búsqueda derivado**, exponencial en m. Toda T se expresa en m, k y n (Θ(|C|·n) = Θ(k^m·n)). Ver `docs/derivaciones/algoritmo1_backtracking.md`, Sección 1.
+- **Espacio de búsqueda:** |C| = 8⁵ = **32.768** configuraciones con temperatura 0,0; con la variante de temperatura {0,0; 0,3; 0,7}, |C′| = **98.304**. 32.768 = 2¹⁵.
 - **Instancias (benchmark del curso, `datos_visibles.json`):** 100 de búsqueda (`n = 100`), 87 de validación, 263 descartadas. Cada instancia trae 2 o 3 restricciones (2,45 en promedio, 49 tipos). Evaluación **todo o nada**.
 - **Oráculo del curso (`oraculo.py`, caja negra):** `Oraculo.evaluar(config, instancias, semilla)` → `precision`, `trazas` (`id`, `violo` = primera restricción violada, `salida`); `Oraculo.validar(config, n)`; `espacio(temps)`. Tiene caché; la clave incluye el nombre del modelo.
 - **Modelo:** `qwen17b` = Qwen/Qwen3-1.7B en fp16. Costo en T4 según la primera entrega: ≈ 209 s por 100 consultas (≈ 2,1 s/consulta), **sin archivo de resultados que lo respalde** (regla 15). Medido en la GPU local: 4,5 s/consulta (`resultados/fase0_verificacion_gpu.json`).
@@ -55,6 +56,7 @@ Se busca una configuración de prompt que maximice la precisión de un LLM sobre
     - Ninguna decisión (puntos de partida, orden, opciones a probar, umbrales) puede apoyarse en información interna de `oraculo.py` (regla 12). El caso sintético calibrado se construyó solo con estadísticas públicas y del registro.
     - Con el modelo real: estimación de consultas y tiempo antes de correr y confirmación del usuario (regla 6). La validación se mide después y se reporta, pero no decide.
     - **Margen de mejora (decidido el 22 de noviembre de 2026, antes de ver resultados):** `entrega.json` solo cambia si la nueva configuración **supera a la actual por al menos 3 puntos en búsqueda** (≈ una desviación estándar con n = 100), comparando las dos con los mismos verificadores (`a4cd966`) y las mismas 100 instancias. Con la actual en 13 %, hace falta ≥ 16 %.
+17. **Presupuesto B en todos los algoritmos de búsqueda** (retroalimentación de la primera entrega, ítem 7): coordenadas y sus variantes, reinicios, SH, uniforme, UCB1, las estrategias de la Fase 7 (y también fuerza bruta y backtracking) reciben B y comprueban **antes de cada evaluación**, con `costo_evaluacion`, que su costo no supere el presupuesto restante (`OraculoBase.presupuesto`); si no alcanza, se detienen sin consultar y devuelven la mejor configuración encontrada (ninguna si B no alcanzó ni para una evaluación). B se cuenta en consultas **nuevas** (costo real con caché; Fase 7, pasos pendiente y estrategia) o **propias** de la corrida (como con caché vacío; comparaciones sobre configuraciones ya evaluadas, como el subespacio). Todo algoritmo nuevo debe respetarlo y tener su caso en `pruebas/test_presupuesto.py`.
 15. **El código corre igual en local y en Colab:** sin rutas absolutas ni dependencias de Windows; las rutas de caché y resultados se toman de la raíz del repositorio o de variables de entorno (para apuntar a Google Drive). La Fase 7 se ejecuta desde un notebook lanzador que clona el fork, instala dependencias con open-instruct en `a4cd966`, usa el caché en Drive y corre los scripts de experimentos. **En la primera corrida en la T4 se mide y se guarda en `resultados/` el costo por consulta**: el valor de ≈ 2,1 s/consulta todavía no está en ningún archivo.
 
 ## 5. Entorno local
@@ -79,7 +81,8 @@ Pasos (Windows con PowerShell, o WSL2 si algo falla):
 
 Del enunciado del proyecto:
 
-- [ ] Definición precisa del tamaño de entrada (|C| y n).
+- [ ] Definición precisa del tamaño de entrada: m, k_p (o Σk_p) y n; |C| = Πk_p como espacio de búsqueda derivado (retroalimentación, ítem 1).
+- [ ] Control del presupuesto B en todos los algoritmos de búsqueda, documentado en el informe y el manual (retroalimentación, ítem 7; regla 17).
 - [ ] **T(n) del algoritmo exacto** deducida paso a paso (conteo de operaciones o recurrencia), con su notación asintótica.
 - [ ] T(n) de cada heurística, y su garantía demostrable cuando exista (citada o demostrada).
 - [ ] **Validación experimental:** tiempo real y número de consultas para valores crecientes de n y de |C| (al menos 5 tamaños, con repeticiones), graficados contra la T(n) teórica, como en clase.

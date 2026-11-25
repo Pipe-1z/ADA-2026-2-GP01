@@ -26,6 +26,8 @@ Los números de la primera entrega se calificaron en Colab con una versión de `
 | I10 | Entrada de la Parte 1 | "49 tipos distintos" es el número de tipos de restricción en búsqueda; búsqueda y validación juntas tienen 50. | Decir sobre qué partición se cuenta, con el número generado por script. |
 | I11 | Reproducibilidad | Afirma que al volver a ejecutar el notebook "se obtienen las mismas decisiones". No era cierto: los notebooks clonaban la versión más reciente de open-instruct, cuyos verificadores cambiaron y además usaban `langdetect` sin semilla. | Explicar que los verificadores quedan fijados en `a4cd966` y qué cambia con eso. |
 | I12 | Aclaraciones Resueltas / Algoritmos | Los errores del enunciado (3840, 144, 432, n = 150, 91.444, k_max = 4, falta del factor m en O(I·k·n₀), Cobertura Máxima frente a 3-SAT) se mencionan solo en parte. | Explicarlos todos en el informe final con la corrección y su porqué (Fases 4 y 8). |
+| I13 | Formalización: Tamaño de la Entrada (Tabla 2) | **Retroalimentación de la docente, ítem 1.** Presenta \|C\| como tamaño de la entrada; la entrada es el catálogo (m ranuras con k_p opciones), las n instancias y el oráculo, y \|C\| = Πk_p es el espacio de búsqueda derivado, exponencial en m. | Redefinir el tamaño de la entrada como Θ(Σk_p + n) = Θ(m·k + n), presentar \|C\| como espacio de búsqueda, expresar toda T en m, k y n (Θ(\|C\|·n) = Θ(k^m·n)), explicar por qué el enunciado usa \|C\| y alinearlo con la generalización a m ranuras de la prueba de NP-dureza (docs/notas_informe_final.md, Sección 8). |
+| I14 | Proceso de Optimización / algoritmos | **Retroalimentación de la docente, ítem 7.** El presupuesto B no se controlaba en los algoritmos. | Documentar el control de B (comprobación antes de cada evaluación, mejor configuración encontrada si no alcanza, modos de conteo nuevas/propias) y la evidencia de pruebas/test_presupuesto.py. |
 
 ## 2. Manual técnico (`Manual_tecnico.pdf`), Fase 9
 
@@ -38,6 +40,7 @@ Los números de la primera entrega se calificaron en Colab con una versión de `
 | M5 | Entorno | Solo describe Colab. | Agregar el entorno local de CLAUDE.md §5: `PYTHONUTF8=1`, open-instruct en `a4cd966` en el `PYTHONPATH`, caché en `cache/`. |
 | M6 | Pruebas sin GPU | "Python 3.9 o superior, solo biblioteca estándar": las pruebas nuevas usarán pytest. | Actualizar la lista de pruebas y sus requisitos. |
 | M7 | Arquitectura | No incluye el paquete `src/oraculo_ada/`, `scripts/`, `resultados/` ni `figuras/` de la entrega final. | Actualizar cuando existan. |
+| M8 | Funcionamiento / Uso | **Retroalimentación de la docente, ítem 7.** Falta documentar el presupuesto B. | Explicar el parámetro presupuesto de cada algoritmo, los modos de conteo y qué devuelven cuando B no alcanza; incluir pruebas/test_presupuesto.py en la tabla de pruebas. |
 
 ## 3. README y notebooks, Fase 9
 

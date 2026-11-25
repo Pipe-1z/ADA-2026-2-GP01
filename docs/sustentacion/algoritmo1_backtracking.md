@@ -6,6 +6,13 @@ Guía para explicar sin notas el backtracking con poda, su correctitud y su T(n)
 
 Es la fuerza bruta organizada como un árbol, con un "detector de ramas inútiles": antes de bajar por una rama, calculo cuántas instancias **todavía podrían** pasar; si ni en el mejor de los casos esa rama supera lo que ya tengo, no la recorro.
 
+## ¿Cuál es el tamaño de la entrada? (la profesora lo corrigió)
+
+- La entrada **no** es la lista de configuraciones: es el **catálogo** (m ranuras con k opciones cada una), las **n instancias** y el oráculo. Escribirla cuesta del orden de m·k + n.
+- |C| = k^m es el **espacio de búsqueda**: sale del catálogo y crece de forma exponencial con m.
+- Por eso digo Θ(k^m · n) y no "lineal en |C|": es exponencial en una parte de la entrada.
+- Si |C| fuera la entrada, con m = 5 y k = 8 fijos sería una constante (32.768) y la fuerza bruta sería O(n): el problema no podría ser NP-difícil. La dificultad aparece cuando m crece, igual que en la reducción: una ranura por variable de 3-SAT.
+
 ## El árbol
 
 - Decido las ranuras una por una: primero rol, después estrategia, etc. Cada decisión es un nivel del árbol.

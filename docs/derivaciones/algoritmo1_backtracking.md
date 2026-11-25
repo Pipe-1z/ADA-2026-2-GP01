@@ -2,10 +2,15 @@
 
 Derivación formal para el informe final (Fase 8). Código: `src/oraculo_ada/algoritmos/backtracking.py`; cota: `OraculoSintetico.instancias_vivas` y `cota_superior` en `src/oraculo_ada/oraculos/sintetico.py`; pruebas: `pruebas/test_backtracking.py`; medición: `scripts/fase3_backtracking.py` → `resultados/fase3_backtracking.json`. Este documento no contiene resultados medidos: las tablas del informe se generan desde ese archivo.
 
-## 1. Tamaño de la entrada y operación básica
+## 1. Tamaño de la entrada, espacio de búsqueda y operación básica
 
-- m: número de ranuras; k_p: opciones de la ranura p (p = 1, …, m); en el proyecto k_p = k = 8.
-- |C| = k_1 · k_2 · … · k_m (con k_p = k: |C| = k^m); n: número de instancias.
+**Entrada.** La entrada del problema es el **catálogo** de ranuras (m ranuras, la ranura p con k_p opciones), las **n instancias** (cada una con a lo sumo L restricciones, L ≤ 3 en el benchmark) y el **acceso al oráculo** e(c, i). Escribirla ocupa Θ(Σ_p k_p + n·L) símbolos; con k_p = k y L constante, el **tamaño de la entrada** es Θ(m·k + n). En el proyecto, m = 5, k = 8 y n = 100.
+
+**Espacio de búsqueda (derivado, no es la entrada).** Las configuraciones son las tuplas del producto cartesiano C = O_1 × … × O_m, así que |C| = k_1 · k_2 · … · k_m (con k_p = k: |C| = k^m). |C| no se recibe como lista: se **deriva** del catálogo y es **exponencial en m**, una de las dimensiones de la entrada. Por eso las funciones de eficiencia se escriben en términos de m, k y n; escribir Θ(|C|·n) es una abreviatura de Θ(k^m·n).
+
+**Por qué el enunciado usa |C|.** El enunciado formula la Parte 2 como un reparto de consultas entre configuraciones ya enumeradas (C = {c_1, …, c_|C|}, una asignación m_j por configuración), y con m = 5 y k = 8 fijos |C| = 32.768 es una constante. Si |C| fuera el tamaño de la entrada, el problema sería trivialmente polinomial (la fuerza bruta cuesta |C|·n = O(n) con |C| constante) y no podría ser NP-difícil. La dificultad aparece al tomar m como parte de la entrada, que es exactamente la generalización de la prueba de NP-dureza: en la reducción desde 3-SAT, m = v (una ranura por variable), k = 2 y n = N (una instancia por cláusula), así que la entrada construida tiene tamaño Θ(v + N), polinomial en el tamaño de la fórmula, mientras que el espacio de búsqueda tiene |C| = 2^v configuraciones.
+
+- m: número de ranuras; k_p: opciones de la ranura p (p = 1, …, m); en el proyecto k_p = k = 8; n: número de instancias.
 - **Operación básica:** la **consulta**, evaluar una configuración sobre una instancia. Evaluar una hoja cuesta n consultas.
 - **Operación secundaria:** calcular la cota de un nodo interno. No consulta al modelo; recorre las n instancias y, en cada una, sus a lo sumo L pares o familias (L ≤ 4 en los generadores) y las interacciones activas. Su costo es a lo sumo c · n operaciones elementales, con c constante cuando L y el número de interacciones por instancia están acotados.
 
@@ -116,7 +121,7 @@ Desplegando: T_0 = c·n·(1 + k + … + k^{m−1}) + k^m · n = n · k^m + c · 
 - Cota superior: (k^m − 1)/(k − 1) ≤ k^m, luego T ≤ n·|C| + c·n·|C| = (1 + c)·n·|C|, así que c_2 = 1 + c.
 - Las dos valen para todo m ≥ 1 y n ≥ 1 (m_0 = n_0 = 1).
 
-Por lo tanto, en el peor caso **T(|C|, n) = Θ(|C| · n) = Θ(n · k^m)**: exponencial en el número de ranuras m. Lo mismo vale para cada recurso por separado: **Q_peor = n·|C| = Θ(|C|·n)** (exactamente igual que la fuerza bruta) y **K_peor = Θ(|C|·n/k)**, que con k ≥ 2 es a lo sumo c·n·|C|. La validación experimental (Fase 6) mide Q y K por separado: Q como conteo de consultas y K como número de cotas calculadas (y su tiempo de CPU, que no es tiempo de GPU).
+Por lo tanto, en el peor caso **T(m, k, n) = Θ(k^m · n)** (abreviado Θ(|C| · n), con |C| = k^m el espacio de búsqueda derivado): exponencial en el número de ranuras m, que es parte del tamaño de la entrada Θ(m·k + n). Lo mismo vale para cada recurso por separado: **Q_peor = n·|C| = Θ(|C|·n)** (exactamente igual que la fuerza bruta) y **K_peor = Θ(|C|·n/k)**, que con k ≥ 2 es a lo sumo c·n·|C|. La validación experimental (Fase 6) mide Q y K por separado: Q como conteo de consultas y K como número de cotas calculadas (y su tiempo de CPU, que no es tiempo de GPU).
 
 **El peor caso ocurre.** `generar_peor_caso_backtracking(m, k, n)` construye un caso con un solo par por instancia, siempre en la última ranura (la instancia i pasa si la última ranura vale i mod k). En todo nodo interno la última ranura está sin fijar, así que todas las instancias están vivas y UB = 1; pero ninguna configuración resuelve más de ⌈n/k⌉ instancias, y con k ≥ 2 y n ≥ 2 la mejor precisión es menor que 1. Luego UB > mejor en todos los nodos internos y no se poda nada (lo comprueba `test_peor_caso_construido_no_poda_nada`).
 
